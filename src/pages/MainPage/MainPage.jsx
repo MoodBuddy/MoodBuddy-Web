@@ -1,5 +1,11 @@
+import IntroduceSection from '../../components/MainPage/IntroduceSection';
+
 const MainPage = () => {
-  return <div className="text-3xl">MoodBuddy</div>;
+  return (
+    <>
+      <IntroduceSection />
+    </>
+  );
 };
 
 export default MainPage;
