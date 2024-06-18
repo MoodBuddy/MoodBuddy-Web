@@ -1,4 +1,5 @@
 import AnalysisSection from '../../components/MainPage/AnalysisSection';
+import CalendarSection from '../../components/MainPage/CalendarSection';
 import IntroduceSection from '../../components/MainPage/IntroduceSection';
 
 const MainPage = () => {
@@ -6,6 +7,7 @@ const MainPage = () => {
     <>
       <IntroduceSection />
       <AnalysisSection />
+      <CalendarSection />
     </>
   );
 };
