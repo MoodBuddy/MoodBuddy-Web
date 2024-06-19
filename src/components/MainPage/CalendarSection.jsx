@@ -1,4 +1,4 @@
-import CalendarCard from './CalendarCard';
+import CalendarCard from "./Calendar/CalendarCard";
 
 const CalendarSection = () => {
   return (
