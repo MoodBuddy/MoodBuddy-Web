@@ -13,7 +13,7 @@ const RankingCard = () => {
         </div>
 
         <div className="my-12 ml-8">
-          <img src={happyQuddy} alt="happyQuddy" />
+          <img src={happyQuddy} alt="happyQuddy" className="w-[193px] h-[204px]"/>
         </div>
 
         <div className="flex justify-end mr-6">
