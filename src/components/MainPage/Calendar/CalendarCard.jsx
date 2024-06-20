@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const CalendarCard = () => {
   return (
     <div className="flex justify-end mt-10 mb-36">
-      <div className="bg-[#EEEDE6] w-[1500px] p-8 rounded-l-[66px] shadow-lg">
+      <div className="bg-[#EEEDE6] w-[80%] p-8 rounded-l-[66px] shadow-lg">
         <h1 className="font-meetme text-[57px] flex justify-center my-6">
           성나영 님의 캘린더를 통해 성장과정을 봐볼까요?
         </h1>
