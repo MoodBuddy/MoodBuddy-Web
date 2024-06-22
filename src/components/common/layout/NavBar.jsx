@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 
 const NavBar = () => {
@@ -10,9 +10,17 @@ const NavBar = () => {
 
       <div className="flex items-center gap-32 text-[22px] font-semibold">
         {MenuList.map((item) => (
-          <Link to={item.to} className="hover:text-[#B98D6D]" key={item.id}>
+          <NavLink
+            to={item.to}
+            className={({ isActive }) =>
+              isActive
+                ? 'text-[#B98D6D]'
+                : 'hover:text-[#B98D6D] transition-colors duration-75'
+            }
+            key={item.id}
+          >
             {item.name}
-          </Link>
+          </NavLink>
         ))}
       </div>
 
