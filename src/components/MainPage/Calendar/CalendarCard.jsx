@@ -1,18 +1,24 @@
 import CalendarHeader from './CalendarHeader';
 import CalendarBody from './CalendarBody';
 import { Link } from 'react-router-dom';
+import helloQuddy from '@assets/helloQuddy.svg';
 
 const CalendarCard = () => {
   return (
-    <div className="flex justify-end mt-10 mb-36">
-      <div className="bg-[#EEEDE6] w-[80%] p-8 rounded-l-[66px] shadow-lg">
+    <div className="relative flex justify-end mt-10 mb-36">
+      {/* 좌측 쿼디 이미지 */}
+      <div className="hidden xl:block absolute left-0 top-[40%] transform -translate-y-1/2 z-0">
+        <img src={helloQuddy} alt="helloQuddy" className="w-auto h-auto" />
+      </div>
+
+      <div className="relative bg-[#EEEDE6] p-8 rounded-l-[66px] shadow-lg z-10">
         <h1 className="font-meetme text-[57px] flex justify-center my-6">
           성나영 님의 캘린더를 통해 성장과정을 봐볼까요?
         </h1>
 
         {/* 캘린더 */}
-        <div className="flex justify-center">
-          <div className="bg-[#FFFFFFA3] w-[1180px] border rounded-[35px] py-4 px-24 mt-16">
+        <div className="flex justify-center px-10">
+          <div className="bg-[#FFFFFFA3] border rounded-[35px] py-4 px-24 mt-16">
             <CalendarHeader />
             <CalendarBody />
           </div>
@@ -23,8 +29,8 @@ const CalendarCard = () => {
         </div>
 
         {/* 일기 한 줄 요약 */}
-        <div className="flex justify-center text-[29px] mb-40">
-          <div className="w-[1180px] h-[248px] border rounded-[36px] bg-white px-12 py-4 relative">
+        <div className="flex justify-center text-[29px] mb-40 px-8">
+          <div className="w-full h-[248px] border rounded-[36px] bg-white px-12 py-4 relative">
             <div className="absolute top-4 right-4">
               <Link
                 to="/"
