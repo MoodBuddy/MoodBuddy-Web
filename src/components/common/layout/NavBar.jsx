@@ -3,7 +3,7 @@ import { MenuList } from '../../../constants/MenuList';
 
 const NavBar = () => {
   return (
-    <div className="flex top-0 z-10 bg-[#E8DBCF] h-[84px] justify-around">
+    <div className="flex top-0 bg-[#E8DBCF] h-[84px] justify-around relative z-50">
       <div className="flex items-center text-2xl mr-12">
         <h1 className="font-meetme">MOODBUDDY</h1>
       </div>
