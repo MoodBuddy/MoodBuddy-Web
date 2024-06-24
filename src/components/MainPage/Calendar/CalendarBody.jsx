@@ -25,15 +25,14 @@ const CalendarBody = () => {
       </div>
 
       {/* days 출력 */}
-      <div className="border-collapse table w-full">
-        <div className="table-row-group">
+      <div className="border-collapse table">
           {Array.from({ length: Math.ceil(days.length / 7) }).map(
             (_, rowIndex) => (
               <div className="table-row cursor-pointer" key={rowIndex}>
                 {days.slice(rowIndex * 7, rowIndex * 7 + 7).map((date) => (
                   <div
                     key={date.date}
-                    className={`table-cell border-[3.5px] border-black h-[132px] align-top p-2 ${format(currentDate, 'MM') !== date.month ? 'text-gray-400' : ''}
+                    className={`table-cell border-[3.5px] border-black p-2 w-[130px] h-[130px] ${format(currentDate, 'MM') !== date.month ? 'text-gray-400' : ''}
                     ${date.dayIndexOfWeek === 0 && format(currentDate, 'MM') === date.month ? 'text-red-500' : ''}
                     ${date.dayIndexOfWeek === 6 && format(currentDate, 'MM') === date.month ? 'text-blue-500' : 'text-black'}`}
                     onClick={() => selectDate(date.date)}
@@ -52,18 +51,17 @@ const CalendarBody = () => {
                         <img
                           src={happyQuddy}
                           alt="happyQuddy"
-                          className="w-[83px] h-[88px]"
+                          className="w-[65%]"
                         />
                       </div>
                     ) : (
-                      <div className="w-[83px] h-[88px]"></div>
+                      <div className="w-[65%]"></div>
                     )}
                   </div>
                 ))}
               </div>
             ),
           )}
-        </div>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ const Button = forwardRef(function Button(
   const buttonColors = {
     brown: 'bg-[#AC7544] text-white hover:bg-[#8E5B33]',
     beige: 'bg-[#D8B18E] text-black hover:bg-[#B08A5E]',
+    white: 'bg-[#FFFEFD] text-[#787878] ',
   };
 
   return (

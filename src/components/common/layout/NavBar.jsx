@@ -1,18 +1,31 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 
 const NavBar = () => {
   return (
+<<<<<<< HEAD
     <div className="flex top-0 z-10 bg-[#E8DBCF] h-[84px] justify-around transform scale-75">
       <div className="flex items-center text-2xl mr-12 ">
+=======
+    <div className="flex top-0 bg-[#E8DBCF] h-[84px] justify-around relative z-50">
+      <div className="flex items-center text-2xl mr-12">
+>>>>>>> 143692ae77d9263f8b43f0b35e35601af2acf715
         <h1 className="font-meetme">MOODBUDDY</h1>
       </div>
 
       <div className="flex items-center gap-32 text-[22px] font-semibold">
         {MenuList.map((item) => (
-          <Link to={item.to} className="hover:text-[#B98D6D]" key={item.id}>
+          <NavLink
+            to={item.to}
+            className={({ isActive }) =>
+              isActive
+                ? 'text-[#B98D6D]'
+                : 'hover:text-[#B98D6D] transition-colors duration-75'
+            }
+            key={item.id}
+          >
             {item.name}
-          </Link>
+          </NavLink>
         ))}
       </div>
 
