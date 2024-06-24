@@ -8,9 +8,11 @@ const MainPage = () => {
   return (
     <>
       <NavBar />
+
       <IntroduceSection />
       <AnalysisSection />
       <CalendarSection />
+
       <Footer />
     </>
   );
