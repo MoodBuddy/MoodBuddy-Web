@@ -46,3 +46,23 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+
+/* 스크롤바 스타일링 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #d8b18e; /* 스크롤바의 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(216, 177, 142, 0.39); /* 스크롤바 뒷 배경 색상 */
+  border-radius: 28px;
+}
+
+.custom-scrollbar {
+  padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
+}

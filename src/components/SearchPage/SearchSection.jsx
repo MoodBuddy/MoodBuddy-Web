@@ -6,9 +6,19 @@ import searchIcon from '../../../public/icon/searchIcon.svg';
 
 const SearchBar = () => {
   const [showDetailOptions, setShowDetailOptions] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedQuddy, setSelectedQuddy] = useState(null);
 
   const toggleDetailOptions = () => {
     setShowDetailOptions(!showDetailOptions);
+  };
+
+  const handleTopicClick = (index) => {
+    setSelectedTopic(index);
+  };
+
+  const handleQuddyClick = (index) => {
+    setSelectedQuddy(index);
   };
 
   return (
@@ -49,7 +59,7 @@ const SearchBar = () => {
               <div className="flex gap-4 items-center mr-40">
                 <span className="text-zinc-700 text-2xl mr-20">날짜 검색</span>
                 <input
-                  className="w-[706px] h-[62px] text-2xl placeholder-stone-300 bg-white/opacity-90 rounded-2xl border border-neutral-400 px-10"
+                  className="w-[706px] h-[62px] text-2xl placeholder-stone-300 bg-white/opacity-90 rounded-2xl border border-[#999898] px-10"
                   placeholder="년 월"
                 />
               </div>
@@ -61,10 +71,13 @@ const SearchBar = () => {
                   {topics.map((topic, index) => (
                     <Button
                       key={index}
+                      onClick={() => handleTopicClick(index)}
                       color="white"
-                      className="rounded-[14.45px] border border-neutral-400"
+                      className={`rounded-[14.45px] border border-[#999898] ${
+                        selectedTopic === index ? 'bg-[#DCC6B1]' : ''
+                      }`}
                     >
-                      <p className="px-12 py-1 text-neutral-500 text-xl font-medium">
+                      <p className="px-12 py-1 text-xl font-medium">
                         {topic.label}
                       </p>
                     </Button>
@@ -79,12 +92,17 @@ const SearchBar = () => {
                   {quddies.map((quddy, index) => (
                     <button
                       key={index}
-                      className="flex flex-col items-center gap-3"
+                      onClick={() => handleQuddyClick(index)}
+                      className={`flex flex-col gap-2 py-2 px-0.5 items-center ${
+                        selectedQuddy === index
+                          ? 'bg-[#DCC6B1] rounded-[15px] border border-[#787878]'
+                          : ''
+                      }`}
                     >
                       <img
                         src={quddy.imgSrc}
                         alt={quddy.text}
-                        className="w-[87px] h-[100px]"
+                        className="w-[83px] h-[100px]"
                       />
                       <span className="text-lg">{quddy.text}</span>
                     </button>
