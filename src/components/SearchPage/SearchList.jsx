@@ -1,5 +1,6 @@
 import { diaryData } from '../../mocks/mockData';
 import { weatherList } from '../../constants/WeatherList';
+import { Link } from 'react-router-dom';
 
 const SearchList = () => {
   return (
@@ -7,7 +8,10 @@ const SearchList = () => {
       <div className="h-full overflow-y-scroll custom-scrollbar">
         {diaryData.map((item) => (
           <div key={item.id}>
-            <div className="flex p-4 items-center justify-between">
+            <Link
+              to={`/diary/${item.id}`}
+              className="flex p-4 items-center justify-between"
+            >
               <div className="flex flex-col space-y-3">
                 <p className="text-zinc-400 text-xl">{item.date}</p>
                 <h1 className="font-meetme text-3xl font-bold mb-2">
@@ -35,8 +39,7 @@ const SearchList = () => {
                   />
                 </div>
               )}
-            </div>
-
+            </Link>
             <div className="h-[1px] my-3 w-full bg-stone-300" />
           </div>
         ))}
