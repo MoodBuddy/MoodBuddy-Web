@@ -5,7 +5,7 @@ const Card = ({ children }) => {
         {[...Array(3)].map((_, index) => (
           <div
             key={index}
-            className="w-[9px] h-[9px] rounded-full bg-[#8A8A8A]"
+            className="w-[9px] [9px] rounded-full bg-[#8A8A8A]"
           />
         ))}
       </div>
