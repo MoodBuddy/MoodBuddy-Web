@@ -8,11 +8,12 @@ const Template = ({ templateOn, setTemplateOn, setSelectedTemplate }) => {
   const [tab, setTab] = useState('left');
   return (
     <div
-      className={`flex flex-col  z-20 absolute top-0 right-[0px] h-[1600px] bg-[#E8DBCF] rounded-tl-[36px] shadow-2xl transition-all duration-300 ${
+      className={`flex flex-col z-20 absolute top-0 right-0 h-[1600px] bg-[#E8DBCF] rounded-tl-[36px] shadow-2xl transition-transform transition-opacity duration-500 ${
         templateOn
-          ? 'transform translate-x-[380px] w-[400px]'
-          : 'transform translate-x-[780px] w-[400px] hidden'
+          ? 'translate-x-[400px] opacity-100'
+          : 'translate-x-[600px] opacity-0'
       }`}
+      style={{ width: '400px', visibility: templateOn ? 'visible' : 'hidden' }}
     >
       <div className="flex justify-between w-[350px] mx-auto mt-[66px]">
         <div className="font-meetme text-[42px]">템플릿</div>
