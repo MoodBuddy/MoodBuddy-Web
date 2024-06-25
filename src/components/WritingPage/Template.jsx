@@ -16,7 +16,7 @@ const Template = ({ templateOn, setTemplateOn, setSelectedTemplate }) => {
     >
       <div className="flex justify-between w-[350px] mx-auto mt-[66px]">
         <div className="font-meetme text-[42px]">템플릿</div>
-        <img src={close} onClick={setTemplateOn} />
+        <img className="cursor-pointer" src={close} onClick={setTemplateOn} />
       </div>
       <div className="text-[17px] opacity-60 ml-[28px]">
         쉽게 일기를 쓸 수 있도록 도와줄게요.
