@@ -13,6 +13,8 @@ const Router = () => (
         children: [
           { path: '/', element: <WelcomePage /> },
           { path: '/home', element: <MainPage /> },
+          { path: '/writing', element: <WritingPage /> },
+          { path: '/search', element: <SearchPage /> },
         ],
       },
     ])}
