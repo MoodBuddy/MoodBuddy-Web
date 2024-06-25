@@ -3,22 +3,35 @@ import Button from '../common/button/Button';
 import { quddies } from '../../constants/QuddyList';
 import { topics } from '../../constants/TopicList';
 import searchIcon from '../../../public/icon/searchIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const [showDetailOptions, setShowDetailOptions] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [selectedQuddy, setSelectedQuddy] = useState(null);
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  // 검색 옵션 로직
   const toggleDetailOptions = () => {
     setShowDetailOptions(!showDetailOptions);
   };
-
   const handleTopicClick = (index) => {
     setSelectedTopic(index);
   };
-
   const handleQuddyClick = (index) => {
     setSelectedQuddy(index);
+  };
+
+  // 검색창(input) 로직
+  const handleSearch = () => {
+    navigate('/searchList');
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -28,12 +41,16 @@ const SearchBar = () => {
           <div className="relative">
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-[900px] h-[66px] text-2xl placeholder-stone-300 bg-white rounded-[18px] border-2 border-black px-10"
               placeholder="검색어를 입력하세요."
             />
             <img
               src={searchIcon}
               alt="Search Icon"
+              onClick={handleSearch}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
             />
           </div>
