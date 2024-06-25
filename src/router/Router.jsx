@@ -4,6 +4,7 @@ import MainPage from '../pages/MainPage/MainPage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import Layout from './Layout';
 import SearchListPage from '../pages/SearchPage/SearchListPage';
+import DiaryPage from '../pages/DiaryPage/DiaryPage';
 
 const Router = () => (
   <RouterProvider
@@ -15,6 +16,7 @@ const Router = () => (
           { path: '/home', element: <MainPage /> },
           { path: '/search', element: <SearchPage /> },
           { path: '/searchlist', element: <SearchListPage /> },
+          { path: '/diary/:id', element: <DiaryPage /> },
         ],
       },
     ])}
