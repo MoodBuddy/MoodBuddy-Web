@@ -7,6 +7,7 @@ import Layout from './Layout';
 import SearchListPage from '../pages/SearchPage/SearchListPage';
 import DiaryPage from '../pages/DiaryPage/DiaryPage';
 import CounselingPage from '../pages/CounselingPage/CounselingPage';
+import WritingLetterPage from '../pages/CounselingPage/WritingLetterPage';
 
 const Router = () => (
   <RouterProvider
@@ -21,6 +22,7 @@ const Router = () => (
           { path: '/searchlist', element: <SearchListPage /> },
           { path: '/diary/:id', element: <DiaryPage /> },
           { path: '/counseling', element: <CounselingPage /> },
+          { path: '/counseling/writingLetter', element: <WritingLetterPage /> },
         ],
       },
     ])}

@@ -1,10 +1,18 @@
 import profile from '@assets/profile.png';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const handleWritingLetter = () => {
+    navigate('/counseling/writingLetter');
+  };
   return (
     <div className=" flex flex-col items-center w-[286px] h-[619px] bg-[#F7F3EF] rounded-2xl">
       <div className="transform scale-75 relative top-[-110px]">
-        <button className="w-[332px] h-[71px] rounded-[30px] bg-[#C79A76] font-semibold text-[30px] mt-[58px]">
+        <button
+          onClick={handleWritingLetter}
+          className="w-[332px] h-[71px] rounded-[30px] bg-[#C79A76] font-semibold text-[30px] mt-[58px]"
+        >
           편지 쓰기
         </button>
         <div className="flex justify-between items-center w-[283px] mt-[25px] ml-[20px]">
