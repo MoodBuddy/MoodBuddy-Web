@@ -10,6 +10,8 @@ module.exports = {
       colors: {
         btnColor: '#F4EEE8',
         btnColorActive: '#E8DBCF',
+        lightbeige: '#F7F3EF',
+        beige: '#D8B18E',
       },
       keyframes: {
         intro: {

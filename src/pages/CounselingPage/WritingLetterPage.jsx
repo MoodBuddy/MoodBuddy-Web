@@ -12,10 +12,8 @@ const WritingLetterPage = () => {
       <div
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
-        <div className="transform scale-75  relative top-[-180px]">
-          <CounselingTopBar />
-          <Letter />
-        </div>
+        <CounselingTopBar />
+        <Letter />
       </div>
       <div className="relative top-[-180px]">
         <Footer />

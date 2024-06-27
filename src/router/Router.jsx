@@ -8,6 +8,7 @@ import SearchListPage from '../pages/SearchPage/SearchListPage';
 import DiaryPage from '../pages/DiaryPage/DiaryPage';
 import CounselingPage from '../pages/CounselingPage/CounselingPage';
 import WritingLetterPage from '../pages/CounselingPage/WritingLetterPage';
+import CompletedLetter from '../pages/CounselingPage/CompletedLetter';
 
 const Router = () => (
   <RouterProvider
@@ -23,6 +24,7 @@ const Router = () => (
           { path: '/diary/:id', element: <DiaryPage /> },
           { path: '/counseling', element: <CounselingPage /> },
           { path: '/counseling/writingLetter', element: <WritingLetterPage /> },
+          { path: '/counseling/completedLetter', element: <CompletedLetter /> },
         ],
       },
     ])}
