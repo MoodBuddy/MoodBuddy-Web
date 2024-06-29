@@ -11,6 +11,7 @@ import WritingLetterPage from '../pages/CounselingPage/WritingLetterPage';
 import CompletedWriting from '../pages/CounselingPage/CompletedWriting';
 import QuddyLetter from '../pages/CounselingPage/QuddyLetter';
 import AuthPage from '../pages/AuthPage/AuthPage';
+import KakaoAuth from '../components/AuthPage/KakaoAuth';
 
 const Router = () => (
   <RouterProvider
@@ -32,6 +33,8 @@ const Router = () => (
           },
           { path: '/letter/:id', element: <QuddyLetter /> },
           { path: '/auth', element: <AuthPage /> },
+          { path: '/user', element: <AuthPage /> },
+          { path: '/auth', element: <KakaoAuth /> },
         ],
       },
     ])}
