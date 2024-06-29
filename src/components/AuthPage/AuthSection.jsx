@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TimePicker from '../common/TimePicker/TimePicker';
+import TimePicker from '../common/timePicker/TimePicker';
 import Button from '../common/button/Button';
 import Toggle from '../common/toggle/Toggle';
 

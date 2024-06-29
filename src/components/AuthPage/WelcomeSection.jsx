@@ -9,8 +9,18 @@ import { useNavigate } from 'react-router-dom';
 
 const WelcomeSection = () => {
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate('/home');
+  };
+
+  const CLIENT_ID = import.meta.env.VITE_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
+ 
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const handleLogin = () => {
+    window.location.href = kakaoURL;
   };
 
   return (
@@ -45,7 +55,7 @@ const WelcomeSection = () => {
       </div>
 
       <Button
-        onClick={handleClick}
+        onClick={handleLogin}
         color="brown"
         className="w-[479px] h-[96px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
       >
