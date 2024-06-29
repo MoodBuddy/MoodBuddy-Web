@@ -21,7 +21,7 @@ const SelectModal = ({ sending, setSending }) => {
   };
 
   const completeSending = () => {
-    navigate('/counseling/completedLetter');
+    navigate('/counseling/completedWriting');
   };
 
   return (

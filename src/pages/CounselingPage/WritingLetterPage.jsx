@@ -1,10 +1,16 @@
+import { useEffect } from 'react';
 import CounselingTopBar from '../../components/CounselingPage/CounselingTopBar';
 import Letter from '../../components/CounselingPage/Letter';
 import Footer from '../../components/common/layout/Footer';
 import NavBar from '../../components/common/layout/NavBar';
 import styles from '@styles/check.module.css';
+import useContentStore from '../../store/contentStore';
 
 const WritingLetterPage = () => {
+  const { setContent } = useContentStore();
+  useEffect(() => {
+    setContent('');
+  }, []);
   return (
     <div>
       <NavBar />
