@@ -10,6 +10,7 @@ import CounselingPage from '../pages/CounselingPage/CounselingPage';
 import WritingLetterPage from '../pages/CounselingPage/WritingLetterPage';
 import CompletedWriting from '../pages/CounselingPage/CompletedWriting';
 import QuddyLetter from '../pages/CounselingPage/QuddyLetter';
+import AuthPage from '../pages/AuthPage/AuthPage';
 
 const Router = () => (
   <RouterProvider
@@ -30,6 +31,7 @@ const Router = () => (
             element: <CompletedWriting />,
           },
           { path: '/letter/:id', element: <QuddyLetter /> },
+          { path: '/auth', element: <AuthPage /> },
         ],
       },
     ])}
