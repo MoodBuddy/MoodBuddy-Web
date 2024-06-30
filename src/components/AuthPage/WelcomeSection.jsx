@@ -5,18 +5,10 @@ import angryQuddy from '@assets/angryQuddy.svg';
 import gloomyQuddy from '@assets/gloomyQuddy.svg';
 import kakaoIcon from '../../../public/icon/kakaoIcon.svg';
 import Button from '../common/button/Button';
-import { useNavigate } from 'react-router-dom';
 
 const WelcomeSection = () => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/home');
-  };
-
   const CLIENT_ID = import.meta.env.VITE_REST_API_KEY;
   const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
- 
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {
@@ -53,15 +45,15 @@ const WelcomeSection = () => {
           className="w-[152px] h-[160px]"
         />
       </div>
-
-      <Button
-        onClick={handleLogin}
-        color="brown"
-        className="w-[479px] h-[96px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
-      >
-        <img src={kakaoIcon} alt="kakaoIcon" />
-        <p className="font-semibold text-[25px]">1초 카카오톡 간편 로그인</p>
-      </Button>
+      <a href={kakaoURL}>
+        <Button
+          color="brown"
+          className="w-[479px] h-[96px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
+        >
+          <img src={kakaoIcon} alt="kakaoIcon" />
+          <p className="font-semibold text-[25px]">1초 카카오톡 간편 로그인</p>
+        </Button>
+      </a>
     </div>
   );
 };

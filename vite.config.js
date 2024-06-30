@@ -16,7 +16,12 @@ export default defineConfig({
     },
   },
   server: {
-    cors: false,
-    proxy: {},
+    proxy: {
+      'http://localhost:5173/api/v1/user/login/oauth2/code/kakao': {
+        target: 'https://kauth.kakao.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/kakao-api/, ''),
+      },
+    },
   },
 });

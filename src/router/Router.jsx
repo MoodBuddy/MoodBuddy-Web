@@ -32,9 +32,11 @@ const Router = () => (
             element: <CompletedWriting />,
           },
           { path: '/letter/:id', element: <QuddyLetter /> },
-          { path: '/auth', element: <AuthPage /> },
           { path: '/user', element: <AuthPage /> },
-          { path: '/auth', element: <KakaoAuth /> },
+          {
+            path: '/api/v1/user/login/oauth2/code/kakao',
+            element: <KakaoAuth />,
+          },
         ],
       },
     ])}

@@ -14,8 +14,8 @@ const CompletedWriting = () => {
       >
         <CounselingTopBar />
         <CompletedLetter />
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
