@@ -7,6 +7,7 @@ import Layout from './Layout';
 import SearchListPage from '../pages/SearchPage/SearchListPage';
 import DiaryPage from '../pages/DiaryPage/DiaryPage';
 import AuthPage from '../pages/AuthPage/AuthPage';
+import CompletePage from '../pages/AuthPage/CompletePage';
 
 const Router = () => (
   <RouterProvider
@@ -21,6 +22,7 @@ const Router = () => (
           { path: '/searchlist', element: <SearchListPage /> },
           { path: '/diary/:id', element: <DiaryPage /> },
           { path: '/auth', element: <AuthPage /> },
+          { path: '/complete', element: <CompletePage /> },
         ],
       },
     ])}
