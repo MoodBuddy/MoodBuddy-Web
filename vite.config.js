@@ -23,5 +23,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/kakao-api/, ''),
       },
     },
+    '/api': {
+      target: 'http://localhost:8080', // 스프링부트 서버 주소
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, '/api'),
+    },
   },
 });
