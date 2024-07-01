@@ -15,12 +15,14 @@ const WelcomeSection = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#EDE2DA]">
-      <h1 className="font-meetme text-4xl">MOODBUDDY</h1>
-      <h1 className="font-meetme text-[64px]">
-        쿼디와 함께 자신의 마음과 생각을 행복하게 정리해봐요 !
-      </h1>
+      <div className="flex flex-col items-center gap-2">
+        <h1 className="font-meetme text-3xl">MOODBUDDY</h1>
+        <h1 className="font-meetme text-6xl">
+          쿼디와 함께 자신의 생각과 고민을 행복하게 정리해봐요 !
+        </h1>
+      </div>
 
-      <div className="flex items-end gap-10 my-8">
+      <div className="flex items-end gap-10 my-12">
         <img
           src={angryQuddy}
           alt="angryQuddy"
@@ -47,7 +49,7 @@ const WelcomeSection = () => {
       <Button
         onClick={handleClick}
         color="brown"
-        className="w-[479px] h-[96px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
+        className="w-[450px] h-[84px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
       >
         <img src={kakaoIcon} alt="kakaoIcon" />
         <p className="font-semibold text-[25px]">1초 카카오톡 간편 로그인</p>
