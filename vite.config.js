@@ -16,23 +16,6 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-      'http://localhost:5173/api/v1/user/login/oauth2/code/kakao': {
-        target: 'https://kauth.kakao.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/kakao-api/, ''),
-      },
-      // 스프링부트 서버로 요청을 프록시
-      '/api': {
-        target: 'http://localhost:8080', // 스프링부트 서버 주소
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
-      },
-    },
-    '/api': {
-      target: 'http://localhost:8080', // 스프링부트 서버 주소
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, '/api'),
-    },
+    proxy: {},
   },
 });
