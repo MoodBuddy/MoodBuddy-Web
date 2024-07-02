@@ -1,6 +1,6 @@
 export const topics = [
-  { label: '일상', value: 'daily' },
-  { label: '성장', value: 'growth' },
-  { label: '감정', value: 'emotion' },
-  { label: '여행', value: 'travel' },
+  { label: '일상', value: 'Daily' },
+  { label: '성장', value: 'Growth' },
+  { label: '감정', value: 'Emotion' },
+  { label: '여행', value: 'Trip' },
 ];

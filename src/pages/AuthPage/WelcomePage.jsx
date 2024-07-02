@@ -3,7 +3,7 @@ import WelcomeSection from '../../components/AuthPage/WelcomeSection';
 const WelcomePage = () => {
   return (
     <div>
-      <WelcomeSection />;
+      <WelcomeSection />
     </div>
   );
 };
