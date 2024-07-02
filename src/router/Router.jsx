@@ -9,6 +9,7 @@ import DiaryPage from '../pages/DiaryPage/DiaryPage';
 import AuthPage from '../pages/AuthPage/AuthPage';
 import CompletePage from '../pages/AuthPage/CompletePage';
 import StatsPage from '../pages/MyPage/StatsPage';
+import QuddyTiPage from '../pages/MyPage/QuddyTiPage';
 
 const Router = () => (
   <RouterProvider
@@ -25,6 +26,7 @@ const Router = () => (
           { path: '/auth', element: <AuthPage /> },
           { path: '/complete', element: <CompletePage /> },
           { path: '/stats', element: <StatsPage /> },
+          { path: '/quddyti', element: <QuddyTiPage /> },
         ],
       },
     ])}
