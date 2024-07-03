@@ -15,7 +15,7 @@ const AnalysisSection = () => {
         style={{ backgroundImage: `url(${sketchBackground})` }}
       >
         {/* 사용자별 문구 */}
-        <div className="flex items-center justify-center mt-40 mb-10 relative">
+        <div className="flex items-center justify-center mt-44 mb-10 relative transform scale-90">
           <img src={nameCover} alt="nameCover" className="absolute" />
           <h1 className="z-10 font-meetme text-5xl">
             성나영 님의 하루를 기록해봐요 !
