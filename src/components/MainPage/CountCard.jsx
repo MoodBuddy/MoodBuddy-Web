@@ -17,7 +17,7 @@ const CountCard = () => {
           <div className="border rounded-[18px] border-black">
             <h1 className="text-9xl font-medium text-center px-12 py-2">20</h1>
           </div>
-          <p className="text-[40px] font-medium">회</p>
+          <p className="text-4xl font-medium">회</p>
         </div>
 
         <div className="flex justify-center">
