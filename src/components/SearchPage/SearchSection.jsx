@@ -44,7 +44,7 @@ const SearchBar = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-[900px] h-[66px] text-2xl placeholder-stone-300 bg-white rounded-[18px] border-2 border-black px-10"
+              className="w-[900px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[18px] border-2 border-black px-10"
               placeholder="검색어를 입력하세요."
             />
             <img

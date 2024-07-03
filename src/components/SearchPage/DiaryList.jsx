@@ -2,7 +2,7 @@ import { diaryData } from '../../mocks/mockData';
 import { weatherList } from '../../constants/WeatherList';
 import { Link } from 'react-router-dom';
 
-const SearchList = () => {
+const DiaryList = () => {
   return (
     <div className="bg-[#F7F3EF] w-[1080px] h-screen rounded-[36px] p-6 my-10">
       <div className="h-full overflow-y-scroll custom-scrollbar">
@@ -48,4 +48,4 @@ const SearchList = () => {
   );
 };
 
-export default SearchList;
+export default DiaryList;

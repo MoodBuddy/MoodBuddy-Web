@@ -1,6 +1,6 @@
 import Footer from '../../components/common/layout/Footer';
 import NavBar from '../../components/common/layout/NavBar';
-import SearchList from '../../components/SearchPage/SearchList';
+import DiaryList from '../../components/SearchPage/DiaryList';
 import SearchBar from '../../components/SearchPage/SearchSection';
 import styles from '@styles/check.module.css';
 
@@ -12,7 +12,7 @@ const SearchListPage = () => {
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
         <SearchBar />
-        <SearchList />
+        <DiaryList />
       </div>
       <Footer />
     </div>
