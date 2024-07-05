@@ -1,5 +1,4 @@
 import MailBoxContent from './MailBoxContent';
-import MailBoxNoContent from './MailBoxNoContent';
 
 const MailBox = () => {
   return (
@@ -9,7 +8,6 @@ const MailBox = () => {
       </div>
       <div className="border-b-[0.75px] border-black"></div>
       <div className="h-[1005px] overflow-y-auto overflow-x-hidden custom-scrollbar">
-        <MailBoxNoContent />
         <MailBoxContent />
         <MailBoxContent />
         <MailBoxContent />

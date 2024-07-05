@@ -31,7 +31,7 @@ const Router = () => (
             path: '/counseling/completedWriting',
             element: <CompletedWriting />,
           },
-          { path: '/letter/:id', element: <QuddyLetter /> },
+          { path: 'counseling/letter', element: <QuddyLetter /> },
           { path: '/user', element: <AuthPage /> },
           {
             path: '/api/v1/user/login/oauth2/code/kakao',

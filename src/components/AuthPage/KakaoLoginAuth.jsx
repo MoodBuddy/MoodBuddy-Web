@@ -26,6 +26,7 @@ const KakaoLoginAuth = () => {
           console.log('kakaoLogin Failed');
         });
     };
+    console.log(code);
     kakaoLogin();
   }, []);
   return <div>로딩중</div>;
