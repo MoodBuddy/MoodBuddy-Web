@@ -28,10 +28,12 @@ const Timer = ({ hh, mm, ss }) => {
   }, [hours, minutes, seconds]);
 
   return (
-    <div className="text-[99px] flex justify-center relative top-[-12px]">
-      {hours < 10 ? ` 0${hours}` : hours} :{' '}
-      {minutes < 10 ? ` 0${minutes}` : minutes} :{' '}
-      {seconds < 10 ? ` 0${seconds}` : seconds}
+    <div className="w-[620px] h-[128px] rounded-[28px] bg-white border-[3px] border-black">
+      <div className="text-[99px] flex justify-center relative top-[-12px]">
+        {hours < 10 ? ` 0${hours}` : hours} :{' '}
+        {minutes < 10 ? ` 0${minutes}` : minutes} :{' '}
+        {seconds < 10 ? ` 0${seconds}` : seconds}
+      </div>
     </div>
   );
 };
