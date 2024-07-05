@@ -63,10 +63,11 @@ const SelectModal = ({ sending, setSending }) => {
               <div className="font-meetme text-[78px] text-center mt-[88px]">
                 고민 전송 완료 !
               </div>
-              <div className="text-[30px]">12시간 뒤에 답장이 와요</div>
-              <div className="w-[620px] h-[128px] rounded-[28px] bg-white border-[3px] border-black mt-[50px]">
-                <Timer hh={'12'} mm={'00'} ss={'00'} />
+              <div className="text-[30px] mb-[30px]">
+                12시간 뒤에 답장이 와요
               </div>
+              <Timer hh={'12'} mm={'00'} ss={'00'} />
+
               <Button
                 onClick={completeSending}
                 className="w-[300px] h-[58px] font-semibold text-[27px] mt-[59px]"
