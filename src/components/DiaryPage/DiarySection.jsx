@@ -3,9 +3,9 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useQuery } from '@tanstack/react-query';
 import { getFindOne } from '../../apis/diary';
+import { formatWeather, formatQuddyByEmotion } from '../../utils/format';
 import SimilarModal from './SimilarModal';
 import EditBar from './EditBar';
-import happyQuddy from '@assets/happyQuddy.svg';
 import happyBubble from '../../../public/image/happyBubble.svg';
 
 const DiarySection = ({ diaryId }) => {
@@ -21,6 +21,7 @@ const DiarySection = ({ diaryId }) => {
     queryFn: () => getFindOne(diaryId),
     enabled: !!diaryId,
   });
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -42,6 +43,9 @@ const DiarySection = ({ diaryId }) => {
     },
   );
 
+  const formattedWeather = formatWeather(diary.diaryWeather);
+  const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
+
   return (
     <div>
       <EditBar />
@@ -55,17 +59,15 @@ const DiarySection = ({ diaryId }) => {
 
             <div className="flex items-center gap-6 mb-20">
               <p className="text-lg">{formattedDate}</p>
-              <p className="text-lg">날씨 - {diary.diaryWeather}</p>
+              <p className="text-lg">날씨 - {formattedWeather}</p>
             </div>
           </div>
 
           <div className="mr-40 mb-6">
-            <img
-              src={happyQuddy}
-              alt="happyQuddy"
-              className="w-[150px] h-[170px]"
-            />
-            <p className="text-center text-lg">행복 Quddy</p>
+            <img src={imgSrc} alt={imgSrc} className="w-[150px] h-[170px]" />
+            <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+              {text}쿼디
+            </p>
           </div>
 
           {/* 비슷한 추억보기 모달 */}
@@ -99,7 +101,12 @@ const DiarySection = ({ diaryId }) => {
         )}
       </div>
 
-      {isModalOpen && <SimilarModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <SimilarModal
+          emotion={diary.diaryEmotion}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
