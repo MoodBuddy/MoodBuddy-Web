@@ -27,7 +27,7 @@ export const getFindAll = async () => {
     );
     return data;
   } catch (error) {
-    throw new Error('데이터 불러오기에 실패하였습니다.');
+    console.error('데이터 불러오기에 실패하였습니다.', error);
   }
 };
 
