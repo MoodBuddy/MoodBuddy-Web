@@ -6,29 +6,35 @@ const KakaoLoginAuth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let code = new URL(window.location.href).searchParams.get('code');
-    const kakaoLogin = async () => {
-      await axios({
-        method: 'GET',
-        url: `http://localhost:8080/api/v1/user/login/oauth2/code/kakao?code=${code}`,
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
-        .then((res) => {
-          localStorage.setItem('token', res.data.accessToken);
+    const code = new URL(window.location.href).searchParams.get('code');
 
-          console.log(res);
-          navigate('/home');
-        })
-        .catch(() => {
-          console.log('kakaoLogin Failed');
+    const kakaoLogin = async () => {
+      try {
+        const res = await axios({
+          method: 'GET',
+          url: `http://localhost:8080/api/v1/user/login/oauth2/code/kakao?code=${code}`,
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
         });
+        const { accessToken, refreshToken } = res.data;
+        sessionStorage.setItem(
+          'session',
+          JSON.stringify({ token: accessToken }),
+        );
+        sessionStorage.setItem('i', refreshToken);
+        navigate('/home');
+      } catch (error) {
+        console.log('kakaoLogin Failed', error);
+      }
     };
-    console.log(code);
-    kakaoLogin();
-  }, []);
-  return <div>로딩중</div>;
+
+    if (code) {
+      kakaoLogin();
+    }
+  }, [navigate]);
+
+  return <div>로딩중...</div>;
 };
+
 export default KakaoLoginAuth;

@@ -1,21 +1,50 @@
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import EditBar from './EditBar';
-import happyQuddy from '@assets/happyQuddy.svg';
-import happyBubble from '../../../public/image/happyBubble.svg';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getFindOne } from '../../apis/diary';
+import { formatWeather, formatQuddyByEmotion } from '../../utils/format';
 import SimilarModal from './SimilarModal';
+import EditBar from './EditBar';
+import happyBubble from '../../../public/image/happyBubble.svg';
 
-const DiarySection = ({ data }) => {
+const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const formattedDate = format(new Date(data.date), 'yyyy년 MM월 dd일 EEEE', {
-    locale: ko,
+  const {
+    isLoading,
+    isError,
+    data: diary,
+    error,
+  } = useQuery({
+    queryKey: ['diary', diaryId],
+    queryFn: () => getFindOne(diaryId),
+    enabled: !!diaryId,
   });
 
-  if (!data) {
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (isError) {
+    console.error('Error fetching diary:', error);
+    return <div>오류 발생: {error.message}</div>;
+  }
+
+  if (!diary) {
     return <div>일기를 찾을 수 없습니다.</div>;
   }
+
+  const formattedDate = format(
+    new Date(diary.diaryDate),
+    'yyyy년 MM월 dd일 EEEE',
+    {
+      locale: ko,
+    },
+  );
+
+  const formattedWeather = formatWeather(diary.diaryWeather);
+  const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
 
   return (
     <div>
@@ -25,22 +54,20 @@ const DiarySection = ({ data }) => {
         <div className="flex justify-between relative">
           <div>
             <h1 className="font-meetme text-5xl font-bold mb-4 w-[550px] whitespace-normal break-words">
-              {data.title}
+              {diary.diaryTitle}
             </h1>
 
             <div className="flex items-center gap-6 mb-20">
               <p className="text-lg">{formattedDate}</p>
-              <p className="text-lg">날씨 - {data.weather}</p>
+              <p className="text-lg">날씨 - {formattedWeather}</p>
             </div>
           </div>
 
           <div className="mr-40 mb-6">
-            <img
-              src={happyQuddy}
-              alt="happyQuddy"
-              className="w-[150px] h-[170px]"
-            />
-            <p className="text-center text-lg">행복 Quddy</p>
+            <img src={imgSrc} alt={imgSrc} className="w-[150px] h-[170px]" />
+            <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+              {text}쿼디
+            </p>
           </div>
 
           {/* 비슷한 추억보기 모달 */}
@@ -54,20 +81,32 @@ const DiarySection = ({ data }) => {
 
         <div className="h-[1px] my-3 w-full bg-stone-300" />
 
-        <p className="text-lg my-10">{data.content}</p>
+        <p className="text-lg my-10 whitespace-normal break-words">
+          {diary.diaryContent}
+        </p>
 
-        {data.image ? (
-          <img
-            src={data.image}
-            alt="Diary Image"
-            className="w-full h-auto object-cover"
-          />
+        {diary.diaryImgList && diary.diaryImgList.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4">
+            {diary.diaryImgList.map((imgUrl, index) => (
+              <img
+                key={index}
+                src={imgUrl}
+                alt={`Diary Image ${index}`}
+                className="w-full h-auto object-cover"
+              />
+            ))}
+          </div>
         ) : (
           <></>
         )}
       </div>
 
-      {isModalOpen && <SimilarModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <SimilarModal
+          emotion={diary.diaryEmotion}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

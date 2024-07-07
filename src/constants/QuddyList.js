@@ -7,11 +7,11 @@ import gloomyQuddy from '@assets/gloomyQuddy.svg';
 import fearQuddy from '@assets/fearQuddy.svg';
 
 export const quddies = [
-  { imgSrc: happyQuddy, text: '행복' },
-  { imgSrc: angryQuddy, text: '화남' },
-  { imgSrc: hatredQuddy, text: '혐오' },
-  { imgSrc: surpriseQuddy, text: '놀람' },
-  { imgSrc: calmQuddy, text: '평온' },
-  { imgSrc: gloomyQuddy, text: '우울함' },
-  { imgSrc: fearQuddy, text: '두려움' },
+  { emotion: 'HAPPY', imgSrc: happyQuddy, text: '행복' },
+  { emotion: 'ANGRY', imgSrc: angryQuddy, text: '화남' },
+  { emotion: 'AVERSION', imgSrc: hatredQuddy, text: '혐오' },
+  { emotion: 'SURPRISED', imgSrc: surpriseQuddy, text: '놀람' },
+  { emotion: 'CALMNESS', imgSrc: calmQuddy, text: '평온' },
+  { emotion: 'DEPRESSION', imgSrc: gloomyQuddy, text: '우울함' },
+  { emotion: 'FEAR', imgSrc: fearQuddy, text: '두려움' },
 ];

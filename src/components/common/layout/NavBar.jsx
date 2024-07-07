@@ -18,7 +18,7 @@ const NavBar = () => {
           <h1 className="font-meetme">MOODBUDDY</h1>
         </div>
 
-        <div className="flex items-center gap-32 text-[22px] font-semibold">
+        <div className="flex items-center font-meetme gap-32 text-3xl font-semibold">
           {MenuList.map((item) => (
             <div
               key={item.id}
