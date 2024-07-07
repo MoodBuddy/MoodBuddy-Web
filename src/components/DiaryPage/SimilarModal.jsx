@@ -4,7 +4,8 @@ import close from '../../../public/icon/close.svg';
 import DiaryList from '../SearchPage/DiaryList';
 import Button from '../common/button/Button';
 
-const SimilarModal = ({ onClose }) => {
+
+const SimilarModal = ({ onClose, emotion }) => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
@@ -25,7 +26,7 @@ const SimilarModal = ({ onClose }) => {
           <img src={close} alt="close" className="w-6 h-6" />
         </button>
 
-        <div className="transfrom scale-90">
+        <div className="transform scale-90">
           <div>
             <h1 className="font-meetme text-6xl mb-2">비슷한 추억 보기</h1>
             <p className="text-zinc-500 text-xl">
@@ -34,7 +35,7 @@ const SimilarModal = ({ onClose }) => {
           </div>
 
           <div className="h-[750px] overflow-hidden">
-            <DiaryList />
+            <DiaryList filterType="emotion" emotion={emotion}/>
           </div>
 
           <div className="flex justify-end mt-20">
