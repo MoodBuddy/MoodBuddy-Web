@@ -14,14 +14,11 @@ const DiaryList = ({ filterType, emotion }) => {
     }
   };
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { isError, data, error } = useQuery({
     queryKey: ['diaries'],
     queryFn: getDiariesQuery,
   });
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
 
   if (isError) {
     return <div>오류 발생: {error.message}</div>;
