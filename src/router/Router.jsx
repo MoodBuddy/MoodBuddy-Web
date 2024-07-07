@@ -15,6 +15,9 @@ import KakaoLoginAuth from '../components/AuthPage/KakaoLoginAuth';
 import CompletePage from '../pages/AuthPage/CompletePage';
 import StatsPage from '../pages/MyPage/StatsPage';
 import QuddyTiPage from '../pages/MyPage/QuddyTiPage';
+import EditProfilePage from '../pages/MyPage/EditProfilePage';
+import MyActivityPage from '../pages/MyPage/MyActivityPage';
+import BookMarkPage from '../pages/MyPage/BookMarkPage';
 
 const Router = () => (
   <RouterProvider
@@ -43,6 +46,9 @@ const Router = () => (
           { path: '/complete', element: <CompletePage /> },
           { path: '/stats', element: <StatsPage /> },
           { path: '/quddyti', element: <QuddyTiPage /> },
+          { path: '/editProfile', element: <EditProfilePage /> },
+          { path: '/myActivity', element: <MyActivityPage /> },
+          { path: '/bookMark', element: <BookMarkPage /> },
         ],
       },
     ])}
