@@ -12,7 +12,6 @@ const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    isLoading,
     isError,
     data: diary,
     error,
@@ -21,10 +20,6 @@ const DiarySection = ({ diaryId }) => {
     queryFn: () => getFindOne(diaryId),
     enabled: !!diaryId,
   });
-
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
 
   if (isError) {
     console.error('Error fetching diary:', error);

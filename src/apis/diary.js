@@ -31,17 +31,11 @@ export const getFindAll = async () => {
   }
 };
 
-export const getFindAllByEmotion = async () => {
+export const getFindAllByEmotion = async ({ emotion }) => {
   try {
-    const data = await get(
-      '/api/v1/member/diary/findAllByEmotionWithPageable',
-      {
-        params: {
-          diaryEmotion: 'HAPPY',
-        },
-      },
-    );
-
+    const url = `/api/v1/member/diary/findAllByEmotionWithPageable?diaryEmotion=${emotion}&page=0&size=20&sort=string`;
+    const data = await get(url);
+    console.log(data);
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
