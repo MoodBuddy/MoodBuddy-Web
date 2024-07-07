@@ -8,15 +8,15 @@ const DiaryList = ({ filterType, emotion }) => {
   const getDiariesQuery = () => {
     switch (filterType) {
       case 'emotion':
-        return () => getFindAllByEmotion(emotion);
+        return getFindAllByEmotion(emotion);
       default:
-        return getFindAll;
+        return getFindAll();
     }
   };
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ['diaries'],
-    queryFn: getDiariesQuery(),
+    queryFn: getDiariesQuery,
   });
 
   if (isLoading) {

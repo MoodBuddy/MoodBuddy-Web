@@ -5,6 +5,11 @@ const get = async (url) => {
   return res.data.data;
 };
 
+const post = async (url, data) => {
+  const res = await client.post(url, data);
+  return res?.data.data;
+};
+
 export const getFindOne = async (diaryId) => {
   try {
     const data = await get(`/api/v1/member/diary/findOne/${diaryId}`);
