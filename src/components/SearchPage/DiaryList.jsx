@@ -8,20 +8,23 @@ const DiaryList = ({ filterType, emotion }) => {
   const getDiariesQuery = () => {
     switch (filterType) {
       case 'emotion':
-        return getFindAllByEmotion(emotion);
+        return getFindAllByEmotion({ emotion });
       default:
         return getFindAll();
     }
   };
 
   const { isError, data, error } = useQuery({
-    queryKey: ['diaries'],
+    queryKey: ['diaries', filterType, emotion],
     queryFn: getDiariesQuery,
   });
 
-
   if (isError) {
     return <div>오류 발생: {error.message}</div>;
+  }
+
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
   }
 
   return (
