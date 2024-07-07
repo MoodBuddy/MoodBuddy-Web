@@ -3,25 +3,35 @@ import Button from '../common/button/Button';
 import { useState } from 'react';
 import Timer from './timer';
 import { useNavigate } from 'react-router-dom';
-
+import useContentStore from '../../store/contentStore';
+import { postLetter } from '../../apis/letter';
 const SelectModal = ({ sending, setSending }) => {
-  const [consolation, setConsolation] = useState(false);
-  const [solution, setSolution] = useState(false);
+  const { content } = useContentStore();
+  const [selectedFormat, setSelectedFormat] = useState(null);
 
   const navigate = useNavigate();
 
-  const isConsolation = () => {
-    setSending(!sending);
-    setConsolation(!consolation);
-  };
+  const handleFormatSelection = async (format) => {
+    setSelectedFormat(format);
+    setSending(false);
 
-  const isSolution = () => {
-    setSending(!sending);
-    setSolution(!solution);
-  };
+    try {
+      const letterData = {
+        letterFormat: format,
+        letterWorryContent: content,
+        letterDate: new Date().toISOString(),
+      };
 
-  const completeSending = () => {
-    navigate('/counseling/completedWriting');
+      const response = await postLetter(letterData);
+
+      if (response) {
+        navigate('/counseling/completedWriting');
+      } else {
+        console.error('데이터 요청에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -39,14 +49,14 @@ const SelectModal = ({ sending, setSending }) => {
               />
               <div className="flex mt-[31px] gap-[8px]">
                 <Button
-                  onClick={isConsolation}
+                  onClick={() => handleFormatSelection(1)}
                   className="w-[300px] h-[58px] font-semibold text-[22px]"
                 >
                   따뜻한 위로의 말
                 </Button>
 
                 <Button
-                  onClick={isSolution}
+                  onClick={() => handleFormatSelection(0)}
                   className="bg-beige w-[300px] h-[58px] font-semibold text-[22px]"
                 >
                   따끔한 해결의 말
@@ -54,9 +64,8 @@ const SelectModal = ({ sending, setSending }) => {
               </div>
             </div>
           </div>
-          ;
         </div>
-      ) : consolation || solution ? (
+      ) : selectedFormat !== null ? (
         <div className="z-40 fixed top-0 left-0 w-full h-full bg-stone-600/60">
           <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[900px] h-[600px] rounded-[60px] bg-lightbeige transform scale-75">
             <div className="flex flex-col justify-center items-center">
@@ -69,7 +78,7 @@ const SelectModal = ({ sending, setSending }) => {
               <Timer hh={'12'} mm={'00'} ss={'00'} />
 
               <Button
-                onClick={completeSending}
+                onClick={() => navigate('/counseling/completedWriting')}
                 className="w-[300px] h-[58px] font-semibold text-[27px] mt-[59px]"
               >
                 확인
@@ -83,4 +92,5 @@ const SelectModal = ({ sending, setSending }) => {
     </>
   );
 };
+
 export default SelectModal;
