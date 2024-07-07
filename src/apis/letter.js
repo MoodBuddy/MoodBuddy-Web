@@ -11,13 +11,13 @@ const post = async (url, data) => {
 };
 
 export const getLetter = async () => {
-    try {
-      const data = await get(`/api/v1/member/letter`);
-      return data;
-    } catch (error) {
-      throw new Error('데이터 불러오기에 실패하였습니다.');
-    }
-  };
+  try {
+    const data = await get(`/api/v1/member/letter`);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
 
 export const getLetterDetails = async (letterId) => {
   try {
