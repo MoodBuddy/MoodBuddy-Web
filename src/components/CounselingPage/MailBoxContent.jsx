@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const MailBoxContent = () => {
+const MailBoxContent = ({ letterId }) => {
   const navigate = useNavigate();
   const [reply, setReply] = useState(false);
+
   const handleMailBox = () => {
-    navigate('/counseling/letter');
+    navigate(`/counseling/letter/${letterId}`);
   };
+
   return (
     <div
       onClick={handleMailBox}
@@ -17,4 +19,5 @@ const MailBoxContent = () => {
     </div>
   );
 };
+
 export default MailBoxContent;

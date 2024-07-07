@@ -17,7 +17,7 @@ const CompletedLetter = () => {
             <div className="font-medium text-[35px]">To.QUDDY</div>
           </div>
           <div className="flex flex-col">
-            <div className="text-center mt-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] h-[1100px] overflow-y-auto custom-scrollbar">
+            <div className="text-center mt-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] h-[1100px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
               {content}
             </div>
             <div className="flex flex-col items-end font-medium text-[30px] pr-[80px] gap-[10px] ">
