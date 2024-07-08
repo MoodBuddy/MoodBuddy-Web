@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getFindAll, getFindAllByEmotion } from '../../apis/diary';
+import { getBookMarkFindAll } from '../../apis/bookMark';
 import { weatherList } from '../../constants/WeatherList';
 
 const DiaryList = ({ filterType, emotion }) => {
@@ -9,6 +10,8 @@ const DiaryList = ({ filterType, emotion }) => {
     switch (filterType) {
       case 'emotion':
         return getFindAllByEmotion({ emotion });
+      case 'bookMark':
+        return getBookMarkFindAll();
       default:
         return getFindAll();
     }
