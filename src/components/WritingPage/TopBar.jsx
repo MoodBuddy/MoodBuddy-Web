@@ -1,13 +1,14 @@
 import img from '@assets/img.svg';
-import analysisEmotion from '@assets/analysisEmotion.svg';
+import save from '../../../public/icon/save.svg';
 import temporaryStorage from '@assets/temporaryStorage.svg';
 import showTemplate from '@assets/showTemplate.svg';
 import { useRef, useState } from 'react';
 import TemporaryStorage from './TemporaryStorage.jsx';
-import AnalysisEmotion from './AnalysisEmotion.jsx';
+import GotoAnalysis from './GotoAnalysis.jsx';
 const TopBar = ({ setImgSrcs, setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
-  const [AnalysisEmotionModal, setAnalysisEmotionModal] = useState(false);
+  const [gotoAnalysisEmotionModal, setGotoAnalysisEmotionModal] =
+    useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -36,8 +37,8 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
     setTemporaryStorageModal(!temporaryStorageModal);
   };
 
-  const isAnalysisEmotionModal = () => {
-    setAnalysisEmotionModal(!AnalysisEmotionModal);
+  const isGotoAnalysisEmotionModal = () => {
+    setGotoAnalysisEmotionModal(!gotoAnalysisEmotionModal);
   };
 
   return (
@@ -75,11 +76,11 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
             </button>
 
             <button
-              onClick={isAnalysisEmotionModal}
+              onClick={isGotoAnalysisEmotionModal}
               className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-col justify-center items-center gap-[13.5px]"
             >
-              <img src={analysisEmotion}></img>
-              <p>감정분석하기</p>
+              <img src={save}></img>
+              <p>저장하기</p>
             </button>
             <button
               onClick={setTemplateOn}
@@ -95,7 +96,7 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
         isTemporaryStorageModal={isTemporaryStorageModal}
         temporaryStorageModal={temporaryStorageModal}
       />
-      <AnalysisEmotion AnalysisEmotionModal={AnalysisEmotionModal} />
+      <GotoAnalysis gotoAnalysisEmotionModal={gotoAnalysisEmotionModal} />
     </>
   );
 };

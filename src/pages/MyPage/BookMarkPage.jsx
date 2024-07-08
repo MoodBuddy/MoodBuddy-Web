@@ -14,7 +14,7 @@ const BookMarkPage = () => {
           <div className="mb-[40px] font-light text-[24px]">
             내가 북마크한 추억의 일기를 볼 수 있어요.
           </div>
-          <DiaryList filterType="bookMark" />
+          <DiaryList filterType="emotion" emotion={emotion} />
           <div className="mb-[110px]"></div>
         </div>
       </div>
