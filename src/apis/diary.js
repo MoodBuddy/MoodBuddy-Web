@@ -2,35 +2,40 @@ import client from './client';
 
 const get = async (url) => {
   const res = await client.get(url);
-  return res?.data;
+  return res.data.data;
 };
 
 const post = async (url, data) => {
   const res = await client.post(url, data);
-  return res?.data;
+  return res?.data.data;
 };
 
-export const getLetter = async () => {
+export const getFindOne = async (diaryId) => {
   try {
-    const data = await get(`/api/v1/member/letter`);
+    const data = await get(`/api/v1/member/diary/findOne/${diaryId}`);
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };
 
-export const getLetterDetails = async (letterId) => {
+// Pageable Object 수정해야함
+export const getFindAll = async () => {
   try {
-    const data = await get(`/api/v1/member/letter/details/${letterId}`);
+    const data = await get(
+      `/api/v1/member/diary/findAllPageable?page=0&size=20`,
+    );
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };
 
-export const postLetter = async (letterData) => {
+export const getFindAllByEmotion = async ({ emotion }) => {
   try {
-    const data = await post(`/api/v1/member/letter/write`, letterData);
+    const url = `/api/v1/member/diary/findAllByEmotionWithPageable?diaryEmotion=${emotion}&page=0&size=20&sort=string`;
+    const data = await get(url);
+    console.log(data);
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
