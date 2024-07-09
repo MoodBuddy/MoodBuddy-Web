@@ -3,8 +3,14 @@ import sketchBackground from '@assets/sketchBackground.png';
 import CountCard from './CountCard';
 import ProfileCard from './ProfileCard';
 import RankingCard from './RankingCard';
+import useUserStore from '../../store/userStore';
 
 const AnalysisSection = () => {
+  const userInfo = useUserStore((state) => ({
+    profileNickName: state.profileNickName,
+  }));
+  const profileNickName = userInfo.profileNickName;
+
   return (
     <>
       {/* 상단 여백 색상 */}
@@ -17,9 +23,15 @@ const AnalysisSection = () => {
         {/* 사용자별 문구 */}
         <div className="flex items-center justify-center mt-44 mb-10 relative transform scale-90">
           <img src={nameCover} alt="nameCover" className="absolute" />
-          <h1 className="z-10 font-meetme text-5xl">
-            성나영 님의 하루를 기록해봐요 !
-          </h1>
+          {profileNickName ? (
+            <h1 className="z-10 font-meetme text-5xl">
+              {profileNickName} 님의 하루를 기록해봐요 !
+            </h1>
+          ) : (
+            <h1 className="z-10 font-meetme text-5xl">
+              프로필을 설정하고 기록을 확인해봐요 !
+            </h1>
+          )}
         </div>
 
         {/* 카드 */}
