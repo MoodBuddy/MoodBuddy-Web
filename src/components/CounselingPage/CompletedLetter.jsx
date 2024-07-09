@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import back from '../../../public/icon/back.svg';
 import letterContent from '../../store/contentStore';
+import { formatDate } from '../../utils/format';
 
 const CompletedLetter = () => {
   const { content } = letterContent();
@@ -8,6 +9,9 @@ const CompletedLetter = () => {
   const handleBack = () => {
     navigate('/counseling');
   };
+
+  const todayDate = formatDate();
+
   return (
     <div>
       <div className="transform scale-75 relative top-[-220px]">
@@ -21,7 +25,7 @@ const CompletedLetter = () => {
               {content}
             </div>
             <div className="flex flex-col items-end font-medium text-[30px] pr-[80px] gap-[10px] ">
-              <div>2024.04.22 (토)</div>
+              <div>{todayDate}</div>
               <div>From.닉네임</div>
             </div>
           </div>

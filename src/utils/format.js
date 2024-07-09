@@ -26,7 +26,8 @@ export const formatQuddyByEmotion = (emotion) => {
 
 // 날짜 포맷 ex) 2024.07.09(화)
 export const formatDate = (date) => {
-  return format(new Date(date), 'yyyy. MM. dd (E)', {
+  const targetDate = date ? new Date(date) : new Date();
+  return format(targetDate, 'yyyy. MM. dd (E)', {
     locale: ko,
   });
 };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import back from '../../../public/icon/back.svg';
 import SelectModal from './SelectModal';
 import useContentStore from '../../store/contentStore';
+import { formatDate } from '../../utils/format';
 
 const Letter = () => {
   const { content, setContent } = useContentStore();
@@ -10,6 +11,8 @@ const Letter = () => {
   const isSending = () => {
     setSending(!sending);
   };
+
+  const todayDate = formatDate();
 
   return (
     <div>
@@ -38,7 +41,7 @@ const Letter = () => {
 나에게 고민을 털어버리고 훌훌 털어버려요"
             />
             <div className="self-end flex flex-col items-end font-medium text-[30px] pr-[80px] gap-[10px] ">
-              <div>2024.04.22 (토)</div>
+              <div>{todayDate}</div>
               <div>From.닉네임</div>
             </div>
           </div>
