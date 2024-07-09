@@ -63,3 +63,16 @@ export const getFindAllByEmotion = async ({ emotion }) => {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };
+
+export const deleteDiary = async (diaryId) => {
+  try {
+    const response = await client.delete(
+      `/api/v1/member/diary/delete/${diaryId}`,
+    );
+    console.log('일기 삭제 성공:', response);
+    return response;
+  } catch (error) {
+    console.error('일기 삭제 오류:', error);
+    throw new Error('일기 삭제에 실패하였습니다.');
+  }
+};
