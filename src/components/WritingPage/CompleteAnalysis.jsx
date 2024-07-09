@@ -1,15 +1,36 @@
 import { useNavigate } from 'react-router-dom';
 import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
-import AnalysisEmotion from './AnalysisEmotion';
-import happyQuddy from '@assets/happyQuddy.svg';
+import { useState } from 'react';
+import { saveDiary } from '../../apis/diary';
+import useTitleStore from '../../store/titleStore';
+import useDiaryContentStore from '../../store/diaryContentStore';
+
 const CompleteAnalysis = ({ completeAnaylsis }) => {
+  const [diaryId, setDiaryId] = useState(null);
+  const { title, setTitle } = useTitleStore();
+  const { content, setContent } = useDiaryContentStore();
+
   const navigate = useNavigate();
 
   const items = EmotionQuddyList.find((it) => it.id === 1);
 
-  const isCompleteSave = () => {
-    navigate(`/diary/:1`);
+  const isCompleteSave = async () => {
+    try {
+      const diaryData = {
+        diaryTitle: title,
+        diaryDate: new Date().toISOString(),
+        diaryContent: content,
+        diaryWeather: 'CLEAR',
+        diaryImgList: [],
+      };
+      console.log(diaryData);
+      const res = await saveDiary(diaryData);
+      console.log(res);
+    } catch (error) {
+      console.error('일기 저장 오류', error);
+    }
   };
+
   return (
     <>
       {completeAnaylsis && (
