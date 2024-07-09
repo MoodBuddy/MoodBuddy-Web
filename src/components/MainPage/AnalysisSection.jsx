@@ -8,7 +8,7 @@ const AnalysisSection = () => {
   return (
     <>
       {/* 상단 여백 색상 */}
-      <div className="bg-[#E8DBCF] h-12"></div>
+      <div className="bg-[#E8DBCF]"></div>
 
       <div
         className="grid bg-[#E8DBCF] bg-cover bg-center h-[947px]"

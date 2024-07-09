@@ -1,21 +1,91 @@
-import mainQuddy from '@assets/mainQuddy.svg';
+import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '@styles/slick.css';
+import banner_1 from '@assets/banner/banner_1.svg';
+import banner_2 from '@assets/banner/banner_2.svg';
+import banner_3 from '@assets/banner/banner_3.svg';
+import banner_4 from '@assets/banner/banner_4.svg';
+import banner_5 from '@assets/banner/banner_5.svg';
+import banner_6 from '@assets/banner/banner_6.svg';
+import nextIcon from '../../../public/icon/bannerNextIcon.svg';
+import prevIcon from '../../../public/icon/bannerPrevIcon.svg';
+
+function SampleNextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      className="absolute w-14 h-14  right-4 top-[45%] transform -translate-y-1/2 z-10 cursor-pointer"
+      onClick={onClick}
+    >
+      <img src={nextIcon} alt="" className="w-12 h-12" />
+    </div>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      className="absolute w-14 h-14 left-4 top-[45%] transform -translate-y-1/2 z-10 cursor-pointer"
+      onClick={onClick}
+    >
+      <img src={prevIcon} alt="" className="w-12 h-12" />
+    </div>
+  );
+}
 
 const IntroduceSection = () => {
-  return (
-    <div className="flex items-center justify-center bg-[#F4EDE7] text-3xl py-12">
-      <div>
-        <h1 className="font-meetme text-8xl mb-12">Quddy 쿼디</h1>
-        <p className="text-xl">
-          안녕하세요! 저는 쿼디, 호기심 많은 쿼카예요.
-          <br /> 자연을 사랑하고 새로운 친구들을 사귀는 걸 좋아해요.
-          <br /> 세계를 여행하며 다양한 생물들을 만나고, 경험을 일기에 <br />
-          기록하는 게 제 꿈이에요. 저는 항상 긍정적인 마음으로 <br />
-          용기와 희망을 전하는 쿼카랍니다!
-        </p>
+  const settings = {
+    dots: true, // 점 표시 여부
+    infinite: true, // 무한 루프 설정
+    speed: 1500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
+    slidesToScroll: 1, // 한 번에 스크롤할 슬라이드 수
+    autoplay: true, // 자동 재생 여부
+    autoplaySpeed: 6000, // 자동 재생 속도 (6초)
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    appendDots: (dots) => (
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ul>{dots}</ul>
       </div>
+    ),
+    dotsClass: 'dots_custom',
+  };
 
-      <img src={mainQuddy} alt="mainQuddy" className="w-[400px]"/>
+  return (
+    <div>
+      <Slider {...settings}>
+        <Link>
+          <img src={banner_1} alt="Banner 1" className="w-full" />
+        </Link>
+        <Link to="/writing">
+          <img src={banner_2} alt="Banner 2" className="w-full" />
+        </Link>
+        <Link to="/writing">
+          <img src={banner_3} alt="Banner 3" className="w-full" />
+        </Link>
+        <Link to="/search">
+          <img src={banner_4} alt="Banner 4" className="w-full" />
+        </Link>
+        <Link to="/counseling">
+          <img src={banner_5} alt="Banner 5" className="w-full" />
+        </Link>
+        <Link to="/myActivity">
+          <img src={banner_6} alt="Banner 6" className="w-full" />
+        </Link>
+      </Slider>
     </div>
   );
 };
+
 export default IntroduceSection;
