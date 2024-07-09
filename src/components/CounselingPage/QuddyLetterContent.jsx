@@ -2,14 +2,14 @@ import back from '../../../public/icon/back.svg';
 import { useNavigate } from 'react-router-dom';
 import Timer from './timer';
 
-const QuddyLetterContent = ({ letter }) => {
+const QuddyLetterContent = ({ data }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/counseling');
   };
 
-  if (!letter) {
+  if (!data) {
     return <div>편지를 찾을 수 없습니다.</div>;
   }
 
@@ -23,7 +23,7 @@ const QuddyLetterContent = ({ letter }) => {
           </div>
 
           <div className="text-center my-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-            {letter.letterWorryContent}
+            {data.letterWorryContent}
           </div>
 
           <div className="flex items-center justify-center h-[86px] border-y-[1px] border-black font-medium text-[35px]">
@@ -31,8 +31,8 @@ const QuddyLetterContent = ({ letter }) => {
           </div>
 
           <div className="flex flex-col justify-center items-center  mt-[159px] gap-[70px]">
-            {letter.letterAnswerContent ? (
-              <div>{letter.letterAnswerContent}</div>
+            {data.letterAnswerContent ? (
+              <div>{data.letterAnswerContent}</div>
             ) : (
               <div className="font-light text-[46px] text-[#7c7c7c]">
                 답장이 오는 중입니다! 조금만 기다려주세요 :)

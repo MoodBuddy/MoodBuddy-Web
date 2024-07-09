@@ -31,8 +31,8 @@ const QuddyLetter = () => {
       <div
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
-        <QuddyLetterTopBar letter={letter} />
-        <QuddyLetterContent letter={letter} />
+        <QuddyLetterTopBar data={letter} />
+        <QuddyLetterContent data={letter} />
       </div>
       <Footer />
     </>
