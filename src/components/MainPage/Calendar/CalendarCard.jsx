@@ -4,23 +4,15 @@ import { Link } from 'react-router-dom';
 import helloQuddy from '@assets/helloQuddy.svg';
 import calendarFlower from '@assets/calendarFlower.svg';
 import calendarRainbow from '@assets/calendarRainbow.svg';
-import { useEffect } from 'react';
-import { getUserName } from '../../../apis/user';
+import useUserStore from '../../../store/userStore';
 
 const CalendarCard = () => {
-  useEffect(() => {
-    getUserName()
-      .then((res) => console.log(res))
-      .catch((error) => {
-        if ((error.code = 'ERR_NETWORK')) {
-          console.error(
-            'Network error: Please check your internet connection or the server status.',
-          );
-        } else {
-          console.error('Error:', error.message);
-        }
-      });
-  });
+  const userInfo = useUserStore((state) => ({
+    profileNickName: state.profileNickName,
+  }));
+
+  const profileNickName = userInfo.profileNickName;
+
   return (
     <div className="relative flex justify-end mt-24 mb-36">
       {/* 좌측 쿼디 이미지 */}
@@ -55,7 +47,9 @@ const CalendarCard = () => {
 
       <div className="relative bg-[#EEEDE6] p-8 rounded-l-[66px] shadow-lg z-10">
         <h1 className="font-meetme text-5xl flex justify-center mt-8">
-          성나영 님의 캘린더를 통해 성장과정을 봐볼까요?
+          {profileNickName
+            ? '님의 캘린더를 통해 성장과정을 봐볼까요?'
+            : '프로필을 설정하고 캘린더를 통해 성장과정을 살펴보세요 !'}
         </h1>
 
         {/* 캘린더 */}
