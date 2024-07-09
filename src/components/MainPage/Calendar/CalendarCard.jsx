@@ -4,8 +4,23 @@ import { Link } from 'react-router-dom';
 import helloQuddy from '@assets/helloQuddy.svg';
 import calendarFlower from '@assets/calendarFlower.svg';
 import calendarRainbow from '@assets/calendarRainbow.svg';
+import { useEffect } from 'react';
+import { getUserName } from '../../../apis/user';
 
 const CalendarCard = () => {
+  useEffect(() => {
+    getUserName()
+      .then((res) => console.log(res))
+      .catch((error) => {
+        if ((error.code = 'ERR_NETWORK')) {
+          console.error(
+            'Network error: Please check your internet connection or the server status.',
+          );
+        } else {
+          console.error('Error:', error.message);
+        }
+      });
+  });
   return (
     <div className="relative flex justify-end mt-24 mb-36">
       {/* 좌측 쿼디 이미지 */}

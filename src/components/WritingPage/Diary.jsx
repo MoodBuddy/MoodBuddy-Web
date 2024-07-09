@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import Weather from './Weather';
 import Template from './Template';
+import useDiaryContentStore from '../../store/diaryContentStore';
+import useTitleStore from '../../store/titleStore';
 
 const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
-  const [title, setTitle] = useState('제목');
-  const [content, setContent] = useState('');
+  const { title, setTitle } = useTitleStore();
+  const { content, setContent } = useDiaryContentStore();
   const [selectedTemplate, setSelectedTemplate] = useState('');
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
   };
+  useEffect(() => {
+    setTitle('');
+    setContent('');
+  }, []);
 
   useEffect(() => {
     if (selectedTemplate) {
