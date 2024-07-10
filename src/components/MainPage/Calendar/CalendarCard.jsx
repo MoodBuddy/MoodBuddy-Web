@@ -1,10 +1,10 @@
 import CalendarHeader from './CalendarHeader';
 import CalendarBody from './CalendarBody';
-import { Link } from 'react-router-dom';
 import helloQuddy from '@assets/helloQuddy.svg';
 import calendarFlower from '@assets/calendarFlower.svg';
 import calendarRainbow from '@assets/calendarRainbow.svg';
 import useUserStore from '../../../store/userStore';
+import DiarySummary from './DiarySummary';
 
 const CalendarCard = () => {
   const userInfo = useUserStore((state) => ({
@@ -66,18 +66,7 @@ const CalendarCard = () => {
 
         {/* 일기 한 줄 요약 */}
         <div className="flex justify-center text-[26px] mb-32 px-14 mx-10">
-          <div className="w-full h-[220px] border rounded-[36px] bg-white px-12 py-4 relative">
-            <div className="absolute top-4 right-4">
-              <Link
-                to="/"
-                className="text-base font-thin text-[#919191] p-3 mr-10"
-              >
-                자세히 보기
-              </Link>
-            </div>
-            <h1 className="font-bold my-6">제목</h1>
-            <p className="font-medium">일기 한 줄 요약</p>
-          </div>
+          <DiarySummary />
         </div>
       </div>
     </div>

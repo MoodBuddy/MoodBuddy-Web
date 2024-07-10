@@ -30,7 +30,7 @@ const useCalendarStore = create((set) => ({
       console.error('Failed to fetch diary list:', error.message);
     }
   },
-  
+
   handlePrevMonth: async () => {
     set((state) => {
       const newDate = subMonths(state.currentDate, 1);
