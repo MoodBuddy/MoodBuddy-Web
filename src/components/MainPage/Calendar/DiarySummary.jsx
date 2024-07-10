@@ -48,10 +48,16 @@ const DiarySummary = () => {
           </Link>
         )}
       </div>
-      <h1 className="font-bold my-6">{title ? title : '제목'}</h1>
-      <p className="font-medium">
-        {summary ? summary : '일기를 작성하지 않았습니다.'}
-      </p>
+      {id ? (
+        <>
+          <h1 className="font-bold my-6">{title}</h1>
+          <p className="font-medium">{summary}</p>
+        </>
+      ) : (
+        <>
+          <p className="font-medium my-[70px]">일기를 작성하지 않았습니다.</p>
+        </>
+      )}
     </div>
   );
 };

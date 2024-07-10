@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import CalendarHeader from './CalendarHeader';
 import CalendarBody from './CalendarBody';
 import helloQuddy from '@assets/helloQuddy.svg';
@@ -5,13 +6,16 @@ import calendarFlower from '@assets/calendarFlower.svg';
 import calendarRainbow from '@assets/calendarRainbow.svg';
 import useUserStore from '../../../store/userStore';
 import DiarySummary from './DiarySummary';
+import useCalendarStore from '../../../store/calendarStore';
 
 const CalendarCard = () => {
+  const { selectedDate } = useCalendarStore();
   const userInfo = useUserStore((state) => ({
     profileNickName: state.profileNickName,
   }));
 
   const profileNickName = userInfo.profileNickName;
+  const formattedDay = format(selectedDate, 'd');
 
   return (
     <div className="relative flex justify-end mt-24 mb-36">
@@ -61,7 +65,7 @@ const CalendarCard = () => {
         </div>
 
         <div className="flex justify-center mb-4 mt-[-24px]">
-          <h1 className="text-[26px] font-bold">21일의 기록</h1>
+          <h1 className="text-[26px] font-bold">{formattedDay}일의 기록</h1>
         </div>
 
         {/* 일기 한 줄 요약 */}
