@@ -49,7 +49,9 @@ const CalendarBody = () => {
                   className={`table-cell border-[3.5px] border-black p-2 w-[122px] h-[122px] ${format(currentDate, 'MM') !== date.month ? 'text-gray-400' : ''}
                 ${date.dayIndexOfWeek === 0 && format(currentDate, 'MM') === date.month ? 'text-red-500' : ''}
                 ${date.dayIndexOfWeek === 6 && format(currentDate, 'MM') === date.month ? 'text-blue-500' : 'text-black'}`}
-                  onClick={() => selectDate(date.date)}
+                  onClick={() => {
+                    selectDate(date.date);
+                  }}
                 >
                   <div
                     className={`flex justify-center items-center w-[30px] h-[30px] ${selectedDate === date.date ? 'border-[4px] rounded-[4px] border-[#D8B18E] bg-[#D8B18E]' : ''}`}
@@ -61,15 +63,15 @@ const CalendarBody = () => {
 
                   {/* 감정에 맞는 쿼디 출력 */}
                   {getDiaryEmotion(date.date) ? (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center relative">
                       <img
                         src={getEmotionImage(getDiaryEmotion(date.date))}
                         alt={getDiaryEmotion(date.date)}
-                        className="w-[65%]"
+                        className="w-[75%] absolute top-[-18px] left-5"
                       />
                     </div>
                   ) : (
-                    <div className="w-[65%]"></div>
+                    <div className="w-[75%]"></div>
                   )}
                 </div>
               ))}
