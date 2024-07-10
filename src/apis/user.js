@@ -2,10 +2,10 @@ import client from './client';
 
 const get = async (url) => {
   const res = await client.get(url);
-  return res.data.data;
+  return res.data;
 };
 
-export const getUserName = async () => {
+export const getUserInfo = async () => {
   try {
     const data = await get('/api/v1/member/main');
     return data;
