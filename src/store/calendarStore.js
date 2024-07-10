@@ -10,17 +10,42 @@ import {
   startOfWeek,
   subMonths,
 } from 'date-fns';
+import { postCalendar } from '../apis/main';
 
 const useCalendarStore = create((set) => ({
   currentDate: new Date(),
   selectedDate: format(new Date(), 'yyyy-MM-dd'),
+  diaryList: [], // 일기 목록
+
   setDate: (newDate) => set({ currentDate: newDate }),
   selectDate: (date) => set({ selectedDate: date }),
 
-  handlePrevMonth: () =>
-    set((state) => ({ currentDate: subMonths(state.currentDate, 1) })),
-  handleNextMonth: () =>
-    set((state) => ({ currentDate: addMonths(state.currentDate, 1) })),
+  fetchDiaryList: async () => {
+    const currentDate = useCalendarStore.getState().currentDate;
+    const month = format(currentDate, 'yyyy-MM');
+    try {
+      const data = await postCalendar({ calendarMonth: month });
+      set({ diaryList: data.diaryResCalendarMonthDTOList });
+    } catch (error) {
+      console.error('Failed to fetch diary list:', error.message);
+    }
+  },
+  
+  handlePrevMonth: async () => {
+    set((state) => {
+      const newDate = subMonths(state.currentDate, 1);
+      return { currentDate: newDate };
+    });
+    await useCalendarStore.getState().fetchDiaryList();
+  },
+
+  handleNextMonth: async () => {
+    set((state) => {
+      const newDate = addMonths(state.currentDate, 1);
+      return { currentDate: newDate };
+    });
+    await useCalendarStore.getState().fetchDiaryList();
+  },
 
   daysInMonth: (currentDate) => {
     const startCurrentMonth = startOfMonth(currentDate);
