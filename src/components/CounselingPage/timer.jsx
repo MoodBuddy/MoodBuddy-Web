@@ -1,40 +1,56 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { differenceInSeconds } from 'date-fns';
 
-const Timer = ({ hh, mm, ss }) => {
-  const [hours, setHours] = useState(parseInt(hh));
-  const [minutes, setMinutes] = useState(parseInt(mm));
-  const [seconds, setSeconds] = useState(parseInt(ss));
+const Timer = ({ displayTime }) => {
+  const calculateTimeLeft = () => {
+    const currentTime = new Date();
+    const difference = differenceInSeconds(displayTime, currentTime);
+
+    if (difference <= 0) {
+      return {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
+
+    const hours = Math.floor(difference / 3600);
+    const minutes = Math.floor((difference % 3600) / 60);
+    const seconds = difference % 60;
+
+    return {
+      hours,
+      minutes,
+      seconds,
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const countdown = setInterval(() => {
-      if (parseInt(seconds) > 0) {
-        setSeconds(parseInt(seconds) - 1);
-      } else {
-        if (parseInt(minutes) > 0) {
-          setMinutes(parseInt(minutes) - 1);
-          setSeconds(59);
-        } else {
-          if (parseInt(hours) === 0) {
-            clearInterval(countdown);
-          } else {
-            setHours(parseInt(hours) - 1);
-            setMinutes(59);
-            setSeconds(59);
-          }
-        }
-      }
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [hours, minutes, seconds]);
+    const calculateAndSetTimeLeft = () => {
+      setTimeLeft(calculateTimeLeft());
+    };
+
+    if (displayTime) {
+      calculateAndSetTimeLeft();
+      const timer = setInterval(calculateAndSetTimeLeft, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [displayTime]);
+
+  const { hours, minutes, seconds } = timeLeft;
 
   return (
     <div className="w-[620px] h-[128px] rounded-[28px] bg-white border-[3px] border-black">
       <div className="text-[99px] flex justify-center relative top-[-12px]">
-        {hours < 10 ? ` 0${hours}` : hours} :{' '}
-        {minutes < 10 ? ` 0${minutes}` : minutes} :{' '}
-        {seconds < 10 ? ` 0${seconds}` : seconds}
+        {hours < 10 ? `0${hours}` : hours} :{' '}
+        {minutes < 10 ? `0${minutes}` : minutes} :{' '}
+        {seconds < 10 ? `0${seconds}` : seconds}
       </div>
     </div>
   );
 };
+
 export default Timer;
