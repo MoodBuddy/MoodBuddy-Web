@@ -1,7 +1,8 @@
 import client from './client';
+import qs from 'qs';
 
-const get = async (url) => {
-  const res = await client.get(url);
+const get = async (url, params) => {
+  const res = await client.get(url, { params });
   return res.data.data;
 };
 
@@ -58,6 +59,30 @@ export const getFindAllByEmotion = async ({ emotion }) => {
     const url = `/api/v1/member/diary/findAllByEmotionWithPageable?diaryEmotion=${emotion}&page=0&size=20&sort=string`;
     const data = await get(url);
     console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const getFindAllByFilter = async (searchParams) => {
+  try {
+    const url = `/api/v1/member/diary/findAllByFilter`;
+    const params = {
+      keyWord: encodeURIComponent(searchParams.keyword),
+      page: 0,
+      size: 20,
+      sort: 'string',
+      year: searchParams.year,
+      month: searchParams.month,
+      diarySubject: searchParams.topic,
+      diaryEmotion: searchParams.diaryEmotion,
+    };
+
+    // qs 라이브러리를 사용하여 params 객체를 쿼리 문자열로 변환
+    const queryString = qs.stringify(params, { encode: false });
+
+    const data = await get(`${url}?${queryString}`);
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
