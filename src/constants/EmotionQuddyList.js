@@ -9,6 +9,7 @@ import fearQuddy from '@assets/fearQuddy.svg';
 export const EmotionQuddyList = [
   {
     id: 1,
+    emotion: 'HAPPY',
     imgSrc: happyQuddy,
     name: '행복쿼디',
     color: '#D8B18E',
@@ -16,6 +17,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 2,
+    emotion: 'ANGRY',
     imgSrc: angryQuddy,
     name: '화남쿼디',
     color: '#CE8C98',
@@ -23,6 +25,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 3,
+    emotion: 'AVERSION',
     imgSrc: hatredQuddy,
     name: '혐오쿼디',
     color: '#F08D74',
@@ -30,6 +33,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 4,
+    emotion: 'SURPRISED',
     imgSrc: surpriseQuddy,
     name: '놀람쿼디',
     color: '#E3C778',
@@ -37,6 +41,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 5,
+    emotion: 'CALMNESS',
     imgSrc: calmQuddy,
     name: '혐오쿼디',
     color: '#9CB57A',
@@ -44,6 +49,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 6,
+    emotion: 'DEPRESSION',
     imgSrc: gloomyQuddy,
     name: '우울쿼디',
     color: '#7598BA',
@@ -51,6 +57,7 @@ export const EmotionQuddyList = [
   },
   {
     id: 7,
+    emotion: 'FEAR',
     imgSrc: fearQuddy,
     name: '두렴쿼디',
     color: '#9C8EBD',

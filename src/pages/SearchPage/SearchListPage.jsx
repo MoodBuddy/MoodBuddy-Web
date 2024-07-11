@@ -12,7 +12,7 @@ const SearchListPage = () => {
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
         <SearchBar />
-        <DiaryList />
+        <DiaryList filterType="search" />
       </div>
       <Footer />
     </div>
