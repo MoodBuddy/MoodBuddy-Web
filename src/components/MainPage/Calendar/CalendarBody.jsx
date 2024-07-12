@@ -1,26 +1,12 @@
-import React from 'react';
 import { format } from 'date-fns';
 import useCalendarStore from '../../../store/calendarStore';
-import { quddies } from '../../../constants/QuddyList';
+import { getDiaryEmotion, getEmotionImage } from '../../../utils/calendar'; 
 
 const CalendarBody = () => {
   const { currentDate, selectedDate, selectDate, daysInMonth, diaryList } =
     useCalendarStore();
   const days = daysInMonth(currentDate);
   const weeks = ['일', '월', '화', '수', '목', '금', '토'];
-
-  const getDiaryEmotion = (date) => {
-    const diary = diaryList.find(
-      (diary) => format(new Date(diary.diaryDate), 'yyyy-MM-dd') === date,
-    );
-    return diary ? diary.diaryEmotion : null;
-  };
-
-  // 감정에 맞는 쿼디를 가져오는 함수
-  const getEmotionImage = (emotion) => {
-    const quddy = quddies.find((quddy) => quddy.emotion === emotion);
-    return quddy ? quddy.imgSrc : null;
-  };
 
   return (
     <div className="py-6 px-20">
@@ -62,11 +48,13 @@ const CalendarBody = () => {
                   </div>
 
                   {/* 감정에 맞는 쿼디 출력 */}
-                  {getDiaryEmotion(date.date) ? (
+                  {getDiaryEmotion(diaryList, date.date) ? (
                     <div className="flex justify-center relative">
                       <img
-                        src={getEmotionImage(getDiaryEmotion(date.date))}
-                        alt={getDiaryEmotion(date.date)}
+                        src={getEmotionImage(
+                          getDiaryEmotion(diaryList, date.date),
+                        )}
+                        alt={getDiaryEmotion(diaryList, date.date)}
                         className="w-[75%] absolute top-[-18px] left-5"
                       />
                     </div>
