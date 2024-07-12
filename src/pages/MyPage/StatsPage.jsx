@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { getEmotionStatic } from '../../apis/user';
 import QuddyTiSection from '../../components/MyPage/Statistics/QuddyTiSection';
 import styles from '@styles/check.module.css';
 import Footer from '../../components/common/layout/Footer';
@@ -9,9 +13,34 @@ import MyCalendarSection from '../../components/MyPage/Statistics/MyCalendarSect
 import MemoSection from '../../components/MyPage/Statistics/MemoSection';
 
 const StatsPage = () => {
-  const { currentDate, handlePrevMonth, handleNextMonth, daysInMonth } =
-    useCalendarStore();
-    
+  const {
+    currentDate,
+    handlePrevMonth,
+    handleNextMonth,
+    daysInMonth,
+    fetchDiaryList,
+  } = useCalendarStore();
+  const formattedDate = format(currentDate, 'yyyy-MM-dd');
+
+  const {
+    isError,
+    data: emotion,
+    error,
+  } = useQuery({
+    queryKey: ['emotion', formattedDate],
+    queryFn: () => getEmotionStatic(formattedDate),
+  });
+
+  useEffect(() => {
+    fetchDiaryList();
+  }, [currentDate, fetchDiaryList]);
+  
+
+  if (isError) {
+    console.error('Error fetching letter:', error);
+    return <div>오류 발생: {error.message}</div>;
+  }
+
   return (
     <div>
       <NavBar />
@@ -33,7 +62,7 @@ const StatsPage = () => {
           <QuddyTiSection />
 
           <div className="flex">
-            <RankSection currentDate={currentDate} />
+            <RankSection currentDate={currentDate} emotionData={emotion} />
             <MyCalendarSection
               currentDate={currentDate}
               daysInMonth={daysInMonth}

@@ -13,3 +13,12 @@ export const getUserInfo = async () => {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };
+
+export const getEmotionStatic = async (date) => {
+  try {
+    const data = await get(`/api/v1/member/main/emotion-static?month=${date}`);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
