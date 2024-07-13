@@ -1,14 +1,39 @@
 import Button from '../common/button/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteDiary } from '../../apis/diary';
+import { deleteDiary, getFindAllByEmotion, getFindOne } from '../../apis/diary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { bookMarkToggle } from '../../apis/bookMark';
+import { useEffect, useState } from 'react';
 
 const EditBar = ({ diaryId }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isBookMark, setIsBookMark] = useState(false);
 
+  const getDiaryId = async (id) => {
+    if (id) {
+      const res = await getFindOne(id);
+      return res;
+    }
+  };
+  useEffect(() => {
+    const diaryId = async () => {
+      try {
+        const res = await getDiaryId(id);
+        console.log(res);
+        if (res) {
+          console.log(res.diaryBookMarkCheck);
+          setIsBookMark(res.diaryBookMarkCheck);
+        }
+      } catch (error) {
+        console.error('Error', error);
+      }
+    };
+    if (id) {
+      diaryId();
+    }
+  }, [id]);
   const mutation = useMutation({
     mutationFn: (id) => deleteDiary(id),
     onSuccess: () => {
@@ -27,7 +52,10 @@ const EditBar = ({ diaryId }) => {
       const response = await bookMarkToggle(id);
 
       if (response) {
-        console.log(`${id} 번째 일기 북마크 성공`);
+        console.log(
+          `${isBookMark ? `${id} 번째 일기 북마크 성공` : `${id} 번째 일기 북마크 취소`}`,
+        );
+        setIsBookMark(!isBookMark);
       } else {
         console.error('데이터 요청에 실패했습니다.');
       }
@@ -42,7 +70,7 @@ const EditBar = ({ diaryId }) => {
         color="lightBeige"
         className="border-black rounded-[10px] text-xl"
       >
-        북마크하기
+        {isBookMark ? '북마크취소' : '북마크하기'}
       </Button>
       <Button
         color="lightBeige"
