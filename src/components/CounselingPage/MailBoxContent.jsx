@@ -1,16 +1,33 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addHours, isAfter } from 'date-fns';
 import { formatDate } from '../../utils/format';
 
 const MailBoxContent = ({ letter }) => {
   const navigate = useNavigate();
+  const [replyMessage, setReplyMessage] = useState('');
 
   const handleMailBox = () => {
     navigate(`/counseling/letter/${letter.letterId}`);
   };
 
-  const formattedDate = formatDate(letter.letterCreatedTime);
-  const replyMessage = letter.answerCheck !== 0 ? 'ㅣ 답장이 도착했어요.' : '';
+  useEffect(() => {
+    if (letter.letterCreatedTime) {
+      const createdTime = new Date(letter.letterCreatedTime);
+      const twelveHoursLater = addHours(createdTime, 12);
+      const currentTime = new Date();
 
+      if (isAfter(currentTime, twelveHoursLater)) {
+        setReplyMessage('ㅣ 답장이 도착했어요.');
+      } else {
+        setReplyMessage('');
+      }
+    }
+  }, [letter.letterCreatedTime]);
+
+  const formattedDate = formatDate(letter.letterCreatedTime);
+
+  console.log(letter);
   return (
     <div
       onClick={handleMailBox}

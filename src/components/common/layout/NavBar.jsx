@@ -1,6 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '../../../apis/user';
 
 const NavBar = () => {
   const isLogin = !!localStorage.getItem('token');
@@ -11,6 +13,21 @@ const NavBar = () => {
   const handleMouseLeave = () => {
     setHoveredMyPage(false);
   };
+
+  const { isError, data, error } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+  });
+
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
+  if (isError) {
+    console.error('Error fetching user info:', error);
+    return <div>오류 발생: {error.message}</div>;
+  }
+
   return (
     <div>
       <div className="flex top-0 z-20 bg-[#E8DBCF] h-[84px] justify-around transform scale-75">
@@ -72,9 +89,13 @@ const NavBar = () => {
         {isLogin ? (
           <div className="flex items-center gap-2 ml-12">
             <Link>
-              <div className="w-10 h-10 border rounded-full bg-slate-200"></div>
+              <img
+                src={data.profileImgURL}
+                alt="profileImgURL"
+                className="w-10 h-10 rounded-full"
+              />
             </Link>
-            <h1 className="text-[22px] font-medium">성나영</h1>
+            <h1 className="text-[22px] font-medium">{data.profileNickName}</h1>
           </div>
         ) : (
           <></>

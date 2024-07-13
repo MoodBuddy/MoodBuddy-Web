@@ -43,7 +43,7 @@ const DiarySection = ({ diaryId }) => {
 
   return (
     <div>
-      <EditBar />
+      <EditBar diaryId={diaryId}/>
 
       <div className="bg-[#F7F3EF] w-[1080px] h-full rounded-[36px] px-16 py-12 mb-16 ">
         <div className="flex justify-between relative">

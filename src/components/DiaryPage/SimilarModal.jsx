@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import close from '../../../public/icon/close.svg';
 import DiaryList from '../SearchPage/DiaryList';
 import Button from '../common/button/Button';
-
+import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
 
 const SimilarModal = ({ onClose, emotion }) => {
   const navigate = useNavigate();
@@ -11,6 +11,8 @@ const SimilarModal = ({ onClose, emotion }) => {
   const handleGoHome = () => {
     navigate('/home');
   };
+
+  const quddy = EmotionQuddyList.find((quddy) => quddy.emotion === emotion);
 
   return createPortal(
     <>
@@ -28,14 +30,28 @@ const SimilarModal = ({ onClose, emotion }) => {
 
         <div className="transform scale-90">
           <div>
-            <h1 className="font-meetme text-6xl mb-2">비슷한 추억 보기</h1>
+            <h1 className="font-meetme text-6xl my-2">비슷한 추억 보기</h1>
             <p className="text-zinc-500 text-xl">
               오늘과 비슷한 감정을 가진 날의 일기를 보여드릴게요!
             </p>
           </div>
 
-          <div className="h-[750px] overflow-hidden">
-            <DiaryList filterType="emotion" emotion={emotion}/>
+          <div className="flex flex-col justify-center items-center mt-6 gap-2">
+            <img src={quddy.imgSrc} alt={quddy.name} className="w-48 h-48" />
+            <p
+              className="font-meetme text-center text-2xl"
+              style={{ color: quddy.color }}
+            >
+              {quddy.name}
+            </p>
+          </div>
+
+          <div className="h-[560px] overflow-hidden">
+            <DiaryList
+              filterType="emotion"
+              emotion={emotion}
+              onClose={onClose}
+            />
           </div>
 
           <div className="flex justify-end mt-20">

@@ -1,9 +1,33 @@
+import { useState, useEffect } from 'react';
 import back from '../../../public/icon/back.svg';
 import { useNavigate } from 'react-router-dom';
+import { addHours } from 'date-fns';
 import Timer from './timer';
+import useShowAnswerStore from '../../store/showAnswerStore';
 
 const QuddyLetterContent = ({ data }) => {
   const navigate = useNavigate();
+  const { showAnswer, setShowAnswer } = useShowAnswerStore((state) => ({
+    showAnswer: state.showAnswer,
+    setShowAnswer: state.setShowAnswer,
+  }));
+  const [timeToDisplayAnswer, setTimeToDisplayAnswer] = useState(null);
+
+  useEffect(() => {
+    if (data && data.letterDate) {
+      const letterDate = new Date(data.letterDate);
+      // 12시간 뒤에 보여지게 설정
+      const displayTime = addHours(letterDate, 12);
+      setTimeToDisplayAnswer(displayTime);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const currentTime = new Date();
+    if (timeToDisplayAnswer && currentTime >= timeToDisplayAnswer) {
+      setShowAnswer(true);
+    }
+  }, [timeToDisplayAnswer]);
 
   const handleBack = () => {
     navigate('/counseling');
@@ -31,14 +55,18 @@ const QuddyLetterContent = ({ data }) => {
           </div>
 
           <div className="flex flex-col justify-center items-center  mt-[159px] gap-[70px]">
-            {data.letterAnswerContent ? (
-              <div>{data.letterAnswerContent}</div>
-            ) : (
-              <div className="font-light text-[46px] text-[#7c7c7c]">
-                답장이 오는 중입니다! 조금만 기다려주세요 :)
+            {showAnswer ? (
+              <div className="text-center my-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+                {data.letterAnswerContent}
               </div>
+            ) : (
+              <>
+                <div className="font-light text-[46px] text-[#7c7c7c]">
+                  답장이 오는 중입니다! 조금만 기다려주세요 :)
+                </div>
+                <Timer displayTime={timeToDisplayAnswer} />
+              </>
             )}
-            <Timer hh={'12'} mm={'00'} ss={'00'} />
           </div>
         </div>
       </div>

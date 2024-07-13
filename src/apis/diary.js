@@ -1,24 +1,13 @@
 import client from './client';
+import qs from 'qs';
 
-const get = async (url) => {
-  const res = await client.get(url);
+const get = async (url, params) => {
+  const res = await client.get(url, { params });
   return res.data.data;
 };
 
-export const saveDiary = async (diaryData) => {
+export const saveDiary = async (formData) => {
   try {
-    const formData = new FormData();
-
-    formData.append('diaryTitle', diaryData.diaryTitle);
-    formData.append('diaryDate', diaryData.diaryDate.slice(0, -5));
-    formData.append('diaryContent', diaryData.diaryContent);
-    formData.append('diaryWeather', diaryData.diaryWeather);
-
-    if (diaryData.diaryImgList) {
-      diaryData.diaryImgList.forEach((file) => {
-        formData.append('diaryImgList', file);
-      });
-    }
     const response = await client.post('/api/v1/member/diary/save', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -61,5 +50,42 @@ export const getFindAllByEmotion = async ({ emotion }) => {
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const getFindAllByFilter = async (searchParams) => {
+  try {
+    const url = `/api/v1/member/diary/findAllByFilter`;
+    const params = {
+      keyWord: encodeURIComponent(searchParams.keyword),
+      page: 0,
+      size: 20,
+      sort: 'string',
+      year: searchParams.year,
+      month: searchParams.month,
+      diarySubject: searchParams.topic,
+      diaryEmotion: searchParams.diaryEmotion,
+    };
+
+    // qs 라이브러리를 사용하여 params 객체를 쿼리 문자열로 변환
+    const queryString = qs.stringify(params, { encode: false });
+
+    const data = await get(`${url}?${queryString}`);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const deleteDiary = async (diaryId) => {
+  try {
+    const response = await client.delete(
+      `/api/v1/member/diary/delete/${diaryId}`,
+    );
+    console.log('일기 삭제 성공:', response);
+    return response;
+  } catch (error) {
+    console.error('일기 삭제 오류:', error);
+    throw new Error('일기 삭제에 실패하였습니다.');
   }
 };

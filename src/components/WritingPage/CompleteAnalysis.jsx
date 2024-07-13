@@ -6,47 +6,35 @@ import useTitleStore from '../../store/titleStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
 import useweatherStore from '../../store/weatherStore';
 import useDiaryImgStore from '../../store/diaryImgStore';
-
-const convertBase64ToFile = (base64, fileName) => {
-  const arr = base64.split(',');
-  const mime = arr[0].match(/:(.*?);/)[1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-
-  return new File([u8arr], fileName, { type: mime });
-};
+import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
-  const [diaryId, setDiaryId] = useState(null);
   const { title } = useTitleStore();
   const { content } = useDiaryContentStore();
   const { selectedOption } = useweatherStore();
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
-
+  const { imageFiles } = useDiaryImgFileStore();
   const navigate = useNavigate();
 
   const items = EmotionQuddyList.find((it) => it.id === 1);
-
   const isCompleteSave = async () => {
     try {
       const formData = new FormData();
+
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', new Date().toISOString());
+      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
 
-      diaryImg.forEach((img, index) => {
-        formData.append('diaryImgList', img);
-      });
-
-      console.log(formData);
+      console.log(...formData);
       const res = await saveDiary(formData);
-      console.log(res);
+      console.log(res.data);
+      const diaryId = res.data.data.diaryId;
+      console.log(diaryId);
+      navigate(`/diary/${diaryId}`);
     } catch (error) {
       console.error('일기 저장 오류', error);
     }

@@ -6,23 +6,28 @@ import { useState } from 'react';
 import TemporaryStorage from './TemporaryStorage.jsx';
 import GotoAnalysis from './GotoAnalysis.jsx';
 import useDiaryImgStore from '../../store/diaryImgStore.js';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
   const [gotoAnalysisEmotionModal, setGotoAnalysisEmotionModal] =
     useState(false);
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
-
+  const { addImageFile } = useDiaryImgFileStore();
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
+    console.log(e.target.files);
+
     const newDiaryImgs = [];
 
     files.forEach((file) => {
+      addImageFile(file);
       const reader = new FileReader();
       reader.onload = (event) => {
         newDiaryImgs.push(event.target.result);
         if (newDiaryImgs.length === files.length) {
           setDiaryImg([...diaryImg, ...newDiaryImgs]);
+          e.target.value = null;
         }
       };
       reader.readAsDataURL(file);

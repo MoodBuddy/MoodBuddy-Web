@@ -1,10 +1,12 @@
-import { format, startOfWeek, addDays, isBefore, isSameDay } from 'date-fns';
-import happyQuddy from '@assets/happyQuddy.svg';
+import React from 'react';
+import { format, startOfWeek, addDays } from 'date-fns';
+import useCalendarStore from '../../../store/calendarStore';
+import { getDiaryEmotion, getEmotionImage } from '../../../utils/calendar';
 
 const MyCalendarSection = ({ currentDate, daysInMonth }) => {
+  const { diaryList } = useCalendarStore();
   const days = daysInMonth(currentDate);
   const startDate = startOfWeek(currentDate, { weekStartsOn: 0 });
-  const today = new Date();
 
   const weeks = Array.from({ length: 7 }).map((_, index) =>
     format(addDays(startDate, index), 'eee'),
@@ -40,15 +42,18 @@ const MyCalendarSection = ({ currentDate, daysInMonth }) => {
                 <span className="text-xl cursor-pointer">{date.day}</span>
               </div>
 
-              {/* 오늘 날짜를 기준으로 과거 날짜에만 쿼디 출력 */}
-              {isBefore(new Date(date.date), today) ||
-              isSameDay(new Date(date.date), today) ? (
-                <div className="flex justify-center">
-                  <img src={happyQuddy} alt="happyQuddy" className="w-[50px] mb-3" />
-                </div>
-              ) : (
-                <div className="w-[50px] mb-16"></div>
-              )}
+              {/* 감정에 맞는 쿼디 출력, 없을 경우 빈칸 표시 */}
+              <div className="flex justify-center">
+                {getDiaryEmotion(diaryList, date.date) ? (
+                  <img
+                    src={getEmotionImage(getDiaryEmotion(diaryList, date.date))}
+                    alt={getDiaryEmotion(diaryList, date.date)}
+                    className="w-[50px] mb-3"
+                  />
+                ) : (
+                  <div className="w-[50px] mb-16"></div>
+                )}
+              </div>
             </div>
           ))}
         </div>

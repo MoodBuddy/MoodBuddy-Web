@@ -1,11 +1,32 @@
 import { Link } from 'react-router-dom';
-import { getFindAll, getFindAllByEmotion } from '../../apis/diary';
 import { useQuery } from '@tanstack/react-query';
+import {
+  getFindAll,
+  getFindAllByEmotion,
+  getFindAllByFilter,
+} from '../../apis/diary';
 import { getBookMarkFindAll } from '../../apis/bookMark';
-
 import { weatherList } from '../../constants/WeatherList';
+import useSearchStore from '../../store/searchStore';
 
-const DiaryList = ({ filterType, emotion }) => {
+const DiaryList = ({ filterType, emotion, onClose }) => {
+  const { searchParams } = useSearchStore();
+  console.log(searchParams);
+
+  //searchParams가 비어있으면 filterType을 'all'로 설정
+  if (
+    searchParams.keyword == '' &&
+    searchParams.year == null &&
+    searchParams.month == null &&
+    searchParams.topic == null &&
+    searchParams.diaryEmotion == null &&
+    filterType != 'bookMark'
+  ) {
+    filterType = 'all';
+  }
+
+  console.log(filterType);
+
   // 필터 타입에 따라 다른 API 함수 선택
   const getDiariesQuery = () => {
     switch (filterType) {
@@ -13,6 +34,10 @@ const DiaryList = ({ filterType, emotion }) => {
         return getFindAllByEmotion({ emotion });
       case 'bookMark':
         return getBookMarkFindAll();
+      case 'search':
+        return getFindAllByFilter(searchParams);
+      case 'all':
+        return getFindAll();
       default:
         return getFindAll();
     }
@@ -38,6 +63,7 @@ const DiaryList = ({ filterType, emotion }) => {
           <div key={item.diaryId}>
             <Link
               to={`/diary/${item.diaryId}`}
+              onClick={onClose}
               className="flex p-4 items-center justify-between"
             >
               <div className="flex flex-col space-y-3">

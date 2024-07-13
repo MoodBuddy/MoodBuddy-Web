@@ -1,10 +1,10 @@
 import halfHappyQuddy from '@assets/halfHappyQuddy.svg';
 import Button from '../common/button/Button';
 import { useState } from 'react';
-import Timer from './timer';
 import { useNavigate } from 'react-router-dom';
 import useContentStore from '../../store/contentStore';
 import { postLetter } from '../../apis/letter';
+import FakeTimer from './FakeTimer';
 const SelectModal = ({ sending, setSending }) => {
   const { content } = useContentStore();
   const [selectedFormat, setSelectedFormat] = useState(null);
@@ -16,10 +16,13 @@ const SelectModal = ({ sending, setSending }) => {
     setSending(false);
 
     try {
+      const offset = new Date().getTimezoneOffset() * 60000;
+      const today = new Date(Date.now() - offset);
+
       const letterData = {
         letterFormat: format,
         letterWorryContent: content,
-        letterDate: new Date().toISOString(),
+        letterDate: today,
       };
 
       const response = await postLetter(letterData);
@@ -75,7 +78,7 @@ const SelectModal = ({ sending, setSending }) => {
               <div className="text-[30px] mb-[30px]">
                 12시간 뒤에 답장이 와요
               </div>
-              <Timer hh={'12'} mm={'00'} ss={'00'} />
+              <FakeTimer hh={'12'} mm={'00'} ss={'00'} />
 
               <Button
                 onClick={() => navigate('/counseling/completedWriting')}

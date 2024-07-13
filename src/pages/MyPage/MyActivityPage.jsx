@@ -15,10 +15,10 @@ const MyActivityPage = () => {
           <div className="mb-[40px] font-light text-[24px]">
             현재까지 작성한 일기 횟수와 감정을 볼 수 있어요.
           </div>
-        </div>
-        <div className="flex gap-[24px] mb-[110px]">
-          <DiaryCount />
-          <ShowEmotions />
+          <div className="flex gap-[24px] mb-[110px]">
+            <DiaryCount />
+            <ShowEmotions />
+          </div>
         </div>
       </div>
 
