@@ -15,8 +15,8 @@ export const saveDiary = async (diaryData) => {
     formData.append('diaryWeather', diaryData.diaryWeather);
 
     if (diaryData.diaryImgList) {
-      diaryData.diaryImgList.forEach((file, index) => {
-        formData.append(`diaryImgList[${index}]`, file);
+      diaryData.diaryImgList.forEach((file) => {
+        formData.append('diaryImgList', file);
       });
     }
     const response = await client.post('/api/v1/member/diary/save', formData, {

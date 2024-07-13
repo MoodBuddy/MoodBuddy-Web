@@ -4,11 +4,29 @@ import { useState } from 'react';
 import { saveDiary } from '../../apis/diary';
 import useTitleStore from '../../store/titleStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
+import useweatherStore from '../../store/weatherStore';
+import useDiaryImgStore from '../../store/diaryImgStore';
+
+const convertBase64ToFile = (base64, fileName) => {
+  const arr = base64.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], fileName, { type: mime });
+};
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const [diaryId, setDiaryId] = useState(null);
-  const { title, setTitle } = useTitleStore();
-  const { content, setContent } = useDiaryContentStore();
+  const { title } = useTitleStore();
+  const { content } = useDiaryContentStore();
+  const { selectedOption } = useweatherStore();
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
 
   const navigate = useNavigate();
 
@@ -16,15 +34,18 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
 
   const isCompleteSave = async () => {
     try {
-      const diaryData = {
-        diaryTitle: title,
-        diaryDate: new Date().toISOString(),
-        diaryContent: content,
-        diaryWeather: 'CLEAR',
-        diaryImgList: [],
-      };
-      console.log(diaryData);
-      const res = await saveDiary(diaryData);
+      const formData = new FormData();
+      formData.append('diaryTitle', title);
+      formData.append('diaryDate', new Date().toISOString());
+      formData.append('diaryContent', content);
+      formData.append('diaryWeather', selectedOption);
+
+      diaryImg.forEach((img, index) => {
+        formData.append('diaryImgList', img);
+      });
+
+      console.log(formData);
+      const res = await saveDiary(formData);
       console.log(res);
     } catch (error) {
       console.error('일기 저장 오류', error);

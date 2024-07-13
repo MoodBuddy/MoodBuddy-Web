@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import Weather from './Weather';
 import Template from './Template';
-import useDiaryContentStore from '../../store/diaryContentStore';
 import useTitleStore from '../../store/titleStore';
-
-const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
-  const { title, setTitle } = useTitleStore();
-  const { content, setContent } = useDiaryContentStore();
+import useDiaryImgStore from '../../store/diaryImgStore';
+import useContentStore from '../../store/contentStore';
+import { ResizableBox } from 'react-resizable';
+import 'react-resizable/css/styles.css';
+const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
+  const { title, setTitle } = useTitleStore();
+  const { content, setContent } = useContentStore();
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
@@ -15,6 +18,7 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
   useEffect(() => {
     setTitle('');
     setContent('');
+    setDiaryImg([]);
   }, []);
 
   useEffect(() => {
@@ -24,10 +28,11 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
       );
     }
   }, [selectedTemplate]);
+
   return (
     <>
       <div className="flex relative top-[-203.5px] transform scale-75 mb-[-415px]">
-        <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px] ">
+        <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px] overflow-y-auto custom-scrollbar ">
           <div className="flex flex-row justify-between items-center ml-[121px] mr-[45px] mt-[149px]">
             <div className="flex flex-col gap-[41px]">
               <div className="text-[25px]">2024년 4월 21일 수요일</div>
@@ -49,10 +54,10 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
             </div>
           </div>
           <div className="border-t-[1px] border-[#BABABA]/400 mt-[52px] "></div>
-          <div className="flex justify-center ">
+          <div className="flex flex-col items-center justify-center ">
             <textarea
               type="text"
-              className="my-[105px] font-light text-[20px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] h-[931px]"
+              className={`my-[105px] font-light text-[20px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'} overflow-y-auto custom-scrollbar`}
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
@@ -64,6 +69,30 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
 일기 작성이 어렵다면, 질문 템플릿을 이용해 다양한 생각을 적어볼 수 있어요. 
 일기 작성 후 감정분석하기를 누르면, 감정에 맞는 쿼디가 나타나요!`}
             />
+
+            {diaryImg.map((imageUrl, index) => (
+              <div key={index} className="relative">
+                <ResizableBox
+                  width={200}
+                  height={200}
+                  resizeHandles={['se', 'sw', 'ne', 'nw', 'n', 's', 'e', 'w']}
+                  minConstraints={[100, 100]}
+                  maxConstraints={[500, 500]}
+                  className="custom-resizable-box"
+                >
+                  <img
+                    key={index}
+                    src={imageUrl}
+                    alt={`Diary Image ${index}`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+                </ResizableBox>
+              </div>
+            ))}
           </div>
         </div>
         <Template

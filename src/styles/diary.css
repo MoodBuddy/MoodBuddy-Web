@@ -1,0 +1,59 @@
+.custom-resizable-box .react-resizable-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: transparent; /* 핸들의 색상을 변경 */
+  z-index: 1;
+}
+
+.custom-resizable-box .react-resizable-handle-se {
+  right: -5px;
+  bottom: -5px;
+  cursor: se-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-sw {
+  left: -5px;
+  bottom: -5px;
+  cursor: sw-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-ne {
+  right: -5px;
+  top: -5px;
+  cursor: ne-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-nw {
+  left: -5px;
+  top: -5px;
+  cursor: nw-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-n {
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+  cursor: n-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-s {
+  bottom: -5px;
+  left: 50%;
+  margin-left: -5px;
+  cursor: s-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-e {
+  right: -5px;
+  top: 50%;
+  margin-top: -5px;
+  cursor: e-resize;
+}
+
+.custom-resizable-box .react-resizable-handle-w {
+  left: -5px;
+  top: 50%;
+  margin-top: -5px;
+  cursor: w-resize;
+}
