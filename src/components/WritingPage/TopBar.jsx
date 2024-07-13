@@ -2,35 +2,36 @@ import img from '@assets/img.svg';
 import save from '../../../public/icon/save.svg';
 import temporaryStorage from '@assets/temporaryStorage.svg';
 import showTemplate from '@assets/showTemplate.svg';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import TemporaryStorage from './TemporaryStorage.jsx';
 import GotoAnalysis from './GotoAnalysis.jsx';
-const TopBar = ({ setImgSrcs, setTemplateOn }) => {
+import useDiaryImgStore from '../../store/diaryImgStore.js';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore.js';
+
+const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
   const [gotoAnalysisEmotionModal, setGotoAnalysisEmotionModal] =
     useState(false);
-
-  const fileInputRef = useRef(null);
-
-  const ImgButtonClick = () => {
-    fileInputRef.current.click();
-  };
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
+  const { addImageFile } = useDiaryImgFileStore();
   const handleFileChange = (e) => {
-    const files = e.target.files;
-    const newImageSrcs = [];
+    const files = Array.from(e.target.files);
+    console.log(e.target.files);
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    const newDiaryImgs = [];
+
+    files.forEach((file) => {
+      addImageFile(file);
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        newImageSrcs.push(e.target.result);
-        if (newImageSrcs.length == files.length) {
-          setImgSrcs(newImageSrcs);
+      reader.onload = (event) => {
+        newDiaryImgs.push(event.target.result);
+        if (newDiaryImgs.length === files.length) {
+          setDiaryImg([...diaryImg, ...newDiaryImgs]);
+          e.target.value = null;
         }
       };
       reader.readAsDataURL(file);
-    }
+    });
   };
 
   const isTemporaryStorageModal = () => {
@@ -47,7 +48,7 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
         <div className="flex flex-row justify-between items-center w-[1438px]">
           <button
             type="button"
-            onClick={ImgButtonClick}
+            onClick={() => document.getElementById('fileInput').click()}
             className="transform scale-75 bg-btnColor hover:bg-btnColorActive border-[#98928C] border w-[103px] h-[116px] rounded-[14px] ml-[203px] flex flex-col justify-center items-center gap-[13.5px] cursor-pointer"
           >
             <img src={img}></img>
@@ -56,10 +57,9 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
           <input
             type="file"
             id="fileInput"
-            ref={fileInputRef}
             className="hidden"
             onChange={handleFileChange}
-            accept="immage/*"
+            accept="image/*"
             multiple
           />
           <div className="flex flex-row gap-[20px] mr-[30px] transform scale-75">

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import useweatherStore from '../../store/weatherStore';
 
 const Weather = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const { selectedOption, setSelectedOption } = useweatherStore();
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -14,26 +14,26 @@ const Weather = () => {
     <>
       <div className="bg-[#E8DBCF] w-[119px] h-[158px] rounded-[20px] flex flex-col justify-evenly items-center cursor-pointer">
         <div
-          onClick={() => handleOptionClick('맑음')}
-          className={optionClass('맑음')}
+          onClick={() => handleOptionClick('CLEAR')}
+          className={optionClass('CLEAR')}
         >
           맑음
         </div>
         <div
-          onClick={() => handleOptionClick('구름많음')}
-          className={optionClass('구름많음')}
+          onClick={() => handleOptionClick('CLOUDY')}
+          className={optionClass('CLOUDY')}
         >
           구름많음
         </div>
         <div
-          onClick={() => handleOptionClick('비')}
-          className={optionClass('비')}
+          onClick={() => handleOptionClick('RAIN')}
+          className={optionClass('RAIN')}
         >
           비
         </div>
         <div
-          onClick={() => handleOptionClick('눈')}
-          className={optionClass('눈')}
+          onClick={() => handleOptionClick('SNOW')}
+          className={optionClass('SNOW')}
         >
           눈
         </div>

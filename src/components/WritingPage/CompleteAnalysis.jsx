@@ -4,28 +4,37 @@ import { useState } from 'react';
 import { saveDiary } from '../../apis/diary';
 import useTitleStore from '../../store/titleStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
+import useweatherStore from '../../store/weatherStore';
+import useDiaryImgStore from '../../store/diaryImgStore';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
-  const [diaryId, setDiaryId] = useState(null);
-  const { title, setTitle } = useTitleStore();
-  const { content, setContent } = useDiaryContentStore();
-
+  const { title } = useTitleStore();
+  const { content } = useDiaryContentStore();
+  const { selectedOption } = useweatherStore();
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
+  const { imageFiles } = useDiaryImgFileStore();
   const navigate = useNavigate();
 
   const items = EmotionQuddyList.find((it) => it.id === 1);
-
   const isCompleteSave = async () => {
     try {
-      const diaryData = {
-        diaryTitle: title,
-        diaryDate: new Date().toISOString(),
-        diaryContent: content,
-        diaryWeather: 'CLEAR',
-        diaryImgList: [],
-      };
-      console.log(diaryData);
-      const res = await saveDiary(diaryData);
-      console.log(res);
+      const formData = new FormData();
+
+      formData.append('diaryTitle', title);
+      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append('diaryContent', content);
+      formData.append('diaryWeather', selectedOption);
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
+
+      console.log(...formData);
+      const res = await saveDiary(formData);
+      console.log(res.data);
+      const diaryId = res.data.data.diaryId;
+      console.log(diaryId);
+      navigate(`/diary/${diaryId}`);
     } catch (error) {
       console.error('일기 저장 오류', error);
     }

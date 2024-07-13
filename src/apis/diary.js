@@ -6,20 +6,8 @@ const get = async (url, params) => {
   return res.data.data;
 };
 
-export const saveDiary = async (diaryData) => {
+export const saveDiary = async (formData) => {
   try {
-    const formData = new FormData();
-
-    formData.append('diaryTitle', diaryData.diaryTitle);
-    formData.append('diaryDate', diaryData.diaryDate.slice(0, -5));
-    formData.append('diaryContent', diaryData.diaryContent);
-    formData.append('diaryWeather', diaryData.diaryWeather);
-
-    if (diaryData.diaryImgList) {
-      diaryData.diaryImgList.forEach((file, index) => {
-        formData.append(`diaryImgList[${index}]`, file);
-      });
-    }
     const response = await client.post('/api/v1/member/diary/save', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

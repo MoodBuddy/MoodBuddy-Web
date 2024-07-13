@@ -7,11 +7,7 @@ import Footer from '../../components/common/layout/Footer';
 import { useState } from 'react';
 
 const WritingPage = () => {
-  const [imgSrcs, setImgSrcs] = useState([]);
   const [templateOn, setTemplateOn] = useState(false);
-  const handleSetImgSrcs = (newImgSrcs) => {
-    setImgSrcs(newImgSrcs);
-  };
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
@@ -20,17 +16,10 @@ const WritingPage = () => {
   return (
     <>
       <NavBar></NavBar>
-      <TopBar
-        setImgSrcs={handleSetImgSrcs}
-        setTemplateOn={handleTemplate}
-      ></TopBar>
+      <TopBar setTemplateOn={handleTemplate}></TopBar>
 
       <div className={`flex justify-center ${styles.check} `}>
-        <Diary
-          imgSrcs={imgSrcs}
-          templateOn={templateOn}
-          setTemplateOn={handleTemplate}
-        ></Diary>
+        <Diary templateOn={templateOn} setTemplateOn={handleTemplate}></Diary>
       </div>
       <Footer />
     </>
