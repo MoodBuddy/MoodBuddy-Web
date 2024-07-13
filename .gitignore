@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 .env
+/public/firebase-messaging-sw.js
 
 #yarn
 .yarn/install-state.gz
