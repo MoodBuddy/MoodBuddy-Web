@@ -9,7 +9,7 @@ import fearQuddy from '@assets/fearQuddy.svg';
 export const quddies = [
   {
     id: 1,
-    emotion: 'HAPPY',
+    emotion: 'HAPPINESS',
     imgSrc: happyQuddy,
     text: '행복',
     name: '행복쿼디',
@@ -17,7 +17,7 @@ export const quddies = [
   },
   {
     id: 2,
-    emotion: 'ANGRY',
+    emotion: 'ANGER',
     imgSrc: angryQuddy,
     text: '화남',
     name: '화남쿼디',
@@ -25,7 +25,7 @@ export const quddies = [
   },
   {
     id: 3,
-    emotion: 'AVERSION',
+    emotion: 'DISGUST',
     imgSrc: hatredQuddy,
     text: '혐오',
     name: '혐오쿼디',
@@ -33,7 +33,7 @@ export const quddies = [
   },
   {
     id: 4,
-    emotion: 'SURPRISED',
+    emotion: 'SURPRISE',
     imgSrc: surpriseQuddy,
     text: '놀람',
     name: '놀람쿼디',
@@ -41,7 +41,7 @@ export const quddies = [
   },
   {
     id: 5,
-    emotion: 'CALMNESS',
+    emotion: 'NEUTRAL',
     imgSrc: calmQuddy,
     text: '평온',
     name: '평온쿼디',
@@ -49,7 +49,7 @@ export const quddies = [
   },
   {
     id: 6,
-    emotion: 'DEPRESSION',
+    emotion: 'SADNESS',
     imgSrc: gloomyQuddy,
     text: '우울함',
     name: '우울쿼디',
