@@ -19,7 +19,6 @@ import useDraftNumStore from '../../store/draftNumStore.js';
 import useDraftListStore from '../../store/draftListStore.js';
 import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
-import { useNavigate } from 'react-router-dom';
 import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
@@ -34,9 +33,8 @@ const TopBar = ({ setTemplateOn }) => {
   const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
   const { setDraftList } = useDraftListStore();
   const { updateDiary } = useUpdateDiaryStore();
-  const { diaryItemId } = useDiaryItemIdStore();
+  const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { diaryDeleteImg } = useDiaryDeleteImgStore();
-  const navigate = useNavigate();
   useEffect(() => {
     console.log(updateDiary);
     console.log(diaryItemId);
@@ -89,12 +87,17 @@ const TopBar = ({ setTemplateOn }) => {
 
       console.log(...formData);
       const res = await SaveDraftDiary(formData);
+      console.log(res.data.data.diaryId);
+      const newDraftId = res.data.data.diaryId;
 
       const { draftList, draftLength } = await getFindDraftAll();
       setDraftDiaryNum(draftLength);
       setDraftList(draftList);
+
+      return newDraftId;
     } catch (error) {
       console.error('일기 임시 저장 오류', error);
+      throw error;
     }
   };
 

@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import close from '../../../public/icon/close.svg';
 import Storage from './Storage';
-import { deleteDraft, getFindDraftAll } from '../../apis/diary';
+import { deleteDraft, getFindDraftAll, getFindOne } from '../../apis/diary';
 import useDraftEditStore from '../../store/draftEditStore';
 import useDraftNumStore from '../../store/draftNumStore';
 import useDraftListStore from '../../store/draftListStore';
 const TemporaryStorage = ({
   isTemporaryStorageModal,
   temporaryStorageModal,
+  draftId,
 }) => {
   const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
   const { draftList, setDraftList } = useDraftListStore();
   const [selectedCount, setSelectedCount] = useState(0); //체크박스 개수 상태
   const { draftEdit, setDraftEdit } = useDraftEditStore();
   const [selectedIndexes, setSelectedIndexes] = useState([]); // 선택된 인덱스들을 저장하는 상태
-
   const handleClose = () => {
     setSelectedCount(0);
     isTemporaryStorageModal();
@@ -80,8 +80,6 @@ const TemporaryStorage = ({
     }
   };
 
-  const handleDraftDiaryItem = () => {};
-
   return (
     <>
       {temporaryStorageModal && (
@@ -142,7 +140,6 @@ const TemporaryStorage = ({
               <div className="mr-[10px] h-[240px] overflow-x-hidden overflow-y-auto custom-scrollbar ">
                 {draftList.map((it) => (
                   <Storage
-                    onClick={handleDraftDiaryItem}
                     index={it.productId}
                     diaryDate={it.diaryDate}
                     onSelectionChange={handleSelectionChange}
