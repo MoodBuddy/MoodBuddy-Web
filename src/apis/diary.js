@@ -68,6 +68,20 @@ export const deleteDraft = async (deleteDraftList) => {
   }
 };
 
+export const updateDiaryOne = async (formData) => {
+  try {
+    const data = await client.post('/api/v1/member/diary/update', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error('일기 수정 오류:', error);
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
 export const getFindOne = async (diaryId) => {
   try {
     const data = await get(`/api/v1/member/diary/findOne/${diaryId}`);

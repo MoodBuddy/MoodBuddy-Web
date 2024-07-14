@@ -4,7 +4,12 @@ import DailyQuestion from './DailyQuestion';
 import EmotionQuestion from './EmotionQuestion';
 import FutureQuestion from './FutureQuestion';
 
-const Template = ({ templateOn, setTemplateOn, setSelectedTemplate }) => {
+const Template = ({
+  templateOn,
+  setTemplateOn,
+  setSelectedTemplate,
+  selectedTemplate,
+}) => {
   const [tab, setTab] = useState('left');
   return (
     <div
@@ -44,7 +49,10 @@ const Template = ({ templateOn, setTemplateOn, setSelectedTemplate }) => {
       </div>
       <div className="border-b-[1px] border-[#BABABA]"></div>
       {tab == 'left' ? (
-        <DailyQuestion setSelectedTemplate={setSelectedTemplate} />
+        <DailyQuestion
+          setSelectedTemplate={setSelectedTemplate}
+          selectedTemplate={selectedTemplate}
+        />
       ) : tab == 'mid' ? (
         <EmotionQuestion setSelectedTemplate={setSelectedTemplate} />
       ) : (
