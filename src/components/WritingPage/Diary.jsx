@@ -36,6 +36,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       setDiaryImg([]); // 컴포넌트가 마운트 해제될 때(clean-up) 리스너 제거
       setDiaryDeleteImg([]);
       setUpdateDiary(false);
+      removeImageFile([]);
     };
   }, []);
 

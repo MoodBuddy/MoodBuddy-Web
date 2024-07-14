@@ -15,6 +15,11 @@ const TemporaryStorage = ({
   const { draftEdit, setDraftEdit } = useDraftEditStore();
   const [selectedIndexes, setSelectedIndexes] = useState([]); // 선택된 인덱스들을 저장하는 상태
 
+  const handleClose = () => {
+    setSelectedCount(0);
+    isTemporaryStorageModal();
+    setSelectedIndexes([]);
+  };
   useEffect(() => {
     setDraftEdit(true);
   }, [draftDiaryNum]);
@@ -85,7 +90,7 @@ const TemporaryStorage = ({
             <div className="flex flex-col">
               <div
                 className="flex justify-end mt-[28px] mr-[35px] cursor-pointer"
-                onClick={isTemporaryStorageModal}
+                onClick={handleClose}
               >
                 <img className="w-[15px] h-[15px]" src={close} />
               </div>
