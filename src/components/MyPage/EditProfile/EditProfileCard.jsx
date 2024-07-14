@@ -4,16 +4,22 @@ import Toggle from '../../common/toggle/Toggle';
 import TimePicker from '../../common/timePicker/TimePicker';
 import { postProfileEdit } from '../../../apis/user';
 import { handleAllowNotification } from '../../../service/notificationPermission';
+import useUserStore from '../../../store/userStore';
 
 const EditProfileCard = () => {
+  const userInfo = useUserStore((state) => ({
+    profileNickName: state.profileNickName,
+    userBirth: state.userBirth,
+  }));
+
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const [notificationTime, setNotificationTime] = useState('');
 
   const [state, setState] = useState({
-    nickname: '',
-    birthDate: '',
+    nickname: userInfo.profileNickName || '',
+    birthDate: userInfo.userBirth || '',
     profileComment: '',
-    newProfileImg: '',
+    newProfileImg: null,
     gender: true,
   });
 
@@ -31,6 +37,16 @@ const EditProfileCard = () => {
   const handleTimeChange = (newTime) => {
     setNotificationTime(newTime);
   };
+  // 생년월일 placeholder 설정 함수
+  const getBirthDatePlaceholder = () => {
+    if (state.birthDate) {
+      // 사용자가 입력한 생년월일이 있으면 그 값을 사용
+      return state.birthDate;
+    } else {
+      // 입력된 생년월일이 없으면 임의의 형식으로 표시
+      return '2002-08-19 (8자리)';
+    }
+  };
 
   const handleSubmit = async () => {
     const profileData = {
@@ -46,9 +62,9 @@ const EditProfileCard = () => {
     try {
       console.log(profileData);
       const response = await postProfileEdit(profileData);
-      console.log('Profile updated successfully', response);
+      console.log('프로필 저장 성공', response);
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('프로필 변경에 실패했습니다.', error);
     }
   };
 
@@ -82,7 +98,7 @@ const EditProfileCard = () => {
               value={state.nickname}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder="현재 닉네임"
+              placeholder={`현재 닉네임 ${userInfo.profileNickName || ''}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
@@ -93,7 +109,7 @@ const EditProfileCard = () => {
               value={state.birthDate}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder="2002.08.19 (8자리)"
+              placeholder={`${getBirthDatePlaceholder()}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
