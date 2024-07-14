@@ -29,10 +29,10 @@ const Profile = ({ data }) => {
         ></img>
         <div className="ml-3">
           <div className="flex items-end mt-[20px]">
-            <div className="font-semibold text-4xl mr-4">{data.profileNickname}강민하</div>
-            <div className="font-thin text-xl">
-              {data.userBirth}
+            <div className="font-semibold text-4xl mr-4">
+              {data.profileNickname}강민하
             </div>
+            <div className="font-thin text-xl">{data.userBirth}</div>
           </div>
           <div className="text-2xl mt-4 whitespace-pre-wrap">
             {data.profileComment}

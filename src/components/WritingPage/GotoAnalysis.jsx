@@ -11,10 +11,6 @@ const GotoAnalysis = ({ gotoAnalysisEmotionModal }) => {
     setAnalysisEmotionModal(!AnalysisEmotionModal);
   };
 
-  useEffect(() => {
-    console.log(content);
-    console.log(title);
-  }, []);
   return (
     <>
       {gotoAnalysisEmotionModal && (
