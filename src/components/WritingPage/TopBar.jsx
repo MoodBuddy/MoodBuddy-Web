@@ -67,20 +67,23 @@ const TopBar = ({ setTemplateOn }) => {
       formData.append('diaryDate', new Date().toISOString().slice(0, -5));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
-      for (let i = 0; i < imageFiles.length; i++) {
-        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      if (imageFiles.length == 0) {
+        formData.append('diaryImgList', []);
+      } else {
+        for (let i = 0; i < imageFiles.length; i++) {
+          formData.append('diaryImgList', imageFiles[i]);
+        }
       }
 
       console.log(...formData);
       const res = await SaveDraftDiary(formData);
       console.log(res.data);
-      const diaryId = res.data.data.diaryId;
-      console.log(diaryId);
+
       const { draftList, draftLength } = await getFindDraftAll();
       setDraftDiaryNum(draftLength);
       setDraftList(draftList);
     } catch (error) {
-      console.error('일기 저장 오류', error);
+      console.error('일기 임시 저장 오류', error);
     }
   };
 
