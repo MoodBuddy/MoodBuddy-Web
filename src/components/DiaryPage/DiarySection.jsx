@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useQuery } from '@tanstack/react-query';
@@ -7,10 +7,11 @@ import { formatWeather, formatQuddyByEmotion } from '../../utils/format';
 import SimilarModal from './SimilarModal';
 import EditBar from './EditBar';
 import happyBubble from '../../../public/image/happyBubble.svg';
+import useSpeechBubbleStore from '../../store/speechBubbleStore';
 
 const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { speechBubble, setSpeechBubble } = useSpeechBubbleStore();
   const {
     isError,
     data: diary,
@@ -38,12 +39,15 @@ const DiarySection = ({ diaryId }) => {
     },
   );
 
+  useEffect(() => {
+    return () => setSpeechBubble(false);
+  }, []);
+
   const formattedWeather = formatWeather(diary.diaryWeather);
   const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
-
   return (
     <div>
-      <EditBar diaryId={diaryId}/>
+      <EditBar diaryId={diaryId} />
 
       <div className="bg-[#F7F3EF] w-[1080px] h-full rounded-[36px] px-16 py-12 mb-16 ">
         <div className="flex justify-between relative">
@@ -57,21 +61,30 @@ const DiarySection = ({ diaryId }) => {
               <p className="text-lg">날씨 - {formattedWeather}</p>
             </div>
           </div>
+          {speechBubble ? (
+            <div>
+              <div className="mr-40 mb-6">
+                <img
+                  src={imgSrc}
+                  alt={imgSrc}
+                  className="w-[150px] h-[170px]"
+                />
+                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+                  {text}쿼디
+                </p>
+              </div>
 
-          <div className="mr-40 mb-6">
-            <img src={imgSrc} alt={imgSrc} className="w-[150px] h-[170px]" />
-            <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-              {text}쿼디
-            </p>
-          </div>
-
-          {/* 비슷한 추억보기 모달 */}
-          <div
-            onClick={() => setIsModalOpen(true)}
-            className="absolute top-[25%] right-[-220px] cursor-pointer"
-          >
-            <img src={happyBubble} alt="happyBubble" className="w-[90%]" />
-          </div>
+              {/* 비슷한 추억보기 모달 */}
+              <div
+                onClick={() => setIsModalOpen(true)}
+                className="absolute top-[25%] right-[-220px] cursor-pointer"
+              >
+                <img src={happyBubble} alt="happyBubble" className="w-[90%]" />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="h-[1px] my-3 w-full bg-stone-300" />

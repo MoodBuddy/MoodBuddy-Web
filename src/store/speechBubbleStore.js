@@ -1,8 +1,8 @@
 import create from 'zustand';
 
-const useSpeechBubble = create((set) => ({
+const useSpeechBubbleStore = create((set) => ({
   speechBubble: false,
   setSpeechBubble: (show) => set({ speechBubble: show }),
 }));
 
-export default useSpeechBubble;
+export default useSpeechBubbleStore;

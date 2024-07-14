@@ -8,6 +8,7 @@ import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore';
+import useSpeechBubble from '../../store/speechBubbleStore';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { title } = useTitleStore();
@@ -18,6 +19,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
   const [emotion, setEmotion] = useState('');
   const [date, setDate] = useState('');
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
+  const { setSpeechBubble } = useSpeechBubble();
   const navigate = useNavigate();
 
   const items = EmotionQuddyList.find((it) => it.id === 1);
@@ -74,7 +76,10 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
   };
 
   const isSave = () => {
-    navigate(`/diary/${diaryItemId}`);
+    setSpeechBubble(true);
+    if (diaryItemId) {
+      navigate(`/diary/${diaryItemId}`);
+    }
   };
 
   return (
