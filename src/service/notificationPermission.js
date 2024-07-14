@@ -1,6 +1,7 @@
 import { getToken } from 'firebase/messaging';
 import { messaging } from './initFirebase';
 import { postFcmToken } from '../apis/user';
+import { registerServiceWorker } from './registerServiceWorker';
 
 export async function handleAllowNotification() {
   registerServiceWorker();
@@ -25,23 +26,5 @@ export async function handleAllowNotification() {
     }
   } catch (error) {
     console.error('푸시 토큰 가져오는 중에 에러 발생', error);
-  }
-}
-
-export function registerServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker
-        .register('/firebase-messaging-sw.js')
-        .then(function (registration) {
-          console.log(
-            'Service Worker가 scope에 등록되었습니다.:',
-            registration.scope,
-          );
-        })
-        .catch(function (err) {
-          console.log('Service Worker 등록 실패:', err);
-        });
-    });
   }
 }
