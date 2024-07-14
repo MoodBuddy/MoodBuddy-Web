@@ -25,7 +25,15 @@ const useCalendarStore = create((set) => ({
     const month = format(currentDate, 'yyyy-MM');
     try {
       const data = await postCalendar({ calendarMonth: month });
-      set({ diaryList: data.diaryResCalendarMonthDTOList });
+
+      const diaryListWithoutTime = data.diaryResCalendarMonthDTOList.map(
+        (diary) => ({
+          ...diary,
+          diaryDate: format(new Date(diary.diaryDate), 'yyyy-MM-dd'),
+        }),
+      );
+
+      set({ diaryList: diaryListWithoutTime });
     } catch (error) {
       console.error('Failed to fetch diary list:', error.message);
     }

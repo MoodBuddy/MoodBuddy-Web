@@ -14,3 +14,9 @@ export const getEmotionImage = (emotion) => {
   const quddy = quddies.find((quddy) => quddy.emotion === emotion);
   return quddy ? quddy.imgSrc : null;
 };
+
+// 날짜에서 id를 추출하는 함수
+export const getDiaryId = (diaryList, date) => {
+  const diary = diaryList.find((item) => item.diaryDate === date);
+  return diary ? diary.diaryId : '';
+};

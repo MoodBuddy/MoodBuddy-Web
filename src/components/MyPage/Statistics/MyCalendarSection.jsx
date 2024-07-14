@@ -1,7 +1,12 @@
 import React from 'react';
 import { format, startOfWeek, addDays } from 'date-fns';
 import useCalendarStore from '../../../store/calendarStore';
-import { getDiaryEmotion, getEmotionImage } from '../../../utils/calendar';
+import {
+  getDiaryEmotion,
+  getEmotionImage,
+  getDiaryId,
+} from '../../../utils/calendar';
+import { Link } from 'react-router-dom';
 
 const MyCalendarSection = ({ currentDate, daysInMonth }) => {
   const { diaryList } = useCalendarStore();
@@ -39,17 +44,23 @@ const MyCalendarSection = ({ currentDate, daysInMonth }) => {
           {days.slice(rowIndex * 7, rowIndex * 7 + 7).map((date) => (
             <div key={date.date} className="table-cell">
               <div className="flex justify-center items-center w-[34px] h-[34px] mx-5 my-1">
-                <span className="text-xl cursor-pointer">{date.day}</span>
+                <Link to={`/diary/${getDiaryId(diaryList, date.date)}`}>
+                  <span className="text-xl cursor-pointer">{date.day}</span>
+                </Link>
               </div>
 
               {/* 감정에 맞는 쿼디 출력, 없을 경우 빈칸 표시 */}
               <div className="flex justify-center">
                 {getDiaryEmotion(diaryList, date.date) ? (
-                  <img
-                    src={getEmotionImage(getDiaryEmotion(diaryList, date.date))}
-                    alt={getDiaryEmotion(diaryList, date.date)}
-                    className="w-[50px] mb-3"
-                  />
+                  <Link to={`/diary/${getDiaryId(diaryList, date.date)}`}>
+                    <img
+                      src={getEmotionImage(
+                        getDiaryEmotion(diaryList, date.date),
+                      )}
+                      alt={getDiaryEmotion(diaryList, date.date)}
+                      className="w-[50px] mb-3"
+                    />
+                  </Link>
                 ) : (
                   <div className="w-[50px] mb-16"></div>
                 )}
