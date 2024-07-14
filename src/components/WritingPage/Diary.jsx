@@ -8,15 +8,19 @@ import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import useUpdateDiaryStore from '../../store/updateDiaryStore';
+import useweatherStore from '../../store/weatherStore';
+import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore';
 
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
-  const { content, setContent } = useDiaryContentStore();
+  const { content, setContent, addTemplate } = useDiaryContentStore();
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
-
   const { removeImageFile } = useDiaryImgFileStore();
-
+  const { setUpdateDiary } = useUpdateDiaryStore();
+  const { setSelectedOption } = useweatherStore();
+  const { setDiaryDeleteImg } = useDiaryDeleteImgStore();
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
     locale: ko,
   });
@@ -25,23 +29,36 @@ const Diary = ({ templateOn, setTemplateOn }) => {
     setTemplateOn(!templateOn);
   };
   useEffect(() => {
-    setTitle('');
-    setContent('');
-    setDiaryImg([]);
-    console.log(diaryImg);
+    return () => {
+      setTitle('');
+      setContent('');
+      setSelectedOption(null);
+      setDiaryImg([]); // 컴포넌트가 마운트 해제될 때(clean-up) 리스너 제거
+      setDiaryDeleteImg([]);
+      setUpdateDiary(false);
+    };
   }, []);
+
+  // useEffect(() => {
+  //   console.log(updateDiary);
+  //   if (!updateDiary) {
+  //     setTitle('');
+  //     setContent('');
+  //     setDiaryImg([]);
+  //     console.log(diaryImg);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (selectedTemplate) {
-      setContent((prevContent) =>
-        prevContent ? `${prevContent}\n${selectedTemplate}` : selectedTemplate,
-      );
+      addTemplate(selectedTemplate);
     }
   }, [selectedTemplate]);
 
   const handleImageRemove = (indexToRemove) => {
     const newDiaryImg = diaryImg.filter((_, index) => index !== indexToRemove);
     setDiaryImg(newDiaryImg);
+    setDiaryDeleteImg(diaryImg[indexToRemove]);
     removeImageFile(indexToRemove);
   };
 
@@ -106,6 +123,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
           </div>
         </div>
         <Template
+          selectedTemplate={selectedTemplate}
           templateOn={templateOn}
           setTemplateOn={handleTemplate}
           setSelectedTemplate={setSelectedTemplate}

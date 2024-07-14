@@ -10,9 +10,13 @@ import useDiaryImgFileStore from '../../store/diaryImgFileStore.js';
 import useTitleStore from '../../store/titleStore.js';
 import useDiaryContentStore from '../../store/diaryContentStore.js';
 import useweatherStore from '../../store/weatherStore.js';
-import { getFindDraftAll, SaveDraftDiary } from '../../apis/diary.js';
+import { getFindDraftAll, updateDiaryOne } from '../../apis/diary.js';
 import useDraftNumStore from '../../store/draftNumStore.js';
 import useDraftListStore from '../../store/draftListStore.js';
+import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
+import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
+import { useNavigate } from 'react-router-dom';
+import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -25,6 +29,14 @@ const TopBar = ({ setTemplateOn }) => {
   const { selectedOption } = useweatherStore();
   const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
   const { setDraftList } = useDraftListStore();
+  const { updateDiary } = useUpdateDiaryStore();
+  const { diaryItemId } = useDiaryItemIdStore();
+  const { diaryDeleteImg } = useDiaryDeleteImgStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log(updateDiary);
+    console.log(diaryItemId);
+  }, []);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -63,6 +75,7 @@ const TopBar = ({ setTemplateOn }) => {
     try {
       const formData = new FormData();
 
+      formData.append('diaryId', diaryItemId);
       formData.append('diaryTitle', title);
       formData.append('diaryDate', new Date().toISOString().slice(0, -5));
       formData.append('diaryContent', content);
@@ -71,16 +84,32 @@ const TopBar = ({ setTemplateOn }) => {
         imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
       }
 
-      console.log(...formData);
-      const res = await SaveDraftDiary(formData);
-      console.log(res.data);
-      const diaryId = res.data.data.diaryId;
-      console.log(diaryId);
       const { draftList, draftLength } = await getFindDraftAll();
       setDraftDiaryNum(draftLength);
       setDraftList(draftList);
     } catch (error) {
       console.error('일기 저장 오류', error);
+    }
+  };
+
+  const handleupdateDiary = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('diaryId', diaryItemId);
+      formData.append('diaryTitle', title);
+      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append('diaryStatus', 'PUBLISHED');
+      formData.append('imagesToDelete', diaryDeleteImg);
+      formData.append('diaryContent', content);
+      formData.append('diaryWeather', selectedOption);
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
+      console.log(...formData);
+      await updateDiaryOne(formData);
+      navigate(`/diary/${diaryItemId}`);
+    } catch (error) {
+      console.error('일기 수정 오류', error);
     }
   };
 
@@ -123,7 +152,9 @@ const TopBar = ({ setTemplateOn }) => {
             </button>
 
             <button
-              onClick={isGotoAnalysisEmotionModal}
+              onClick={
+                updateDiary ? handleupdateDiary : isGotoAnalysisEmotionModal
+              }
               className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-col justify-center items-center gap-[13.5px]"
             >
               <img src={save}></img>

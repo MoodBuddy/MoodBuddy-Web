@@ -4,23 +4,35 @@ import { deleteDiary, getFindAllByEmotion, getFindOne } from '../../apis/diary';
 import { useNavigate, useParams } from 'react-router-dom';
 import { bookMarkToggle } from '../../apis/bookMark';
 import { useEffect, useState } from 'react';
+import useDiaryContentStore from '../../store/diaryContentStore';
+import useTitleStore from '../../store/titleStore';
+import useUpdateDiaryStore from '../../store/updateDiaryStore';
+import useDiaryImgStore from '../../store/diaryImgStore';
+import useweatherStore from '../../store/weatherStore';
+import useDiaryItemIdStore from '../../store/diaryItemIdStore';
 
 const EditBar = ({ diaryId }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
   const [isBookMark, setIsBookMark] = useState(false);
-
-  const getDiaryId = async (id) => {
+  const { setContent } = useDiaryContentStore();
+  const { setTitle } = useTitleStore();
+  const { setUpdateDiary } = useUpdateDiaryStore();
+  const { setDiaryImg } = useDiaryImgStore();
+  const { setSelectedOption } = useweatherStore();
+  const { setDiaryItemId } = useDiaryItemIdStore();
+  const getOriginalDiary = async (id) => {
     if (id) {
       const res = await getFindOne(id);
       return res;
     }
   };
+
   useEffect(() => {
     const diaryId = async () => {
       try {
-        const res = await getDiaryId(id);
+        const res = await getOriginalDiary(id);
         console.log(res);
         if (res) {
           console.log(res.diaryBookMarkCheck);
@@ -34,6 +46,7 @@ const EditBar = ({ diaryId }) => {
       diaryId();
     }
   }, [id]);
+
   const mutation = useMutation({
     mutationFn: (id) => deleteDiary(id),
     onSuccess: () => {
@@ -63,6 +76,22 @@ const EditBar = ({ diaryId }) => {
       console.error('Error:', error);
     }
   };
+
+  const handleDiaryUpdate = async () => {
+    try {
+      const res = await getOriginalDiary(id);
+
+      setUpdateDiary(true);
+      setDiaryItemId(id);
+      setContent(res.diaryContent);
+      setTitle(res.diaryTitle);
+      setDiaryImg(res.diaryImgList);
+      setSelectedOption(res.diaryWeather);
+      navigate('/writing');
+    } catch (error) {
+      console.error('error:', error);
+    }
+  };
   return (
     <div className="flex justify-end gap-4 mt-8 mb-4">
       <Button
@@ -73,6 +102,7 @@ const EditBar = ({ diaryId }) => {
         {isBookMark ? '북마크취소' : '북마크하기'}
       </Button>
       <Button
+        onClick={handleDiaryUpdate}
         color="lightBeige"
         className="border-black rounded-[10px] text-xl"
       >
