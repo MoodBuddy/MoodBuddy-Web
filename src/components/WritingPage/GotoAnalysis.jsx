@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnalysisEmotion from './AnalysisEmotion';
 import analysisEmotion from '@assets/analysisEmotion.svg';
+import useDiaryContentStore from '../../store/diaryContentStore';
+import useTitleStore from '../../store/titleStore';
 const GotoAnalysis = ({ gotoAnalysisEmotionModal }) => {
   const [AnalysisEmotionModal, setAnalysisEmotionModal] = useState(false);
-
+  const { title } = useTitleStore();
+  const { content } = useDiaryContentStore();
   const isAnalysisEmotionModal = () => {
     setAnalysisEmotionModal(!AnalysisEmotionModal);
   };
 
+  useEffect(() => {
+    console.log(content);
+    console.log(title);
+  }, []);
   return (
     <>
       {gotoAnalysisEmotionModal && (

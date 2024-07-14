@@ -1,13 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Weather from './Weather';
 import Template from './Template';
-import useDiaryContentStore from '../../store/diaryContentStore';
 import useTitleStore from '../../store/titleStore';
+import useDiaryImgStore from '../../store/diaryImgStore';
+import close from '../../../public/icon/blackClose.svg';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore';
+import useDiaryContentStore from '../../store/diaryContentStore';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
-const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
+const Diary = ({ templateOn, setTemplateOn }) => {
+  const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
   const { content, setContent } = useDiaryContentStore();
-  const [selectedTemplate, setSelectedTemplate] = useState('');
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
+
+  const { removeImageFile } = useDiaryImgFileStore();
+
+  const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
+    locale: ko,
+  });
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
@@ -15,6 +27,8 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
   useEffect(() => {
     setTitle('');
     setContent('');
+    setDiaryImg([]);
+    console.log(diaryImg);
   }, []);
 
   useEffect(() => {
@@ -24,13 +38,20 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
       );
     }
   }, [selectedTemplate]);
+
+  const handleImageRemove = (indexToRemove) => {
+    const newDiaryImg = diaryImg.filter((_, index) => index !== indexToRemove);
+    setDiaryImg(newDiaryImg);
+    removeImageFile(indexToRemove);
+  };
+
   return (
     <>
       <div className="flex relative top-[-203.5px] transform scale-75 mb-[-415px]">
-        <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px] ">
+        <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px]">
           <div className="flex flex-row justify-between items-center ml-[121px] mr-[45px] mt-[149px]">
             <div className="flex flex-col gap-[41px]">
-              <div className="text-[25px]">2024년 4월 21일 수요일</div>
+              <div className="text-[25px]">{formattedDate}</div>
               <input
                 type="text"
                 className="font-meetme text-[75px] bg-[#F7F3EF] outline-none"
@@ -49,10 +70,28 @@ const Diary = ({ imgSrcs, templateOn, setTemplateOn }) => {
             </div>
           </div>
           <div className="border-t-[1px] border-[#BABABA]/400 mt-[52px] "></div>
-          <div className="flex justify-center ">
+          <div className="flex flex-col items-center justify-center ">
+            <div className="flex flex-row w-[900px] overflow-x-auto custom-scrollbar">
+              {diaryImg.map((imageUrl, index) => (
+                <div key={index} className="relative mr-[30px] flex-shrink-0">
+                  <img
+                    key={index}
+                    src={imageUrl}
+                    alt={`Diary Image ${index}`}
+                    className="w-[300px] h-[300px]"
+                  />
+                  <button
+                    className="absolute top-0 right-[-25px] rounded-[10px] px-1 py-1 flex justify-center items-center"
+                    onClick={() => handleImageRemove(index)}
+                  >
+                    <img src={close} />
+                  </button>
+                </div>
+              ))}
+            </div>
             <textarea
               type="text"
-              className="my-[105px] font-light text-[20px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] h-[931px]"
+              className={`my-[70px] font-light text-[20px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'}  overflow-y-auto custom-scrollbar `}
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);

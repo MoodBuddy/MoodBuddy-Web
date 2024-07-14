@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import back from '../../../public/icon/back.svg';
 import { useNavigate } from 'react-router-dom';
 import { addHours } from 'date-fns';
-import Timer from './Timer';
+import Timer from './timer';
 import useShowAnswerStore from '../../store/showAnswerStore';
 
 const QuddyLetterContent = ({ data }) => {

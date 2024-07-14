@@ -6,20 +6,13 @@ const get = async (url, params) => {
   return res.data.data;
 };
 
-export const saveDiary = async (diaryData) => {
+const post = async (url, data) => {
+  const res = await client.post(url, data);
+  return res?.data;
+};
+
+export const saveDiary = async (formData) => {
   try {
-    const formData = new FormData();
-
-    formData.append('diaryTitle', diaryData.diaryTitle);
-    formData.append('diaryDate', diaryData.diaryDate.slice(0, -5));
-    formData.append('diaryContent', diaryData.diaryContent);
-    formData.append('diaryWeather', diaryData.diaryWeather);
-
-    if (diaryData.diaryImgList) {
-      diaryData.diaryImgList.forEach((file, index) => {
-        formData.append(`diaryImgList[${index}]`, file);
-      });
-    }
     const response = await client.post('/api/v1/member/diary/save', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -29,6 +22,48 @@ export const saveDiary = async (diaryData) => {
     return response;
   } catch (error) {
     console.error('일기 저장 오류:', error);
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const SaveDraftDiary = async (formData) => {
+  try {
+    const response = await client.post(
+      '/api/v1/member/diary/draftSave',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('일기 저장 오류:', error);
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const getFindDraftAll = async () => {
+  try {
+    const data = await get('/api/v1/member/diary/draftFindAll');
+    const draftList = data.diaryResDraftFindOneList;
+    const draftLength = data.diaryResDraftFindOneList.length;
+    console.log(data.diaryResDraftFindOneList.length);
+    return { draftList, draftLength };
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
+export const deleteDraft = async (deleteDraftList) => {
+  try {
+    const data = await client.delete('/api/v1/member/diary/draftSelectDelete', {
+      data: { diaryIdList: deleteDraftList },
+    });
+    return data;
+  } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };

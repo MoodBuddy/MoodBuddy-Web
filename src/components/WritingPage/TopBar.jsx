@@ -2,35 +2,48 @@ import img from '@assets/img.svg';
 import save from '../../../public/icon/save.svg';
 import temporaryStorage from '@assets/temporaryStorage.svg';
 import showTemplate from '@assets/showTemplate.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import TemporaryStorage from './TemporaryStorage.jsx';
 import GotoAnalysis from './GotoAnalysis.jsx';
-const TopBar = ({ setImgSrcs, setTemplateOn }) => {
+import useDiaryImgStore from '../../store/diaryImgStore.js';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore.js';
+import useTitleStore from '../../store/titleStore.js';
+import useDiaryContentStore from '../../store/diaryContentStore.js';
+import useweatherStore from '../../store/weatherStore.js';
+import { getFindDraftAll, SaveDraftDiary } from '../../apis/diary.js';
+import useDraftNumStore from '../../store/draftNumStore.js';
+import useDraftListStore from '../../store/draftListStore.js';
+
+const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
   const [gotoAnalysisEmotionModal, setGotoAnalysisEmotionModal] =
     useState(false);
+  const { diaryImg, setDiaryImg } = useDiaryImgStore();
+  const { imageFiles, addImageFile } = useDiaryImgFileStore();
+  const { title } = useTitleStore();
+  const { content } = useDiaryContentStore();
+  const { selectedOption } = useweatherStore();
+  const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
+  const { setDraftList } = useDraftListStore();
 
-  const fileInputRef = useRef(null);
-
-  const ImgButtonClick = () => {
-    fileInputRef.current.click();
-  };
   const handleFileChange = (e) => {
-    const files = e.target.files;
-    const newImageSrcs = [];
+    const files = Array.from(e.target.files);
+    console.log(e.target.files);
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    const newDiaryImgs = [];
+
+    files.forEach((file) => {
+      addImageFile(file);
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        newImageSrcs.push(e.target.result);
-        if (newImageSrcs.length == files.length) {
-          setImgSrcs(newImageSrcs);
+      reader.onload = (event) => {
+        newDiaryImgs.push(event.target.result);
+        if (newDiaryImgs.length === files.length) {
+          setDiaryImg([...diaryImg, ...newDiaryImgs]);
+          e.target.value = null;
         }
       };
       reader.readAsDataURL(file);
-    }
+    });
   };
 
   const isTemporaryStorageModal = () => {
@@ -41,13 +54,43 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
     setGotoAnalysisEmotionModal(!gotoAnalysisEmotionModal);
   };
 
+  const CheckDraftDiary = () => {
+    if (window.confirm('일기를 임시저장 하시겠습니까?')) {
+      handleDraftDiary();
+    }
+  };
+  const handleDraftDiary = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append('diaryTitle', title);
+      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append('diaryContent', content);
+      formData.append('diaryWeather', selectedOption);
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
+
+      console.log(...formData);
+      const res = await SaveDraftDiary(formData);
+      console.log(res.data);
+      const diaryId = res.data.data.diaryId;
+      console.log(diaryId);
+      const { draftList, draftLength } = await getFindDraftAll();
+      setDraftDiaryNum(draftLength);
+      setDraftList(draftList);
+    } catch (error) {
+      console.error('일기 저장 오류', error);
+    }
+  };
+
   return (
     <>
       <div className="sticky top-0 z-30 bg-[#EEE4DB] w-[full] h-[117px] shadow-md flex justify-center text-[15px] ">
         <div className="flex flex-row justify-between items-center w-[1438px]">
           <button
             type="button"
-            onClick={ImgButtonClick}
+            onClick={() => document.getElementById('fileInput').click()}
             className="transform scale-75 bg-btnColor hover:bg-btnColorActive border-[#98928C] border w-[103px] h-[116px] rounded-[14px] ml-[203px] flex flex-col justify-center items-center gap-[13.5px] cursor-pointer"
           >
             <img src={img}></img>
@@ -56,23 +99,27 @@ const TopBar = ({ setImgSrcs, setTemplateOn }) => {
           <input
             type="file"
             id="fileInput"
-            ref={fileInputRef}
             className="hidden"
             onChange={handleFileChange}
-            accept="immage/*"
+            accept="image/*"
             multiple
           />
           <div className="flex flex-row gap-[20px] mr-[30px] transform scale-75">
-            <button
-              onClick={isTemporaryStorageModal}
-              className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-row items-center justify-center"
-            >
-              <div className="flex flex-col items-center gap-[13.5px] ">
+            <button className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-row items-center justify-center">
+              <div
+                onClick={CheckDraftDiary}
+                className="flex flex-col items-center gap-[13.5px] "
+              >
                 <img src={temporaryStorage} className="w-[35px] h-[35px]"></img>
                 <p>임시저장</p>
               </div>
               <div className="border-l-[1.5px] border-[#b3b3b3] rounded-md  h-16 mx-4"></div>
-              <div className=" font-medium text-[25px] ml-[10px]">2</div>
+              <div
+                onClick={isTemporaryStorageModal}
+                className=" font-medium text-[25px] ml-[10px]"
+              >
+                {draftDiaryNum}
+              </div>
             </button>
 
             <button

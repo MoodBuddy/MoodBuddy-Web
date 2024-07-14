@@ -13,13 +13,14 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
   const { searchParams } = useSearchStore();
   console.log(searchParams);
 
-  // searchParams가 비어있으면 filterType을 'all'로 설정
+  //searchParams가 비어있으면 filterType을 'all'로 설정
   if (
     searchParams.keyword == '' &&
     searchParams.year == null &&
     searchParams.month == null &&
     searchParams.topic == null &&
-    searchParams.diaryEmotion == null
+    searchParams.diaryEmotion == null &&
+    filterType != 'bookMark'
   ) {
     filterType = 'all';
   }
