@@ -25,16 +25,16 @@ const Profile = ({ data }) => {
 
         <img
           src={data.profileImageUrl}
-          className="mt-[35px] mx-auto w-[300px] h-[360px] rounded-3xl object-cover"
+          className="mt-[35px] mx-auto w-[320px] h-[360px] rounded-3xl object-cover"
         ></img>
-        <div className="ml-[20px]">
-          <div className="flex items-end mt-[20px]  ">
-            <div className="font-bold text-[32px]">{data.profileNickname}</div>
-            <div className="font-thin text-[16px] ml-[10px] mb-[5px]">
+        <div className="ml-3">
+          <div className="flex items-end mt-[20px]">
+            <div className="font-semibold text-4xl mr-4">{data.profileNickname}강민하</div>
+            <div className="font-thin text-xl">
               {data.userBirth}
             </div>
           </div>
-          <div className="text-[20px] whitespace-pre-wrap">
+          <div className="text-2xl mt-4 whitespace-pre-wrap">
             {data.profileComment}
           </div>
         </div>

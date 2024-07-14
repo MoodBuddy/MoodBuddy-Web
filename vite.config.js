@@ -18,4 +18,19 @@ export default defineConfig({
   server: {
     proxy: {},
   },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          let extType = assetInfo.name.split('.').pop(); // 파일 확장자 가져오기
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = 'img';
+          }
+          return `assets/${extType}/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+      },
+    },
+  },
 });

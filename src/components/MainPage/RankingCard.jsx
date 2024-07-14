@@ -37,7 +37,9 @@ const RankingCard = () => {
         </div>
 
         <div className="flex justify-end mr-6">
-          <h1 className="text-[40px] font-medium">{maxEmotionNum} 회</h1>
+          <h1 className="text-[40px] font-medium">
+            {maxEmotionNum ? maxEmotionNum : 0} 회
+          </h1>
         </div>
       </div>
     </Card>
