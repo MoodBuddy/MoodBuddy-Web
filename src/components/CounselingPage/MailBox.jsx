@@ -8,9 +8,13 @@ const MailBox = ({ letters }) => {
       </div>
       <div className="border-b-[0.75px] border-black"></div>
       <div className="h-[1005px] overflow-y-auto overflow-x-hidden custom-scrollbar">
-        {letters.map((letter) => (
-          <MailBoxContent key={letter.letterId} letter={letter} />
-        ))}
+        {letters && letters.length > 0 ? (
+          letters.map((letter) => (
+            <MailBoxContent key={letter.letterId} letter={letter} />
+          ))
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
