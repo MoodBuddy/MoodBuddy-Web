@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { setHours, setMinutes } from 'date-fns';
+import { setHours, setMinutes, format } from 'date-fns';
 
 const TimePicker = ({ onTimeChange }) => {
   const [selectedHour, setSelectedHour] = useState(12);
@@ -18,7 +18,8 @@ const TimePicker = ({ onTimeChange }) => {
     }
 
     const newTime = setMinutes(setHours(new Date(), hour), minute);
-    onTimeChange(newTime);
+    const formattedTime = format(newTime, 'HH:mm');
+    onTimeChange(formattedTime);
   };
 
   const handleHourChange = (e) => {
@@ -79,3 +80,4 @@ const TimePicker = ({ onTimeChange }) => {
 };
 
 export default TimePicker;
+

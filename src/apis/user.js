@@ -46,6 +46,15 @@ export const getEmotionNums = async () => {
   }
 };
 
+export const postProfileEdit = async (profile) => {
+  try {
+    const data = await post('/api/v1/member/main/profile-edit', profile);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
 export const postFcmToken = async (token) => {
   try {
     const data = await post('/api/v1/member/main/fcmToken', {
