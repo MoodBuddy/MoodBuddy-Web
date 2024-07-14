@@ -20,7 +20,6 @@ const StatsPage = () => {
     daysInMonth,
     fetchDiaryList,
   } = useCalendarStore();
-  const formattedDate = format(currentDate, 'yyyy-MM-dd');
 
   const {
     isError,
@@ -34,7 +33,6 @@ const StatsPage = () => {
   useEffect(() => {
     fetchDiaryList();
   }, [currentDate, fetchDiaryList]);
-  
 
   if (isError) {
     console.error('Error fetching letter:', error);
