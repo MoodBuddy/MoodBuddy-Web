@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../common/loading/LoadingSpinner';
 
 const KakaoLoginAuth = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const KakaoLoginAuth = () => {
     }
   }, [navigate]);
 
-  return <div>로딩중...</div>;
+  return <LoadingSpinner />;
 };
 
 export default KakaoLoginAuth;
