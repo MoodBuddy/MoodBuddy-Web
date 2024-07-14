@@ -16,8 +16,8 @@ const Letter = () => {
 
   return (
     <div>
-      <div className="transform scale-75 relative top-[-220px]">
-        <div className="box-content border-[1px] border-black w-[1600px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
+      <div className="transform scale-[85%] relative top-[-135px]">
+        <div className="box-content border-[1px] border-black w-[1560px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
           <div className="px-[23px] w-full h-[98px] border-b-[1px] border-black flex justify-between items-center ">
             <img src={back} />
             <div className="font-medium text-[35px]">To.QUDDY</div>
