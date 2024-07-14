@@ -21,7 +21,9 @@ const CountCard = () => {
         {/* 횟수 카운트 */}
         <div className="flex items-end justify-center gap-4 my-12">
           <div className="border rounded-[18px] border-black">
-            <h1 className="text-9xl font-medium text-center px-12 py-2">{userCurDiaryNums}</h1>
+            <h1 className="text-9xl font-medium text-center px-12 py-2">
+              {userCurDiaryNums ? userCurDiaryNums : 0}
+            </h1>
           </div>
           <p className="text-4xl font-medium">회</p>
         </div>

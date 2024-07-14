@@ -30,7 +30,7 @@ const DiarySummary = () => {
   const summary = diarySummary.diarySummary;
 
   return (
-    <div className="w-full h-[220px] border rounded-[36px] bg-white px-12 py-4 relative">
+    <div className="w-[1000px] h-[220px] border rounded-[36px] bg-white px-12 py-4 relative">
       <div className="absolute top-4 right-4">
         {id ? (
           <Link
@@ -50,8 +50,8 @@ const DiarySummary = () => {
       </div>
       {id ? (
         <>
-          <h1 className="font-bold my-6">{title}</h1>
-          <p className="font-medium">{summary}</p>
+          <h1 className="font-bold my-6 whitespace-pre-wrap">{title}</h1>
+          <p className="font-medium whitespace-pre-wrap">{summary}</p>
         </>
       ) : (
         <>
