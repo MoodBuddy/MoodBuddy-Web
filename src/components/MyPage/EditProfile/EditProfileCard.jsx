@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Toggle from '../../common/toggle/Toggle';
 import TimePicker from '../../common/timePicker/TimePicker';
 import { postProfileEdit } from '../../../apis/user';
-import { handleAllowNotification } from '../../../service/notificationPermission';
 import useUserStore from '../../../store/userStore';
 
 const EditProfileCard = () => {
@@ -66,10 +65,6 @@ const EditProfileCard = () => {
     } catch (error) {
       console.error('프로필 변경에 실패했습니다.', error);
     }
-  };
-
-  const handleResetNotification = async () => {
-    await handleAllowNotification();
   };
 
   return (
