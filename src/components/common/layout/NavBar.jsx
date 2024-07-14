@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getUserInfo } from '../../../apis/user';
+import { getProfile } from '../../../apis/user';
 
 const NavBar = () => {
   const isLogin = !!localStorage.getItem('token');
@@ -15,8 +15,8 @@ const NavBar = () => {
   };
 
   const { isError, data, error } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
+    queryKey: ['getProfile'],
+    queryFn: getProfile,
   });
 
   if (!data) {
@@ -86,20 +86,17 @@ const NavBar = () => {
             </div>
           ))}
         </div>
-        {isLogin ? (
-          <div className="flex items-center gap-2 ml-12">
-            <Link>
-              <img
-                src={data.profileImgURL}
-                alt="profileImgURL"
-                className="w-10 h-10 rounded-full"
-              />
-            </Link>
-            <h1 className="text-[22px] font-medium">{data.profileNickName}</h1>
-          </div>
-        ) : (
-          <></>
-        )}
+
+        <div className="flex items-center gap-3 ml-12">
+          <Link>
+            <img
+              src={data.url}
+              alt="profileImgURL"
+              className="w-10 h-10 rounded-full"
+            />
+          </Link>
+          <h1 className="text-[22px] font-medium">{data.nickname}</h1>
+        </div>
       </div>
 
       <div className="border-b-[1px] border-[#B98D6D]"> </div>

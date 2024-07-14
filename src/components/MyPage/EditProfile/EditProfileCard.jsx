@@ -2,17 +2,35 @@ import profile from '@assets/profile.png';
 import { useState } from 'react';
 import Toggle from '../../common/toggle/Toggle';
 import TimePicker from '../../common/timePicker/TimePicker';
-import { postProfileEdit } from '../../../apis/user';
+import { getProfile, postProfileEdit } from '../../../apis/user';
 import useUserStore from '../../../store/userStore';
+import { useQuery } from '@tanstack/react-query';
 
 const EditProfileCard = () => {
   const userInfo = useUserStore((state) => ({
     profileNickName: state.profileNickName,
     userBirth: state.userBirth,
+    profileImgURL: state.profileImgURL,
   }));
+
+  const { isError, data, error } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  });
+  console.log(data);
+
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
+  if (isError) {
+    console.error('Error fetching user info:', error);
+    return <div>오류 발생: {error.message}</div>;
+  }
 
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const [notificationTime, setNotificationTime] = useState('');
+  const [profileImage, setProfileImage] = useState(profile);
 
   const [state, setState] = useState({
     nickname: userInfo.profileNickName || '',
@@ -36,15 +54,30 @@ const EditProfileCard = () => {
   const handleTimeChange = (newTime) => {
     setNotificationTime(newTime);
   };
-  // 생년월일 placeholder 설정 함수
+
   const getBirthDatePlaceholder = () => {
     if (state.birthDate) {
-      // 사용자가 입력한 생년월일이 있으면 그 값을 사용
       return state.birthDate;
     } else {
-      // 입력된 생년월일이 없으면 임의의 형식으로 표시
       return '2002-08-19 (8자리)';
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setState({ ...state, newProfileImg: file });
+      setProfileImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleImageDelete = () => {
+    setState({ ...state, newProfileImg: null });
+    setProfileImage(profile);
+  };
+
+  const handleResetNotification = () => {
+    // fcm 토큰 로직 추가
   };
 
   const handleSubmit = async () => {
@@ -74,14 +107,26 @@ const EditProfileCard = () => {
           <div className="text-[20px] ml-[15px] mb-[10px] font-bold">
             프로필 사진
           </div>
-          <img src={profile} className="w-[377px] h-[444px]" />
+          <img
+            src={data.url}
+            className="w-[377px] h-[444px] rounded-3xl object-cover"
+          />
           <div className="flex flex-row gap-[5px] justify-center mt-[16.5px]">
-            <button className="w-[178px] h-[43px] rounded-[14px] bg-[#E8D3C0] text-[19px] font-medium">
+            <button
+              className="w-[178px] h-[43px] rounded-[14px] bg-[#E8D3C0] text-[19px] font-medium"
+              onClick={handleImageDelete}
+            >
               삭제
             </button>
-            <button className="w-[178px] h-[43px] rounded-[14px] bg-[#C79A76] text-[19px] font-medium">
+            <label className="w-[178px] h-[43px] rounded-[14px] bg-[#C79A76] text-[19px] font-medium flex items-center justify-center cursor-pointer">
               사진 변경
-            </button>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
           </div>
         </div>
         <div className="flex flex-col gap-[15px] ml-[70px] mt-[36px]">
@@ -90,7 +135,7 @@ const EditProfileCard = () => {
             <input
               name="nickname"
               type="text"
-              value={state.nickname}
+              value={data.nickname}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
               placeholder={`현재 닉네임 ${userInfo.profileNickName || ''}`}
@@ -101,7 +146,7 @@ const EditProfileCard = () => {
             <input
               name="birthDate"
               type="text"
-              value={state.birthDate}
+              value={data.birthday}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
               placeholder={`${getBirthDatePlaceholder()}`}
@@ -128,7 +173,7 @@ const EditProfileCard = () => {
             <div className="font-bold text-[20px]">한줄소개 변경</div>
             <textarea
               name="profileComment"
-              value={state.profileComment}
+              value={data.profileComment}
               onChange={handleChangeState}
               className="w-[613px] h-[168px] rounded-[10px] border-[1px] border-black p-[15px]"
             />
