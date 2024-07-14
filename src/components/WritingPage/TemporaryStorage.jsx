@@ -1,9 +1,82 @@
+import { useEffect, useState } from 'react';
 import close from '../../../public/icon/close.svg';
 import Storage from './Storage';
+import { deleteDraft, getFindDraftAll } from '../../apis/diary';
+import useDraftEditStore from '../../store/draftEditStore';
+import useDraftNumStore from '../../store/draftNumStore';
+import useDraftListStore from '../../store/draftListStore';
 const TemporaryStorage = ({
   isTemporaryStorageModal,
   temporaryStorageModal,
 }) => {
+  const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
+  const { draftList, setDraftList } = useDraftListStore();
+  const [selectedCount, setSelectedCount] = useState(0); //체크박스 개수 상태
+  const { draftEdit, setDraftEdit } = useDraftEditStore();
+  const [selectedIndexes, setSelectedIndexes] = useState([]); // 선택된 인덱스들을 저장하는 상태
+
+  useEffect(() => {
+    setDraftEdit(true);
+  }, [draftDiaryNum]);
+
+  useEffect(() => {
+    setSelectedCount(0);
+  }, [draftEdit]);
+
+  useEffect(() => {
+    const DraftDiaryNum = async () => {
+      try {
+        const { draftList, draftLength } = await getFindDraftAll();
+        console.log(draftList);
+        console.log(draftLength);
+        setDraftDiaryNum(draftLength);
+        setDraftList(draftList);
+      } catch (error) {
+        console.error('임시저장 글 불러오기 실패:', error);
+      }
+    };
+
+    DraftDiaryNum();
+  }, []);
+
+  const handleEdit = () => {
+    setDraftEdit(!draftEdit);
+    console.log(draftEdit);
+  };
+
+  const handleSelectionChange = (index, isSelected) => {
+    setSelectedIndexes((prev) => {
+      let newSelectedIndexes;
+      if (isSelected) {
+        newSelectedIndexes = [...prev, index];
+      } else {
+        newSelectedIndexes = prev.filter((i) => i !== index);
+      }
+      setSelectedCount(newSelectedIndexes.length);
+      return newSelectedIndexes;
+    });
+  };
+  const handleDelete = async () => {
+    if (
+      window.confirm(`임시 저장된 일기 ${selectedCount}개를 삭제하시겠습니까?`)
+    ) {
+      try {
+        console.log(selectedIndexes);
+
+        await deleteDraft(selectedIndexes);
+        const { draftList: newDraftList, draftLength } =
+          await getFindDraftAll();
+        setDraftDiaryNum(draftLength);
+        setDraftList(newDraftList);
+        setSelectedIndexes([]);
+      } catch (error) {
+        console.error('삭제 실패', error);
+      }
+    }
+  };
+
+  const handleDraftDiaryItem = () => {};
+
   return (
     <>
       {temporaryStorageModal && (
@@ -21,20 +94,56 @@ const TemporaryStorage = ({
                 임시저장한 글
               </div>
               <div className="flex justify-between mx-[35px] mt-[40px]">
-                <div className="text-[13.5px]">
-                  <span>총</span>
-                  <span className="font-bold"> 2</span>
-                  <span>개</span>
-                </div>
+                {draftEdit ? (
+                  <div className="text-[13.5px]">
+                    <span>총</span>
+                    <span className="font-bold"> {draftDiaryNum}</span>
+                    <span>개</span>
+                  </div>
+                ) : (
+                  <div className="text-[13.5px]">
+                    <span>총</span>
+                    <span className="font-bold"> {selectedCount}</span>
+                    <span>개 선택됨</span>
+                  </div>
+                )}
                 <div>
-                  <button className="bg-[#D8B18E] w-[60px] h-[25px] rounded-[9px] font-light text-[11px] flex justify-center items-center cursor-pointer">
-                    편집
-                  </button>
+                  {draftEdit ? (
+                    <button
+                      onClick={handleEdit}
+                      className="bg-[#D8B18E] w-[60px] h-[25px] rounded-[9px]  text-[11px] flex justify-center items-center cursor-pointer"
+                    >
+                      편집
+                    </button>
+                  ) : (
+                    <div className="flex gap-[10px]">
+                      <button
+                        onClick={handleDelete}
+                        className="bg-[#D8B18E] w-[60px] h-[25px] rounded-[9px] text-[11px] flex justify-center items-center cursor-pointer"
+                      >
+                        선택삭제
+                      </button>
+                      <button
+                        onClick={handleEdit}
+                        className="bg-[#D8B18E] w-[60px] h-[25px] rounded-[9px] text-[11px] flex justify-center items-center cursor-pointer"
+                      >
+                        완료
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="w-[470px] mx-auto border-b-[2px] border-[#D9D9D9] mt-[21px]"></div>
-              <Storage />
-              <Storage />
+              <div className="w-[470px] relative right-[9px] mx-auto border-b-[2px] border-[#D9D9D9] mt-[21px]"></div>
+              <div className="mr-[10px] h-[240px] overflow-x-hidden overflow-y-auto custom-scrollbar ">
+                {draftList.map((it) => (
+                  <Storage
+                    onClick={handleDraftDiaryItem}
+                    index={it.productId}
+                    diaryDate={it.diaryDate}
+                    onSelectionChange={handleSelectionChange}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

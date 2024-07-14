@@ -1,18 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
-import { useState } from 'react';
 import { saveDiary } from '../../apis/diary';
 import useTitleStore from '../../store/titleStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
 import useweatherStore from '../../store/weatherStore';
-import useDiaryImgStore from '../../store/diaryImgStore';
 import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { title } = useTitleStore();
   const { content } = useDiaryContentStore();
   const { selectedOption } = useweatherStore();
-  const { diaryImg, setDiaryImg } = useDiaryImgStore();
   const { imageFiles } = useDiaryImgFileStore();
   const navigate = useNavigate();
 
