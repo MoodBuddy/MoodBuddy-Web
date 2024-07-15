@@ -1,74 +1,33 @@
+import completeQuddy from '@assets/completeQuddy.svg';
+import Button from '../common/button/Button';
 import { useNavigate } from 'react-router-dom';
-import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
-import { useState } from 'react';
-import { saveDiary } from '../../apis/diary';
-import useTitleStore from '../../store/titleStore';
-import useDiaryContentStore from '../../store/diaryContentStore';
-import useweatherStore from '../../store/weatherStore';
-import useDiaryImgStore from '../../store/diaryImgStore';
 
-const CompleteAnalysis = ({ completeAnaylsis }) => {
-  const [diaryId, setDiaryId] = useState(null);
-  const { title } = useTitleStore();
-  const { content } = useDiaryContentStore();
-  const { selectedOption } = useweatherStore();
-  const { diaryImg, setDiaryImg } = useDiaryImgStore();
-
+const CompleteSection = () => {
   const navigate = useNavigate();
-
-  const items = EmotionQuddyList.find((it) => it.id === 1);
-
-  const isCompleteSave = async () => {
-    try {
-      const diaryData = {
-        diaryTitle: title,
-        diaryDate: new Date().toISOString(),
-        diaryContent: content,
-        diaryWeather: selectedOption,
-        diaryImgList: diaryImg,
-      };
-      console.log(diaryData);
-      const res = await saveDiary(diaryData);
-      console.log(res);
-    } catch (error) {
-      console.error('일기 저장 오류', error);
-    }
+  const handleClick = () => {
+    navigate('/home');
   };
 
   return (
-    <>
-      {completeAnaylsis && (
-        <div className="z-40 fixed top-0 left-0 w-full h-full bg-stone-600/60">
-          <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
-            <div className="flex flex-col items-center gap-[5px] ">
-              <div className="font-meetme font-bold text-[32.6px] mx-auto mt-[40px] ">
-                오늘 행복한 하루를 보냈네요!
-              </div>
-              <div className="text-[18px] font-medium">24.04.21 (수)</div>
-              <div className="flex flex-col gap-[5px] justify-center items-center ">
-                <img
-                  className="transform scale-75 w-[182px] h-[193px]"
-                  src={items.imgSrc}
-                />
-                <div
-                  className="text-[25px] font-meetme relative top-[-20px]"
-                  style={{ color: items.color }}
-                >
-                  {items.name}
-                </div>
-              </div>
+    <div className="flex flex-col items-center justify-center h-screen bg-[#EDE2DA]">
+      <div className="flex flex-col items-center gap-2">
+        <h1 className="font-meetme text-3xl">MOODBUDDY</h1>
+        <h1 className="font-meetme text-6xl">회원가입이 완료되었어요 !</h1>
+      </div>
 
-              <button
-                onClick={isCompleteSave}
-                className="ml-auto mr-[25px] relative top-[-10px] bg-[#D8B18E] font-medium text-[20px] w-[120px] h-[40px] rounded-[13px] "
-              >
-                저장하기
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      <div className="flex items-end gap-10 my-12">
+        <img src={completeQuddy} alt="completeQuddy" />
+      </div>
+
+      <Button
+        onClick={handleClick}
+        color="brown"
+        className="w-[450px] h-[84px] flex justify-center rounded-[13px] items-center gap-6 mt-6"
+      >
+        <p className="font-semibold text-[25px]">로그인 바로가기</p>
+      </Button>
+    </div>
   );
 };
-export default CompleteAnalysis;
+
+export default CompleteSection;

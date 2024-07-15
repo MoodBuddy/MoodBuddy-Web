@@ -33,7 +33,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       setTitle('');
       setContent('');
       setSelectedOption(null);
-      setDiaryImg([]); // 컴포넌트가 마운트 해제될 때(clean-up) 리스너 제거
+      setDiaryImg([]);
       setDiaryDeleteImg([]);
       setUpdateDiary(false);
       removeImageFile([]);
@@ -89,14 +89,14 @@ const Diary = ({ templateOn, setTemplateOn }) => {
           </div>
           <div className="border-t-[1px] border-[#BABABA]/400 mt-[52px] "></div>
           <div className="flex flex-col items-center justify-center ">
-            <div className="flex flex-row w-[900px] overflow-x-auto custom-scrollbar">
+            <div className="flex flex-row w-[900px] overflow-x-auto custom-scrollbar gap-[30px]">
               {diaryImg.map((imageUrl, index) => (
-                <div key={index} className="relative mr-[30px] flex-shrink-0">
+                <div key={index} className="relative flex-shrink-0">
                   <img
                     key={index}
                     src={imageUrl}
                     alt={`Diary Image ${index}`}
-                    className="w-[300px] h-[300px]"
+                    className="w-[300px] h-[300px]  object-cover"
                   />
                   <button
                     className="absolute top-0 right-[-25px] rounded-[10px] px-1 py-1 flex justify-center items-center"

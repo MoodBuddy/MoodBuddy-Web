@@ -89,24 +89,23 @@ const DiarySection = ({ diaryId }) => {
 
         <div className="h-[1px] my-3 w-full bg-stone-300" />
 
-        <p className="text-lg my-10 whitespace-normal break-words">
-          {diary.diaryContent}
-        </p>
-
         {diary.diaryImgList && diary.diaryImgList.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex overflow-x-auto custom-scrollbar gap-[30px] ">
             {diary.diaryImgList.map((imgUrl, index) => (
               <img
                 key={index}
                 src={imgUrl}
                 alt={`Diary Image ${index}`}
-                className="w-full h-auto object-cover"
+                className="w-[300px] h-[300px] object-cover"
               />
             ))}
           </div>
         ) : (
           <></>
         )}
+        <p className="text-lg my-10 whitespace-normal break-words">
+          {diary.diaryContent}
+        </p>
       </div>
 
       {isModalOpen && (
