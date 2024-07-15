@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import CompleteAnalysis from './CompleteAnalysis';
+import useUserStore from '../../store/userStore';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
   const [progress, setProgress] = useState(0);
   const [completeAnaylsis, setCompleteAnaylsis] = useState(false);
-
+  const userInfo = useUserStore((state) => ({
+    nickname: state.nickname,
+  }));
+  const nickname = userInfo.nickname;
+  const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
   useEffect(() => {
     let interval;
     if (AnalysisEmotionModal) {
@@ -29,6 +37,18 @@ const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
     }
   }, [progress]);
 
+  const hasFinalConsonant = (char) => {
+    const charCode = char.charCodeAt(0); //이름 끝자의 유니코드 값
+    const diff = charCode - 0xac00; //유니코드 값에서 한글 음절의 시작점인 0XAC00을 뺌
+    const jong = diff % 28; //남은 값을 28로 나눠서 나머지 구함
+    return jong !== 0; //나머지가 0이 아니면 받침 존재
+  };
+  const getPostPosition = (nickname) => {
+    if (!nickname) return '은'; //닉네임이 없으면 기본 조사 '은'
+    const lastChar = nickname[nickname.length - 1];
+    return hasFinalConsonant(lastChar) ? '은' : '는';
+  };
+
   return (
     <>
       {AnalysisEmotionModal && (
@@ -36,10 +56,10 @@ const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
           <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
             <div className="flex flex-col">
               <div className="font-medium text-[15px] mx-auto mt-[66px]">
-                24.04.21 (수)
+                {formattedDate}
               </div>
               <div className="font-meetme text-[32.6px] mx-auto mt-[81px]">
-                오늘의 나영이는 어떤 감정일까요?
+                {`오늘의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <div className="mx-auto mt-[40px] border-2 border-black w-[456.75px] h-[26.4px] mb-5 h-2 rounded-full bg-gray-200">
                 <div
