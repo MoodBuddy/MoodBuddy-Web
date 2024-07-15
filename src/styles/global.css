@@ -71,3 +71,17 @@
   padding-right: 16px; /* 스크롤바와 콘텐츠 사이의 간격 */
   padding-bottom: 16px;
 }
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1.5s infinite;
+}

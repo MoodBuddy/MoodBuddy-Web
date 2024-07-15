@@ -30,7 +30,7 @@ const Profile = ({ data }) => {
         <div className="ml-3">
           <div className="flex items-end mt-[20px]">
             <div className="font-semibold text-4xl mr-4">
-              {data.profileNickname}강민하
+              {data.profileNickname}
             </div>
             <div className="font-thin text-xl">{data.userBirth}</div>
           </div>
