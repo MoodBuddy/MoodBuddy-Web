@@ -105,7 +105,7 @@ export const getFindOne = async (diaryId) => {
 export const getFindAll = async () => {
   try {
     const data = await get(
-      `/api/v1/member/diary/findAllPageable?page=0&size=20`,
+      `/api/v1/member/diary/findAllPageable?page=0&size=30`,
     );
     return data;
   } catch (error) {
@@ -115,7 +115,7 @@ export const getFindAll = async () => {
 
 export const getFindAllByEmotion = async ({ emotion }) => {
   try {
-    const url = `/api/v1/member/diary/findAllByEmotionWithPageable?diaryEmotion=${emotion}&page=0&size=20&sort=string`;
+    const url = `/api/v1/member/diary/findAllByEmotionWithPageable?diaryEmotion=${emotion}&page=0&size=30&sort=string`;
     const data = await get(url);
     console.log(data);
     return data;

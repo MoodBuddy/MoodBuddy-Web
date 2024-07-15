@@ -5,7 +5,7 @@ const RankSection = ({ currentDate, emotionData }) => {
   // 감정 데이터를 순위로 정렬
   const sortedEmotions = Array.isArray(emotionData)
     ? emotionData.slice().sort((a, b) => b.nums - a.nums)
-    : [];
+    : quddies.map((quddy) => ({ diaryEmotion: quddy.emotion, nums: 0 }));
 
   return (
     <div className="w-[400px] ml-16 mt-10 mb-8">

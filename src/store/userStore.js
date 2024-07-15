@@ -2,7 +2,7 @@
 import create from 'zustand';
 
 const useUserStore = create((set) => ({
-  profileNickName: null,
+  nickname: null,
   userBirth: null,
   profileComment: null,
   profileImgURL: null,
@@ -12,7 +12,7 @@ const useUserStore = create((set) => ({
 
   setUserInfo: (userInfo) =>
     set((state) => ({
-      profileNickName: userInfo.profileNickName,
+      nickname: userInfo.nickname,
       userBirth: userInfo.userBirth,
       profileComment: userInfo.profileComment,
       profileImgURL: userInfo.profileImgURL,

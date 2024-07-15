@@ -7,9 +7,9 @@ import useUserStore from '../../store/userStore';
 
 const AnalysisSection = () => {
   const userInfo = useUserStore((state) => ({
-    profileNickName: state.profileNickName,
+    nickname: state.nickname,
   }));
-  const profileNickName = userInfo.profileNickName;
+  const nickname = userInfo.nickname;
 
   return (
     <>
@@ -23,9 +23,9 @@ const AnalysisSection = () => {
         {/* 사용자별 문구 */}
         <div className="flex items-center justify-center mt-44 mb-10 relative transform scale-90">
           <img src={nameCover} alt="nameCover" className="absolute" />
-          {profileNickName ? (
+          {nickname ? (
             <h1 className="z-10 font-meetme text-5xl">
-              {profileNickName} 님의 하루를 기록해봐요 !
+              {nickname} 님의 하루를 기록해봐요 !
             </h1>
           ) : (
             <h1 className="z-10 font-meetme text-5xl">

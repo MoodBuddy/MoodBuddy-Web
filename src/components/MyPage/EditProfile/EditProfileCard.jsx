@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const EditProfileCard = () => {
   const userInfo = useUserStore((state) => ({
-    profileNickName: state.profileNickName,
+    nickname: state.nickname,
     userBirth: state.userBirth,
     profileImgURL: state.profileImgURL,
   }));
@@ -33,7 +33,7 @@ const EditProfileCard = () => {
   const [profileImage, setProfileImage] = useState(profile);
 
   const [state, setState] = useState({
-    nickname: userInfo.profileNickName || '',
+    nickname: userInfo.nickname || '',
     birthDate: userInfo.userBirth || '',
     profileComment: '',
     newProfileImg: null,
@@ -56,10 +56,18 @@ const EditProfileCard = () => {
   };
 
   const getBirthDatePlaceholder = () => {
-    if (state.birthDate) {
-      return state.birthDate;
+    if (data.birthday) {
+      return data.birthday;
     } else {
-      return '2002-08-19 (8자리)';
+      return 'ex. 2002-08-19 (8자리)';
+    }
+  };
+
+  const getNamePlaceholder = () => {
+    if (data.nickname) {
+      return data.nickname;
+    } else {
+      return '닉네임을 설정하세요';
     }
   };
 
@@ -135,10 +143,9 @@ const EditProfileCard = () => {
             <input
               name="nickname"
               type="text"
-              value={data.nickname}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder={`현재 닉네임 ${userInfo.profileNickName || ''}`}
+              placeholder={`${data.nickname || ''}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
@@ -146,14 +153,13 @@ const EditProfileCard = () => {
             <input
               name="birthDate"
               type="text"
-              value={data.birthday}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
               placeholder={`${getBirthDatePlaceholder()}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
-            <div className="font-bold text-[20px]">카카오톡 알림 재설정</div>
+            <div className="font-bold text-[20px]">카카오톡 알림</div>
             <div className="flex gap-[40px] items-center">
               <Toggle onToggleChange={handleToggleChange} />
               {isNotificationEnabled && (
@@ -173,7 +179,7 @@ const EditProfileCard = () => {
             <div className="font-bold text-[20px]">한줄소개 변경</div>
             <textarea
               name="profileComment"
-              value={data.profileComment}
+              placeholder={data.profileComment}
               onChange={handleChangeState}
               className="w-[613px] h-[168px] rounded-[10px] border-[1px] border-black p-[15px]"
             />

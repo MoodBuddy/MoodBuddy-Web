@@ -3,12 +3,13 @@ import Card from './Card';
 
 const ProfileCard = () => {
   const userInfo = useUserStore((state) => ({
-    profileNickName: state.profileNickName,
+    nickname: state.nickname,
     userBirth: state.userBirth,
     profileImgURL: state.profileImgURL,
     profileComment: state.profileComment,
   }));
-  const profileNickName = userInfo.profileNickName;
+  console.log(userInfo);
+  const nickname = userInfo.nickname;
   const userBirth = userInfo.userBirth;
   const profileImgURL = userInfo.profileImgURL;
   const profileComment = userInfo.profileComment;
@@ -17,15 +18,15 @@ const ProfileCard = () => {
     <Card>
       <div className="justify-center items-center h-full mt-8">
         <div className="flex gap-8 px-2 items-center">
-          <h1 className="text-3xl font-bold">{profileNickName}</h1>
-          <p className="text-[#7A7A7A]">{userBirth}</p>
+          <h1 className="text-3xl font-bold">{nickname ? nickname : ''}</h1>
+          <p className="text-[#7A7A7A]">{userBirth ? userBirth : ''}</p>
         </div>
         <div className="text-[20px] text-[#7A7A7A] my-3 px-2">
-          {profileNickName ? 'profileComment' : ''}
+          {profileComment ? profileComment : ''}
         </div>
 
         <div className="flex justify-center">
-          {profileNickName ? (
+          {nickname ? (
             <img
               src={profileImgURL}
               alt="profile"
