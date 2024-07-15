@@ -12,7 +12,9 @@ const SimilarModal = ({ onClose, emotion }) => {
     navigate('/home');
   };
 
-  const quddy = EmotionQuddyList.find((quddy) => quddy.emotion === emotion);
+  const quddy = emotion
+    ? EmotionQuddyList.find((quddy) => quddy.emotion === emotion)
+    : undefined;
 
   return createPortal(
     <>
@@ -35,16 +37,18 @@ const SimilarModal = ({ onClose, emotion }) => {
               오늘과 비슷한 감정을 가진 날의 일기를 보여드릴게요!
             </p>
           </div>
-
-          <div className="flex flex-col justify-center items-center mt-6 gap-2">
-            <img src={quddy.imgSrc} alt={quddy.name} className="w-48 h-48" />
-            <p
-              className="font-meetme text-center text-2xl"
-              style={{ color: quddy.color }}
-            >
-              {quddy.name}
-            </p>
-          </div>
+          
+          {quddy && (
+            <div className="flex flex-col justify-center items-center mt-6 gap-2">
+              <img src={quddy.imgSrc} alt={quddy.name} className="w-48 h-48" />
+              <p
+                className="font-meetme text-center text-2xl"
+                style={{ color: quddy.color }}
+              >
+                {quddy.name}
+              </p>
+            </div>
+          )}
 
           <div className="h-[560px] overflow-hidden">
             <DiaryList

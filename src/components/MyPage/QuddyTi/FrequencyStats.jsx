@@ -11,12 +11,12 @@ import {
 const BASE_COLOR = '#EBD9C9';
 const FILL_COLOR = '#D8B18E';
 
-const FrequencyStats = ({ daysInMonth }) => {
+const FrequencyStats = ({ daysInMonth, dailyCount }) => {
   const data = [
     {
       type: 'P(즉흥)',
       type2: 'J(판단)',
-      value: Math.floor(Math.random() * (daysInMonth + 1)),
+      value: dailyCount ? dailyCount : 0,
     },
   ];
 
@@ -32,7 +32,7 @@ const FrequencyStats = ({ daysInMonth }) => {
           axisLine={false}
           tickLine={false}
           width={60}
-          tick={{ fontSize: '18px', fill: '#000' }}
+          tick={{ fontSize: '15px', fill: '#000' }}
         />
         <YAxis
           dataKey="type2"
@@ -41,7 +41,7 @@ const FrequencyStats = ({ daysInMonth }) => {
           orientation="right"
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: '18px', fill: '#000' }}
+          tick={{ fontSize: '15px', fill: '#000' }}
         />
         <Bar
           dataKey="value"

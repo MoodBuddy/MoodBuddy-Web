@@ -26,7 +26,7 @@ const ProfileCard = () => {
         </div>
 
         <div className="flex justify-center">
-          {nickname ? (
+          {profileImgURL ? (
             <img
               src={profileImgURL}
               alt="profile"
