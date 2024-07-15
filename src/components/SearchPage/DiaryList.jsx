@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -11,16 +12,16 @@ import useSearchStore from '../../store/searchStore';
 
 const DiaryList = ({ filterType, emotion, onClose }) => {
   const { searchParams } = useSearchStore();
-  console.log(searchParams);
+  const [sortOrder, setSortOrder] = useState('latest');
 
   //searchParams가 비어있으면 filterType을 'all'로 설정
   if (
-    searchParams.keyword == '' &&
+    searchParams.keyword === '' &&
     searchParams.year == null &&
     searchParams.month == null &&
     searchParams.topic == null &&
     searchParams.diaryEmotion == null &&
-    filterType != 'bookMark'
+    filterType !== 'bookMark'
   ) {
     filterType = 'all';
   }
@@ -56,10 +57,45 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
     return <div>데이터가 없습니다.</div>;
   }
 
+  const sortedData = useMemo(() => {
+    if (sortOrder === 'latest') {
+      return [...data.content].sort(
+        (a, b) => new Date(b.diaryDate) - new Date(a.diaryDate),
+      );
+    } else {
+      return [...data.content].sort(
+        (a, b) => new Date(a.diaryDate) - new Date(b.diaryDate),
+      );
+    }
+  }, [data.content, sortOrder]);
+
+  console.log(sortedData);
+
   return (
-    <div className="bg-[#F7F3EF] w-[1080px] h-screen rounded-[36px] p-6 my-10">
-      <div className="h-full overflow-y-scroll custom-scrollbar">
-        {data.content.map((item) => (
+    <div className="bg-[#F7F3EF] w-[1080px] rounded-[36px] p-6 my-10 ">
+      {/* 시간순서 정렬 */}
+      <div className="flex justify-end p-2 mr-4 text-zinc-400 sticky top-0">
+        <button
+          onClick={() => setSortOrder('latest')}
+          className={`${
+            sortOrder === 'latest' ? 'text-[#B98D6D]' : 'text-inherit'
+          }`}
+        >
+          최신순
+        </button>
+        <p>&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+        <button
+          onClick={() => setSortOrder('oldest')}
+          className={`${
+            sortOrder === 'oldest' ? 'text-[#B98D6D]' : 'text-inherit'
+          }`}
+        >
+          오래된 순
+        </button>
+      </div>
+
+      <div className="h-[800px] overflow-y-scroll custom-scrollbar">
+        {sortedData.map((item) => (
           <div key={item.diaryId}>
             <Link
               to={`/diary/${item.diaryId}`}
