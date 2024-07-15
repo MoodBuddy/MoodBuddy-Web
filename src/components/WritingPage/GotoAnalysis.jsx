@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AnalysisEmotion from './AnalysisEmotion';
 import analysisEmotion from '@assets/analysisEmotion.svg';
-import useDiaryContentStore from '../../store/diaryContentStore';
-import useTitleStore from '../../store/titleStore';
 import useUserStore from '../../store/userStore';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -12,8 +10,7 @@ const GotoAnalysis = ({
   setGotoAnalysisEmotionModal,
 }) => {
   const [AnalysisEmotionModal, setAnalysisEmotionModal] = useState(false);
-  const { title } = useTitleStore();
-  const { content } = useDiaryContentStore();
+
   const isAnalysisEmotionModal = () => {
     setAnalysisEmotionModal(!AnalysisEmotionModal);
   };

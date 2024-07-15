@@ -11,7 +11,7 @@ import { ko } from 'date-fns/locale';
 import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useweatherStore from '../../store/weatherStore';
 import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore';
-
+import ImageModal from '../DiaryPage/ImageModal';
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
@@ -21,6 +21,10 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const { setUpdateDiary } = useUpdateDiaryStore();
   const { setSelectedOption } = useweatherStore();
   const { setDiaryDeleteImg } = useDiaryDeleteImgStore();
+  const { setImageFiles } = useDiaryImgFileStore();
+  const [imgModal, setImgModal] = useState(false);
+  const [imgSource, setImgSource] = useState('');
+  const { updateDiary } = useUpdateDiaryStore();
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
     locale: ko,
   });
@@ -30,10 +34,14 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   };
   useEffect(() => {
     return () => {
+      console.log('diary');
       setTitle('');
       setContent('');
       setSelectedOption(null);
       setDiaryImg([]);
+      {
+        updateDiary ?? setImageFiles([]);
+      }
       setDiaryDeleteImg([]);
       setUpdateDiary(false);
       removeImageFile([]);
@@ -63,6 +71,11 @@ const Diary = ({ templateOn, setTemplateOn }) => {
     removeImageFile(indexToRemove);
   };
 
+  const handleImgModal = (imageUrl) => {
+    console.log(imgModal);
+    setImgSource(imageUrl);
+    setImgModal(!imgModal);
+  };
   return (
     <>
       <div className="flex relative top-[-203.5px] transform scale-75 mb-[-415px]">
@@ -96,6 +109,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
                     key={index}
                     src={imageUrl}
                     alt={`Diary Image ${index}`}
+                    onClick={() => handleImgModal(imageUrl)}
                     className="w-[300px] h-[300px]  object-cover"
                   />
                   <button
@@ -130,6 +144,11 @@ const Diary = ({ templateOn, setTemplateOn }) => {
           setSelectedTemplate={setSelectedTemplate}
         />
       </div>
+      <ImageModal
+        imgModal={imgModal}
+        setImgModal={setImgModal}
+        imgSource={imgSource}
+      />
     </>
   );
 };
