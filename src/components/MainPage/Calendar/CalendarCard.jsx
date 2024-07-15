@@ -11,10 +11,10 @@ import useCalendarStore from '../../../store/calendarStore';
 const CalendarCard = () => {
   const { selectedDate } = useCalendarStore();
   const userInfo = useUserStore((state) => ({
-    profileNickName: state.profileNickName,
+    nickname: state.nickname,
   }));
 
-  const profileNickName = userInfo.profileNickName;
+  const nickname = userInfo.nickname;
   const formattedDay = format(selectedDate, 'd');
 
   return (
@@ -51,7 +51,7 @@ const CalendarCard = () => {
 
       <div className="relative bg-[#EEEDE6] p-8 rounded-l-[66px] shadow-lg z-10">
         <h1 className="font-meetme text-5xl flex justify-center mt-8">
-          {profileNickName
+          {nickname
             ? '님의 캘린더를 통해 성장과정을 봐볼까요?'
             : '프로필을 설정하고 캘린더를 통해 성장과정을 살펴보세요 !'}
         </h1>

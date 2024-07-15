@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const EditProfileCard = () => {
   const userInfo = useUserStore((state) => ({
-    profileNickName: state.profileNickName,
+    nickname: state.nickname,
     userBirth: state.userBirth,
     profileImgURL: state.profileImgURL,
   }));
@@ -33,7 +33,7 @@ const EditProfileCard = () => {
   const [profileImage, setProfileImage] = useState(profile);
 
   const [state, setState] = useState({
-    nickname: userInfo.profileNickName || '',
+    nickname: userInfo.nickname || '',
     birthDate: userInfo.userBirth || '',
     profileComment: '',
     newProfileImg: null,

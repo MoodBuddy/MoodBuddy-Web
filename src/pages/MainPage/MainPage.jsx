@@ -1,4 +1,3 @@
-// MainPage.jsx
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import Footer from '../../components/common/layout/Footer';
@@ -26,7 +25,7 @@ const MainPage = () => {
   if (!data) {
     return <div>데이터가 없습니다.</div>;
   }
-  
+
   if (isError) {
     console.error('Error fetching user info:', error);
     return <div>오류 발생: {error.message}</div>;
