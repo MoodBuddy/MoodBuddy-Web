@@ -34,7 +34,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   };
   useEffect(() => {
     return () => {
-      console.log('diary');
       setTitle('');
       setContent('');
       setSelectedOption(null);

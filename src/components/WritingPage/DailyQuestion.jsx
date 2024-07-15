@@ -15,8 +15,6 @@ const DailynQuestion = ({ selectedTemplate, setSelectedTemplate }) => {
   ];
   const select = (question) => {
     setSelectedTemplate(question);
-    console.log(question);
-    console.log(selectedTemplate);
   };
   return (
     <>

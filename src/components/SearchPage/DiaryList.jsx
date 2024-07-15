@@ -26,8 +26,6 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
     filterType = 'all';
   }
 
-  console.log(filterType);
-
   // 필터 타입에 따라 다른 API 함수 선택
   const getDiariesQuery = () => {
     switch (filterType) {
@@ -68,8 +66,6 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
       );
     }
   }, [data.content, sortOrder]);
-
-  console.log(sortedData);
 
   return (
     <div className="bg-[#F7F3EF] w-[1080px] rounded-[36px] p-6 my-10 ">

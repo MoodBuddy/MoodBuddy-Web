@@ -12,7 +12,6 @@ const BASE_COLOR = '#EBD9C9';
 const FILL_COLOR = '#D8B18E';
 
 const TopicStats = ({ topicList, daysInMonth, data }) => {
-  console.log(data);
   const generateData = () => {
     return topicList.map((topic) => ({
       type: `${topic.value}(${topic.label})`,
