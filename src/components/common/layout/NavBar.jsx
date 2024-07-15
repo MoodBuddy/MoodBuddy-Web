@@ -39,7 +39,8 @@ const NavBar = () => {
             <div
               key={item.id}
               onMouseEnter={item.id === 5 ? handleMouseEnter : undefined}
-              className="relative"
+              onMouseLeave={item.id === 5 ? handleMouseLeave : undefined}
+              className="relative h-full flex items-center"
             >
               <NavLink
                 to={item.to}
@@ -53,7 +54,7 @@ const NavBar = () => {
                 {item.name}
               </NavLink>
               {hoveredMyPage && item.id === 5 && (
-                <div className="absolute z-10 top-[73px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
+                <div className="absolute z-10 top-[70px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
                   <div className="flex flex-col items-start p-2">
                     <NavLink
                       to="/editProfile"
