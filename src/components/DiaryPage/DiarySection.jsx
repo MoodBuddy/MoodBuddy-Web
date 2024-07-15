@@ -8,10 +8,13 @@ import SimilarModal from './SimilarModal';
 import EditBar from './EditBar';
 import happyBubble from '../../../public/image/happyBubble.svg';
 import useSpeechBubbleStore from '../../store/speechBubbleStore';
+import ImageModal from './ImageModal';
 
 const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { speechBubble, setSpeechBubble } = useSpeechBubbleStore();
+  const [imgModal, setImgModal] = useState(false);
+  const [imgSource, setImgSource] = useState('');
   const {
     isError,
     data: diary,
@@ -45,6 +48,12 @@ const DiarySection = ({ diaryId }) => {
 
   const formattedWeather = formatWeather(diary.diaryWeather);
   const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
+
+  const handleImgModal = (imageUrl) => {
+    console.log(imgModal);
+    setImgSource(imageUrl);
+    setImgModal(!imgModal);
+  };
   return (
     <div>
       <EditBar diaryId={diaryId} />
@@ -93,6 +102,7 @@ const DiarySection = ({ diaryId }) => {
           <div className="flex overflow-x-auto custom-scrollbar gap-[30px] ">
             {diary.diaryImgList.map((imgUrl, index) => (
               <img
+                onClick={() => handleImgModal(imgUrl)}
                 key={index}
                 src={imgUrl}
                 alt={`Diary Image ${index}`}
@@ -114,6 +124,11 @@ const DiarySection = ({ diaryId }) => {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+      <ImageModal
+        imgModal={imgModal}
+        setImgModal={setImgModal}
+        imgSource={imgSource}
+      />
     </div>
   );
 };

@@ -36,7 +36,7 @@ const TopBar = ({ setTemplateOn }) => {
   const { setDraftList } = useDraftListStore();
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
-  const { diaryDeleteImg } = useDiaryDeleteImgStore();
+  const { diaryDeleteImg, setDiaryDeleteImg } = useDiaryDeleteImgStore();
   const { temporaryDiary } = useTemporaryDiaryStore();
   const navigate = useNavigate();
 
@@ -122,6 +122,7 @@ const TopBar = ({ setTemplateOn }) => {
       }
       console.log(...formData);
       await updateDiaryOne(formData);
+      await setDiaryDeleteImg([]);
       navigate(`/diary/${diaryItemId}`);
     } catch (error) {
       console.error('일기 수정 오류', error);
