@@ -67,7 +67,7 @@ const SearchSection = () => {
   };
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative z-0">
       <div className="flex flex-col items-center gap-4 mt-16">
         <div className="flex justify-center items-center gap-4 relative z-50">
           <div className="relative">

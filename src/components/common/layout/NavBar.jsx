@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../../apis/user';
 
 const NavBar = () => {
-  const isLogin = !!localStorage.getItem('token');
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
   const handleMouseEnter = () => {
     setHoveredMyPage(true);
@@ -30,7 +29,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="flex top-0 z-20 bg-[#E8DBCF] h-[84px] justify-around transform scale-75">
+      <div className="flex relative top-0 z-20 bg-[#E8DBCF] h-[84px] justify-around transform scale-75">
         <div className="flex items-center text-2xl mr-12 ">
           <h1 className="font-meetme">MOODBUDDY</h1>
         </div>
@@ -54,7 +53,7 @@ const NavBar = () => {
                 {item.name}
               </NavLink>
               {hoveredMyPage && item.id === 5 && (
-                <div className="absolute top-[73px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
+                <div className="absolute z-10 top-[73px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
                   <div className="flex flex-col items-start p-2">
                     <NavLink
                       to="/editProfile"
