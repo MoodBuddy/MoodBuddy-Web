@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
 import useweatherStore from '../../store/weatherStore';
 
 const Weather = () => {
   const { selectedOption, setSelectedOption } = useweatherStore();
-
+  useEffect(() => {
+    setSelectedOption('CLEAR');
+  }, []);
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };

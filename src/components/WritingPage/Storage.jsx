@@ -3,11 +3,14 @@ import { ko } from 'date-fns/locale';
 import useDraftEditStore from '../../store/draftEditStore';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
+import TemporaryStorage from './TemporaryStorage';
 
 const Storage = ({ diaryDate, index, onSelectionChange, resetSelection }) => {
   const { draftEdit } = useDraftEditStore();
   const [isSelected, setIsSelected] = useState(false); // 체크박스 상태 추가
   const isInitialMount = useRef(true);
+  const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const navigate = useNavigate();
 
   const formattedDate = format(new Date(diaryDate), 'yyyy년 MM월 dd일 (EEE)', {
@@ -40,6 +43,8 @@ const Storage = ({ diaryDate, index, onSelectionChange, resetSelection }) => {
 
   const handleDraftDiaryItem = async () => {
     console.log(index);
+    setTemporaryDiary(true);
+    console.log(temporaryDiary);
     navigate(`/diary/${index}`);
   };
 

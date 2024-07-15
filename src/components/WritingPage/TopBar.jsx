@@ -1,6 +1,6 @@
 import img from '@assets/img.svg';
 import save from '../../../public/icon/save.svg';
-import temporaryStorage from '@assets/temporaryStorage.svg';
+import temporary from '@assets/temporaryStorage.svg';
 import showTemplate from '@assets/showTemplate.svg';
 import { useEffect, useState } from 'react';
 import TemporaryStorage from './TemporaryStorage.jsx';
@@ -21,6 +21,7 @@ import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
 import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore.js';
 import { useNavigate } from 'react-router-dom';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -36,11 +37,13 @@ const TopBar = ({ setTemplateOn }) => {
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { diaryDeleteImg } = useDiaryDeleteImgStore();
+  const { temporaryDiary } = useTemporaryDiaryStore();
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(updateDiary);
     console.log(diaryItemId);
+    console.log(temporaryDiary);
   }, []);
 
   const handleFileChange = (e) => {
@@ -151,7 +154,7 @@ const TopBar = ({ setTemplateOn }) => {
                 onClick={CheckDraftDiary}
                 className="flex flex-col items-center gap-[13.5px] "
               >
-                <img src={temporaryStorage} className="w-[35px] h-[35px]"></img>
+                <img src={temporary} className="w-[35px] h-[35px]"></img>
                 <p>임시저장</p>
               </div>
               <div className="border-l-[1.5px] border-[#b3b3b3] rounded-md  h-16 mx-4"></div>
@@ -165,7 +168,9 @@ const TopBar = ({ setTemplateOn }) => {
 
             <button
               onClick={
-                updateDiary ? handleupdateDiary : isGotoAnalysisEmotionModal
+                updateDiary && !temporaryDiary
+                  ? handleupdateDiary
+                  : isGotoAnalysisEmotionModal
               }
               className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-col justify-center items-center gap-[13.5px]"
             >
