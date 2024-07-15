@@ -19,17 +19,8 @@ const QuddyTiInfo = () => {
   const { isError, data } = useQuery({
     queryKey: ['quddyTI'],
     queryFn: getquddyTI,
-    throwOnError: true,
-    onError: (error) => {
-      console.error('Error fetching quddyTI data:', error);
-    },
+    throwOnError: false,
   });
-
-  console.log(data);
-
-  if (!data || isError) {
-    return <div className="p-6">데이터가 없습니다.</div>;
-  }
 
   return (
     <div className="p-6">
@@ -41,10 +32,7 @@ const QuddyTiInfo = () => {
           나의 QuddyTI를 알아볼까요?
         </h1>
 
-        <FrequencyStats
-          daysInMonth={daysInMonth}
-          dailyCount={data.dailyCount}
-        />
+        <FrequencyStats daysInMonth={daysInMonth} count={data} />
         <TopicStats topicList={topics} data={data} daysInMonth={daysInMonth} />
         <EmotionStats emotions={emotions} data={data} />
         <TypeStats data={data} />

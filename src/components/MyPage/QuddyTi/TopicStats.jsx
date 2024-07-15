@@ -16,7 +16,7 @@ const TopicStats = ({ topicList, daysInMonth, data }) => {
   const generateData = () => {
     return topicList.map((topic) => ({
       type: `${topic.value}(${topic.label})`,
-      value: data[`${topic.value.toLowerCase()}Count`] || 0,
+      value: data ? data[`${topic.value.toLowerCase()}Count`] : 0,
     }));
   };
 
