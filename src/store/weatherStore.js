@@ -1,6 +1,6 @@
 import create from 'zustand';
 const useweatherStore = create((set) => ({
-  selectedOption: null,
+  selectedOption: 'CLEAR',
   setSelectedOption: (newOption) => set({ selectedOption: newOption }),
 }));
 
