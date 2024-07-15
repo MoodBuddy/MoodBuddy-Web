@@ -8,7 +8,6 @@ import useDraftListStore from '../../store/draftListStore';
 const TemporaryStorage = ({
   isTemporaryStorageModal,
   temporaryStorageModal,
-  draftId,
 }) => {
   const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
   const { draftList, setDraftList } = useDraftListStore();

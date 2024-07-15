@@ -20,6 +20,7 @@ import useDraftListStore from '../../store/draftListStore.js';
 import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
 import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore.js';
+import { useNavigate } from 'react-router-dom';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -35,6 +36,8 @@ const TopBar = ({ setTemplateOn }) => {
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { diaryDeleteImg } = useDiaryDeleteImgStore();
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log(updateDiary);
     console.log(diaryItemId);
@@ -183,7 +186,10 @@ const TopBar = ({ setTemplateOn }) => {
         isTemporaryStorageModal={isTemporaryStorageModal}
         temporaryStorageModal={temporaryStorageModal}
       />
-      <GotoAnalysis gotoAnalysisEmotionModal={gotoAnalysisEmotionModal} />
+      <GotoAnalysis
+        gotoAnalysisEmotionModal={gotoAnalysisEmotionModal}
+        setGotoAnalysisEmotionModal={setGotoAnalysisEmotionModal}
+      />
     </>
   );
 };

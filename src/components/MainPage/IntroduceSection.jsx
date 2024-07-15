@@ -4,6 +4,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '@styles/slick.css';
 import banner_1 from '@assets/banner/banner_1.svg';
+import banner_1_1 from '@assets/banner/banner_1_1.svg';
+import banner_1_2 from '@assets/banner/banner_1_2.svg';
 import banner_2 from '@assets/banner/banner_2.svg';
 import banner_3 from '@assets/banner/banner_3.svg';
 import banner_4 from '@assets/banner/banner_4.svg';
@@ -66,6 +68,23 @@ const IntroduceSection = () => {
     <div>
       <Slider {...settings}>
         <Link>
+          {/* <div className="relative">
+            <img
+              src={banner_1}
+              alt="Banner 1"
+              className="w-full absolute top-[-15px] z-10"
+            />
+            <img
+              src={banner_1_2}
+              alt="Banner 1_2"
+              className="w-[467px] h-[152px] left-[190px] absolute top-[110px] z-30"
+            />
+            <img
+              className="animate-bounce w-full  absolute top-[-25px] z-20"
+              src={banner_1_1}
+              alt="Banner 1_1"
+            />
+          </div> */}
           <img src={banner_1} alt="Banner 1" className="w-full" />
         </Link>
         <Link to="/writing">

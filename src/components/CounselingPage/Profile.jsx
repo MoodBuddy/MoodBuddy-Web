@@ -5,7 +5,7 @@ const Profile = ({ data }) => {
   const handleWritingLetter = () => {
     navigate('/counseling/writingLetter');
   };
-  
+
   return (
     <div className=" flex flex-col items-center w-[286px] h-[619px] bg-[#F7F3EF] rounded-2xl">
       <div className="transform scale-75 relative top-[-110px]">
@@ -30,9 +30,7 @@ const Profile = ({ data }) => {
         ></img>
         <div className="ml-3">
           <div className="flex items-end mt-[20px]">
-            <div className="font-semibold text-4xl mr-4">
-              {data.nickname}
-            </div>
+            <div className="font-semibold text-4xl mr-4">{data.nickname}</div>
             <div className="font-thin text-xl">{data.userBirth}</div>
           </div>
           <div className="text-2xl mt-4 whitespace-pre-wrap">
