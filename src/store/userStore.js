@@ -1,5 +1,4 @@
-// useUserStore.js (Zustand 스토어)
-import create from 'zustand';
+import { create } from 'zustand';
 
 const useUserStore = create((set) => ({
   nickname: null,

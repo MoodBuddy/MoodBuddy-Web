@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 const useDiaryImgFileStore = create((set) => ({
   imageFiles: [], // 파일 배열로 상태를 초기화

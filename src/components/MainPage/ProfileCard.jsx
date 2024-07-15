@@ -8,7 +8,7 @@ const ProfileCard = () => {
     profileImgURL: state.profileImgURL,
     profileComment: state.profileComment,
   }));
-  console.log(userInfo);
+
   const nickname = userInfo.nickname;
   const userBirth = userInfo.userBirth;
   const profileImgURL = userInfo.profileImgURL;
