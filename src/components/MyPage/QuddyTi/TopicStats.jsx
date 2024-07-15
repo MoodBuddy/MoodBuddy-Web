@@ -11,11 +11,12 @@ import {
 const BASE_COLOR = '#EBD9C9';
 const FILL_COLOR = '#D8B18E';
 
-const TopicStats = ({ data, daysInMonth }) => {
+const TopicStats = ({ topicList, daysInMonth, data }) => {
+  console.log(data);
   const generateData = () => {
-    return data.map((topic) => ({
+    return topicList.map((topic) => ({
       type: `${topic.value}(${topic.label})`,
-      value: Math.floor(Math.random() * (daysInMonth + 1)),
+      value: data[`${topic.value.toLowerCase()}Count`] || 0,
     }));
   };
 
@@ -35,7 +36,7 @@ const TopicStats = ({ data, daysInMonth }) => {
           type="category"
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: '16px', fill: '#000' }}
+          tick={{ fontSize: '15px', fill: '#000' }}
         />
         <Bar
           dataKey="value"

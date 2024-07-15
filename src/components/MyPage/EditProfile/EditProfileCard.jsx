@@ -17,7 +17,6 @@ const EditProfileCard = () => {
     queryKey: ['profile'],
     queryFn: getProfile,
   });
-  console.log(data);
 
   if (!data) {
     return <div>데이터가 없습니다.</div>;
@@ -30,7 +29,7 @@ const EditProfileCard = () => {
 
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const [notificationTime, setNotificationTime] = useState('');
-  const [profileImage, setProfileImage] = useState(profile);
+  const [profileImage, setProfileImage] = useState(data.url || profile);
 
   const [state, setState] = useState({
     nickname: userInfo.nickname || '',
@@ -116,7 +115,7 @@ const EditProfileCard = () => {
             프로필 사진
           </div>
           <img
-            src={data.url}
+            src={profileImage}
             className="w-[377px] h-[444px] rounded-3xl object-cover"
           />
           <div className="flex flex-row gap-[5px] justify-center mt-[16.5px]">
@@ -145,7 +144,7 @@ const EditProfileCard = () => {
               type="text"
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder={`${data.nickname || ''}`}
+              placeholder={`${getNamePlaceholder()}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
