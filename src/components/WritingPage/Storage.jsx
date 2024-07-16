@@ -42,9 +42,7 @@ const Storage = ({ diaryDate, index, onSelectionChange, resetSelection }) => {
   };
 
   const handleDraftDiaryItem = async () => {
-    console.log(index);
     setTemporaryDiary(true);
-    console.log(temporaryDiary);
     navigate(`/diary/${index}`);
   };
 

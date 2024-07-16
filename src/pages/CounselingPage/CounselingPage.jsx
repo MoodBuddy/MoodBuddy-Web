@@ -36,9 +36,7 @@ const CounselingPage = () => {
           </div>
         </div>
       </div>
-      <div className="relative top-[-180px]">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };

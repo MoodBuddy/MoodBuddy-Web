@@ -27,7 +27,6 @@ const MailBoxContent = ({ letter }) => {
 
   const formattedDate = formatDate(letter.letterCreatedTime);
 
-  console.log(letter);
   return (
     <div
       onClick={handleMailBox}

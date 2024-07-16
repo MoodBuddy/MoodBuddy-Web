@@ -41,7 +41,7 @@ const EmotionStats = ({ data, emotions }) => {
 
   const chartData = emotions.map((emotion) => ({
     name: emotion.name,
-    value: data[emotion.key] || 0,
+    value: data ? data[emotion.key] : 1,
   }));
 
   const renderLegend = (props) => {

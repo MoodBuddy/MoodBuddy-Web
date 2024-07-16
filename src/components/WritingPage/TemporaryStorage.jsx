@@ -31,8 +31,6 @@ const TemporaryStorage = ({
     const DraftDiaryNum = async () => {
       try {
         const { draftList, draftLength } = await getFindDraftAll();
-        console.log(draftList);
-        console.log(draftLength);
         setDraftDiaryNum(draftLength);
         setDraftList(draftList);
       } catch (error) {
@@ -45,7 +43,6 @@ const TemporaryStorage = ({
 
   const handleEdit = () => {
     setDraftEdit(!draftEdit);
-    console.log(draftEdit);
   };
 
   const handleSelectionChange = (index, isSelected) => {
@@ -65,8 +62,6 @@ const TemporaryStorage = ({
       window.confirm(`임시 저장된 일기 ${selectedCount}개를 삭제하시겠습니까?`)
     ) {
       try {
-        console.log(selectedIndexes);
-
         await deleteDraft(selectedIndexes);
         const { draftList: newDraftList, draftLength } =
           await getFindDraftAll();

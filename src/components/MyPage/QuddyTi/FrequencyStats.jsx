@@ -11,12 +11,14 @@ import {
 const BASE_COLOR = '#EBD9C9';
 const FILL_COLOR = '#D8B18E';
 
-const FrequencyStats = ({ daysInMonth, dailyCount }) => {
+const FrequencyStats = ({ daysInMonth, count }) => {
+  const dailyCount = count ? count.dailyCount : 0;
+
   const data = [
     {
       type: 'P(즉흥)',
       type2: 'J(판단)',
-      value: dailyCount ? dailyCount : 0,
+      value: dailyCount,
     },
   ];
 
