@@ -13,7 +13,7 @@ const KakaoLoginAuth = () => {
       try {
         const res = await axios({
           method: 'GET',
-          url: `http://localhost:8080/api/v1/user/login/oauth2/code/kakao?code=${code}`,
+          url: `${import.meta.env.VITE_API_BASE_URL}/api/v1/user/login/oauth2/code/kakao?code=${code}`,
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
