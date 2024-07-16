@@ -6,6 +6,7 @@ import gloomyQuddy from '@assets/gloomyQuddy.svg';
 import kakaoIcon from '../../../public/icon/kakaoIcon.svg';
 import Button from '../common/button/Button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const WelcomeSection = () => {
   const CLIENT_ID = import.meta.env.VITE_REST_API_KEY;
@@ -13,8 +14,11 @@ const WelcomeSection = () => {
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    navigate('/home');
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#EDE2DA]">
       <div className="flex flex-col items-center gap-2">
@@ -59,7 +63,7 @@ const WelcomeSection = () => {
             placeholder="아이디를 입력하세요"
           />
         </div>
-        <div className="flex gap-[53px]">
+        {/* <div className="flex gap-[53px]">
           <div className="font-medium text-[24px] w-[88px]">비밀번호</div>
           <input
             className="border-[1px] border-black p-[10px] w-[390px] h-[40px] rounded-[7px]"
@@ -68,7 +72,7 @@ const WelcomeSection = () => {
             onChange={(e) => setPw(e.target.value)}
             placeholder="비밀번호를 입력하세요"
           />
-        </div>
+        </div> */}
         <button
           className="mt-[15px] w-[145px] h-[45px] bg-[#AC7544] text-[#FFFFFF] text-medium font-[20px] rounded-[8px]"
           onClick={handleLogin}
