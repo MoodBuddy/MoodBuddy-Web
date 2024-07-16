@@ -69,7 +69,6 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       formData.append('diaryDate', new Date().toISOString().slice(0, -5));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
-
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('diaryImgList', imageFiles[i]);
       }
