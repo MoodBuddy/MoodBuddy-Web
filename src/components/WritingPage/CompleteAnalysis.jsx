@@ -60,6 +60,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       setItem(quddy);
     }
   }, [emotion]);
+
   const isCompleteSave = async () => {
     try {
       const formData = new FormData();

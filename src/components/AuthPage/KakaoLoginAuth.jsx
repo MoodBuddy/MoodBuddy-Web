@@ -8,7 +8,7 @@ const KakaoLoginAuth = () => {
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
-
+    console.log('로그인 하기');
     const kakaoLogin = async () => {
       try {
         const res = await axios({
