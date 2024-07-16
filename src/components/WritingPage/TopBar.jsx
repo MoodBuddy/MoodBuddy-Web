@@ -19,7 +19,6 @@ import useDraftNumStore from '../../store/draftNumStore.js';
 import useDraftListStore from '../../store/draftListStore.js';
 import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
-import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore.js';
 import { useNavigate } from 'react-router-dom';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 
@@ -36,7 +35,6 @@ const TopBar = ({ setTemplateOn }) => {
   const { setDraftList } = useDraftListStore();
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
-  const { diaryDeleteImg, setDiaryDeleteImg } = useDiaryDeleteImgStore();
   const { temporaryDiary } = useTemporaryDiaryStore();
   const navigate = useNavigate();
 
@@ -114,7 +112,6 @@ const TopBar = ({ setTemplateOn }) => {
       formData.append('diaryTitle', title);
       formData.append('diaryDate', new Date().toISOString().slice(0, -5));
       formData.append('diaryStatus', 'PUBLISHED');
-      formData.append('imagesToDelete', diaryDeleteImg);
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {

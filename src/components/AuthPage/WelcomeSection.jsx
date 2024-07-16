@@ -14,11 +14,8 @@ const WelcomeSection = () => {
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
-  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate('/home');
-  };
+  const handleLogin = async () => {};
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#EDE2DA]">
       <div className="flex flex-col items-center gap-2">

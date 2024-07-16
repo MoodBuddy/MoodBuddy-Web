@@ -134,7 +134,7 @@ const TemporaryStorage = ({
               <div className="mr-[10px] h-[240px] overflow-x-hidden overflow-y-auto custom-scrollbar ">
                 {draftList.map((it) => (
                   <Storage
-                    index={it.productId}
+                    index={it.diaryId}
                     diaryDate={it.diaryDate}
                     onSelectionChange={handleSelectionChange}
                   />

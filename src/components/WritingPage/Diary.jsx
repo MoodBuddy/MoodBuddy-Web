@@ -10,7 +10,6 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useweatherStore from '../../store/weatherStore';
-import useDiaryDeleteImgStore from '../../store/diaryDeleteImgStore';
 import ImageModal from '../DiaryPage/ImageModal';
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
@@ -20,7 +19,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const { removeImageFile } = useDiaryImgFileStore();
   const { setUpdateDiary } = useUpdateDiaryStore();
   const { setSelectedOption } = useweatherStore();
-  const { setDiaryDeleteImg } = useDiaryDeleteImgStore();
   const { setImageFiles } = useDiaryImgFileStore();
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
@@ -41,7 +39,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       {
         updateDiary ?? setImageFiles([]);
       }
-      setDiaryDeleteImg([]);
       setUpdateDiary(false);
       removeImageFile([]);
     };
@@ -66,7 +63,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const handleImageRemove = (indexToRemove) => {
     const newDiaryImg = diaryImg.filter((_, index) => index !== indexToRemove);
     setDiaryImg(newDiaryImg);
-    setDiaryDeleteImg(diaryImg[indexToRemove]);
     removeImageFile(indexToRemove);
   };
 
