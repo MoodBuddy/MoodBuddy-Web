@@ -10,8 +10,8 @@ const EditProfilePage = () => {
         className={` flex flex-col justify-center items-center ${styles.check}`}
       >
         <div className="mt-10">
-          <div className="font-extrabold text-[40px]">프로필 수정</div>
-          <div className="mb-[40px] font-light text-[24px]">
+          <div className="font-extrabold text-4xl mb-2">프로필 수정</div>
+          <div className="mb-[40px] font-light text-xl">
             무드버디에서 사용하는 프로필을 수정하실 수 있어요.
           </div>
           <div className="mb-[110px]">

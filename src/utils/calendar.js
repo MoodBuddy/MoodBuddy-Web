@@ -20,3 +20,7 @@ export const getDiaryId = (diaryList, date) => {
   const diary = diaryList.find((item) => item.diaryDate === date);
   return diary ? diary.diaryId : '';
 };
+
+export const getQuddyData = (diaryEmotion) => {
+  return quddies.find((quddy) => quddy.emotion === diaryEmotion) || {};
+};

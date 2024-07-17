@@ -17,25 +17,28 @@ const Letter = () => {
   const todayDate = formatDate();
 
   return (
-    <div>
-      <div className="transform scale-[85%] relative top-[-135px]">
-        <div className="box-content border-[1px] border-black w-[1570px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
-          <div className="px-[23px] w-full h-[98px] border-b-[1px] border-black flex justify-between items-center ">
+    <div className="z-10">
+      <div>
+        <div className="box-content border-[1px] w-[1000px] h-[900px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-20">
+          {/* 상단 보내기 바 */}
+          <div className="px-[23px] py-3 w-full border-b-[1px] border-black flex justify-between items-center">
             <button onClick={() => navigate(-1)}>
-              <img src={back} />
+              <img src={back} className="w-6 h-6" />
             </button>
-            <div className="font-medium text-[35px] ml-20">To.QUDDY</div>
+            <div className="font-medium text-2xl ml-20">To.QUDDY</div>
             <Button
               onClick={isSending}
-              className="w-[130px] h-[62px] rounded-[13px] bg-[#D8B18E] font-bold text-[20px]"
+              className="w-[100px] h-12 rounded-[13px] bg-[#D8B18E] font-bold text-lg"
             >
               보내기
             </Button>
           </div>
-          <div className="gap-[95px] flex flex-col justify-center items-center ">
+
+          {/* 편지 내용 작성 */}
+          <div className="flex flex-col justify-center items-center">
             <textarea
               type="text"
-              className="mt-[150px] text-center font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] h-[1005px] overflow-y-auto custom-scrollbar"
+              className="mt-[150px] text-center font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none resize-none w-[1000px] h-[600px] overflow-y-auto custom-scrollbar"
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
@@ -44,7 +47,7 @@ const Letter = () => {
 내가 다음날 답장을 보내줄게요.
 나에게 고민을 털어버리고 훌훌 털어버려요"
             />
-            <div className="self-end flex flex-col items-end font-medium text-[30px] pr-[80px] gap-[10px] ">
+            <div className="self-end flex flex-col items-end font-medium text-xl gap-[10px] mr-10">
               <div>{todayDate}</div>
               <div>From.닉네임</div>
             </div>

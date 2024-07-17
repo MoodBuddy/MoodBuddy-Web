@@ -11,8 +11,8 @@ const MyActivityPage = () => {
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
         <div className="mt-10">
-          <div className="font-extrabold text-[40px]">내 활동</div>
-          <div className="mb-[40px] font-light text-[24px]">
+          <div className="font-extrabold text-4xl mb-2">내 활동</div>
+          <div className="mb-[40px] font-light text-xl">
             현재까지 작성한 일기 횟수와 감정을 볼 수 있어요.
           </div>
           <div className="flex gap-[24px] mb-[110px]">

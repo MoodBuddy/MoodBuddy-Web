@@ -14,7 +14,7 @@ const QuddyLetterTopBar = ({ data }) => {
 
   return (
     <div className="transform scale-[85%]">
-      <div className="flex items-center gap-[30px] w-[1600px] h-[95px] bg-[#F7F3EF] border-[3px] border-black transform scale-75 mt-[48px] rounded-[20px] mb-[25px]">
+      <div className="flex items-center gap-[30px] w-[1570px] h-[95px] bg-[#F7F3EF] border-[3px] border-black transform scale-75 mt-12 rounded-[20px]">
         <img className="ml-[67px]" src={msg} alt="message icon" />
         <div className="font-meetme text-[40px]">
           {hoursDifference > 12
