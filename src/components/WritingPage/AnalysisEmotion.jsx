@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
-import CompleteAnalysis from './CompleteAnalysis';
-import useUserStore from '../../store/userStore';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { getProfile } from '../../apis/user';
+import CompleteAnalysis from './CompleteAnalysis';
 
 const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
   const [progress, setProgress] = useState(0);
   const [completeAnaylsis, setCompleteAnaylsis] = useState(false);
-  const userInfo = useUserStore((state) => ({
-    nickname: state.nickname,
-  }));
-  const nickname = userInfo.nickname;
+
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
   });
+  const { isError, data, error } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  });
+  const nickname = data.nickname;
+
   useEffect(() => {
     let interval;
     if (AnalysisEmotionModal) {

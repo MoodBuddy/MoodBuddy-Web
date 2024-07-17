@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import AnalysisEmotion from './AnalysisEmotion';
-import analysisEmotion from '@assets/analysisEmotion.svg';
-import useUserStore from '../../store/userStore';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { getProfile } from '../../apis/user';
+import AnalysisEmotion from './AnalysisEmotion';
+import analysisEmotion from '@assets/analysisEmotion.svg';
 import close from '../../../public/icon/close.svg';
+import Button from '../common/button/Button';
+
 const GotoAnalysis = ({
   gotoAnalysisEmotionModal,
   setGotoAnalysisEmotionModal,
@@ -14,13 +17,15 @@ const GotoAnalysis = ({
   const isAnalysisEmotionModal = () => {
     setAnalysisEmotionModal(!AnalysisEmotionModal);
   };
-  const userInfo = useUserStore((state) => ({
-    nickname: state.nickname,
-  }));
-  const nickname = userInfo.nickname;
+
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
   });
+  const { isError, data, error } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  });
+  const nickname = data.nickname;
 
   const handleClose = () => {
     setGotoAnalysisEmotionModal(!gotoAnalysisEmotionModal);
@@ -32,6 +37,7 @@ const GotoAnalysis = ({
     const jong = diff % 28; //남은 값을 28로 나눠서 나머지 구함
     return jong !== 0; //나머지가 0이 아니면 받침 존재
   };
+
   const getPostPosition = (nickname) => {
     if (!nickname) return '은'; //닉네임이 없으면 기본 조사 '은'
     const lastChar = nickname[nickname.length - 1];
@@ -55,12 +61,12 @@ const GotoAnalysis = ({
               </div>
               <img className=" w-[120px] h-[120px]" src={analysisEmotion} />
               <div>
-                <button
+                <Button
                   onClick={isAnalysisEmotionModal}
                   className="bg-[#D8B18E] font-medium text-[20px] w-[223px] h-[50px] rounded-[13px] mt-[20px] "
                 >
                   감정분석하기
-                </button>
+                </Button>
               </div>
             </div>
           </div>
