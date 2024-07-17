@@ -12,6 +12,7 @@ import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useweatherStore from '../../store/weatherStore';
 import ImageModal from '../DiaryPage/ImageModal';
 import useDiaryDateStore from '../../store/diaryDateStore';
+
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
@@ -24,9 +25,15 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const [imgSource, setImgSource] = useState('');
   const { diaryDate } = useDiaryDateStore();
 
-  const updateDate = format(new Date(diaryDate), 'yyyy년 MM월 dd일 EEEE', {
-    locale: ko,
-  });
+  const diaryDateValue = new Date(diaryDate);
+  const isValidDate = !isNaN(diaryDateValue);
+  
+  const updateDate = format(
+    isValidDate ? diaryDateValue : new Date(),
+    'yyyy년 MM월 dd일 EEEE',
+    { locale: ko }
+  );
+
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
     locale: ko,
   });
