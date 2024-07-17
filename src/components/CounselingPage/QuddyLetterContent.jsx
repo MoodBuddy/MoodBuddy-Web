@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import back from '../../../public/icon/back.svg';
 import { useNavigate } from 'react-router-dom';
-import { addHours } from 'date-fns';
+import { addHours, addMinutes } from 'date-fns';
 import Timer from './Timer';
 import useShowAnswerStore from '../../store/showAnswerStore';
 
@@ -12,12 +12,14 @@ const QuddyLetterContent = ({ data }) => {
     setShowAnswer: state.setShowAnswer,
   }));
   const [timeToDisplayAnswer, setTimeToDisplayAnswer] = useState(null);
-
+  console.log(data);
   useEffect(() => {
     if (data && data.letterDate) {
       const letterDate = new Date(data.letterDate);
-      // 12시간 뒤에 보여지게 설정
-      const displayTime = addHours(letterDate, 12);
+      // 12시간 뒤에 보여지게 설정, 현재는 임의로 3분으로 수정
+      // const displayTime = addHours(letterDate, 12);
+
+      const displayTime = addMinutes(letterDate, 10);
       setTimeToDisplayAnswer(displayTime);
     }
   }, [data]);

@@ -16,13 +16,15 @@ const SelectModal = ({ sending, setSending }) => {
     setSending(false);
 
     try {
-      const offset = new Date().getTimezoneOffset() * 60000;
-      const today = new Date(Date.now() - offset);
+      const today = new Date();
+      today.setTime(today.getTime() + 9 * 60 * 60 * 1000);
+      const todayUTC = today.toISOString();
+      console.log(todayUTC);
 
       const letterData = {
         letterFormat: format,
         letterWorryContent: content,
-        letterDate: today,
+        letterDate: todayUTC,
       };
 
       const response = await postLetter(letterData);
@@ -76,9 +78,9 @@ const SelectModal = ({ sending, setSending }) => {
                 고민 전송 완료 !
               </div>
               <div className="text-[30px] mb-[30px]">
-                12시간 뒤에 답장이 와요
+                10분 뒤에 답장이 와요
               </div>
-              <FakeTimer hh={'12'} mm={'00'} ss={'00'} />
+              <FakeTimer hh={'00'} mm={'10'} ss={'00'} />
 
               <Button
                 onClick={() => navigate('/counseling/completedWriting')}

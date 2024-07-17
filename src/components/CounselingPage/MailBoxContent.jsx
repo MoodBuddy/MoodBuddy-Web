@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addHours, isAfter } from 'date-fns';
+import { addHours, addMinutes, isAfter } from 'date-fns';
 import { formatDate } from '../../utils/format';
 
 const MailBoxContent = ({ letter }) => {
@@ -11,21 +11,26 @@ const MailBoxContent = ({ letter }) => {
     navigate(`/counseling/letter/${letter.letterId}`);
   };
 
-  useEffect(() => {
-    if (letter.letterCreatedTime) {
-      const createdTime = new Date(letter.letterCreatedTime);
-      const twelveHoursLater = addHours(createdTime, 12);
-      const currentTime = new Date();
+  console.log(letter);
 
-      if (isAfter(currentTime, twelveHoursLater)) {
+  useEffect(() => {
+    if (letter.letterDate) {
+      const createdTime = new Date(letter.letterDate);
+      // 12시간 뒤에 보여지게 설정, 현재는 임의로 10분으로 수정
+      // const replyAvailableTime = addHours(createdTime, 12);
+
+      const replyAvailableTime = addMinutes(createdTime, 10);
+      const currentTime = new Date();
+      console.log('현재시간', currentTime);
+      if (currentTime >= replyAvailableTime) {
         setReplyMessage('ㅣ 답장이 도착했어요.');
       } else {
         setReplyMessage('');
       }
     }
-  }, [letter.letterCreatedTime]);
+  }, [letter.letterDate]);
 
-  const formattedDate = formatDate(letter.letterCreatedTime);
+  const formattedDate = formatDate(letter.letterDate);
 
   return (
     <div
