@@ -26,7 +26,7 @@ const Letter = () => {
   return (
     <div className="z-10">
       <div>
-        <div className="box-content border-[1px] w-[1000px] h-[900px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-20">
+        <div className="box-content border-[1px] w-[1000px] h-[939px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-[145px]">
           {/* 상단 보내기 바 */}
           <div className="px-[23px] py-3 w-full border-b-[1px] border-black flex justify-between items-center">
             <button onClick={() => navigate(-1)}>
