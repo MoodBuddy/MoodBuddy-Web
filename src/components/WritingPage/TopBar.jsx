@@ -40,6 +40,10 @@ const TopBar = ({ setTemplateOn }) => {
   const { diaryDate } = useDiaryDateStore();
   const navigate = useNavigate();
 
+  const today = new Date();
+  today.setTime(today.getTime() + 9 * 60 * 60 * 1000); // 9시간 추가
+  const todayUTC = today.toISOString();
+
   useEffect(() => {
     console.log(updateDiary);
     console.log(diaryItemId);
@@ -84,7 +88,7 @@ const TopBar = ({ setTemplateOn }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append('diaryDate', todayUTC.slice(0, -5));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {

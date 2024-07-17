@@ -29,6 +29,10 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
     locale: ko,
   });
 
+  const today = new Date();
+  today.setTime(today.getTime() + 9 * 60 * 60 * 1000); // 9시간 추가
+  const todayUTC = today.toISOString();
+
   useEffect(() => {
     if (completeAnaylsis) {
       const result = async () => {
@@ -67,7 +71,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append('diaryDate', todayUTC.slice(0, -5));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {
@@ -102,7 +106,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
             <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
               <div className="flex flex-col items-center gap-[5px] ">
                 <div className="w-[600px] flex items-center justify-center relative">
-                  <div className="font-meetme font-bold text-[30px] mx-auto mt-[60px] whitespace-pre-wrap text-center leading-9 absolute bottom-[-120px]">
+                  <div className="font-meetme font-bold text-[25px] mx-auto mt-[60px] whitespace-pre-wrap text-center leading-9 absolute bottom-[-110px]">
                     {comment}
                   </div>
                 </div>

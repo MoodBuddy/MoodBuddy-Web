@@ -90,7 +90,7 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
         </button>
       </div>
 
-      <div className="h-[800px] overflow-y-scroll custom-scrollbar">
+      <div className="h-[800px] overflow-y-auto custom-scrollbar">
         {sortedData.map((item) => (
           <div key={item.diaryId}>
             <Link

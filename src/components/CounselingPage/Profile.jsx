@@ -4,7 +4,13 @@ import Button from '../common/button/Button';
 const Profile = ({ data }) => {
   const navigate = useNavigate();
   const handleWritingLetter = () => {
-    navigate('/counseling/writingLetter');
+    console.log(data.userLetterNums);
+    const letterNums = data.userLetterNums;
+    if (letterNums === 0) {
+      navigate('/counseling/noWritingLetter');
+    } else {
+      navigate('/counseling/writingLetter');
+    }
   };
 
   return (

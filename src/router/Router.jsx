@@ -18,7 +18,7 @@ import QuddyTiPage from '../pages/MyPage/QuddyTiPage';
 import EditProfilePage from '../pages/MyPage/EditProfilePage';
 import MyActivityPage from '../pages/MyPage/MyActivityPage';
 import BookMarkPage from '../pages/MyPage/BookMarkPage';
-
+import NoWritingLetterPage from '../pages/CounselingPage/NoWritingLetterPage';
 const Router = () => (
   <RouterProvider
     router={createBrowserRouter([
@@ -34,9 +34,15 @@ const Router = () => (
           { path: '/counseling', element: <CounselingPage /> },
           { path: '/counseling/writingLetter', element: <WritingLetterPage /> },
           {
+            path: '/counseling/noWritingLetter',
+            element: <NoWritingLetterPage />,
+          },
+
+          {
             path: '/counseling/completedWriting',
             element: <CompletedWriting />,
           },
+
           { path: 'counseling/letter/:id', element: <QuddyLetter /> },
           { path: '/user', element: <AuthPage /> },
           {
