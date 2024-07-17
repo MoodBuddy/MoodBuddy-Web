@@ -1,22 +1,41 @@
 import profile from '@assets/profile.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Toggle from '../../common/toggle/Toggle';
 import TimePicker from '../../common/timePicker/TimePicker';
 import { getProfile, postProfileEdit } from '../../../apis/user';
-import useUserStore from '../../../store/userStore';
 import { useQuery } from '@tanstack/react-query';
+import Button from '../../common/button/Button';
 
 const EditProfileCard = () => {
-  const userInfo = useUserStore((state) => ({
-    nickname: state.nickname,
-    userBirth: state.userBirth,
-    profileImgURL: state.profileImgURL,
-  }));
-
   const { isError, data, error } = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
   });
+
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
+  const [notificationTime, setNotificationTime] = useState('');
+  const [profileImage, setProfileImage] = useState(profile);
+
+  const [state, setState] = useState({
+    nickname: '',
+    birthDate: '',
+    profileComment: '',
+    newProfileImg: null,
+    gender: true,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setState({
+        nickname: data.nickname || '',
+        birthDate: data.birthday || '',
+        profileComment: data.profileComment || '',
+        newProfileImg: null,
+        gender: data.gender || true,
+      });
+      setProfileImage(data.url || profile);
+    }
+  }, [data]);
 
   if (!data) {
     return <div>데이터가 없습니다.</div>;
@@ -26,18 +45,6 @@ const EditProfileCard = () => {
     console.error('Error fetching user info:', error);
     return <div>오류 발생: {error.message}</div>;
   }
-
-  const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
-  const [notificationTime, setNotificationTime] = useState('');
-  const [profileImage, setProfileImage] = useState(data.url || profile);
-
-  const [state, setState] = useState({
-    nickname: userInfo.nickname || '',
-    birthDate: userInfo.userBirth || '',
-    profileComment: '',
-    newProfileImg: null,
-    gender: true,
-  });
 
   const handleChangeState = (e) => {
     setState({
@@ -52,22 +59,6 @@ const EditProfileCard = () => {
 
   const handleTimeChange = (newTime) => {
     setNotificationTime(newTime);
-  };
-
-  const getBirthDatePlaceholder = () => {
-    if (data.birthday) {
-      return data.birthday;
-    } else {
-      return 'ex. 2002-08-19 (8자리)';
-    }
-  };
-
-  const getNamePlaceholder = () => {
-    if (data.nickname) {
-      return data.nickname;
-    } else {
-      return '닉네임을 설정하세요';
-    }
   };
 
   const handleImageChange = (e) => {
@@ -142,9 +133,9 @@ const EditProfileCard = () => {
             <input
               name="nickname"
               type="text"
+              value={state.nickname}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder={`${getNamePlaceholder()}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
@@ -152,9 +143,9 @@ const EditProfileCard = () => {
             <input
               name="birthDate"
               type="text"
+              value={state.birthDate}
               onChange={handleChangeState}
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-              placeholder={`${getBirthDatePlaceholder()}`}
             />
           </div>
           <div className="flex flex-col gap-[10px]">
@@ -178,18 +169,18 @@ const EditProfileCard = () => {
             <div className="font-bold text-[20px]">한줄소개 변경</div>
             <textarea
               name="profileComment"
-              placeholder={data.profileComment}
+              value={state.profileComment}
               onChange={handleChangeState}
-              className="w-[613px] h-[168px] rounded-[10px] border-[1px] border-black p-[15px]"
+              className="w-[613px] h-[168px] rounded-[10px] border-[1px] border-black p-[15px] resize-none"
             />
           </div>
           <div className="flex justify-end">
-            <button
+            <Button
               className="w-[178px] h-[43px] rounded-[14px] bg-[#C79A76] text-lg font-medium"
               onClick={handleSubmit}
             >
               저장
-            </button>
+            </Button>
           </div>
         </div>
       </div>
