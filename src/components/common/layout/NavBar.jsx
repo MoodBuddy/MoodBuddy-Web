@@ -67,7 +67,7 @@ const NavBar = () => {
                 {item.name}
               </NavLink>
               {hoveredMyPage && item.id === 5 && (
-                <div className="absolute z-10 top-[75px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
+                <div className="absolute z-10 top-[75px] left-[-25px] w-max h-[157px] bg-[#E8DBCF] border border-[#B98D6D]">
                   <div className="flex flex-col items-start p-2">
                     <NavLink
                       to="/editProfile"
