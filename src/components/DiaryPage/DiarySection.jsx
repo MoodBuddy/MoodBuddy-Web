@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { getFindOne } from '../../apis/diary';
 import { formatWeather, formatQuddyByEmotion } from '../../utils/format';
 import SimilarModal from './SimilarModal';
@@ -9,12 +10,15 @@ import EditBar from './EditBar';
 import happyBubble from '../../../public/image/happyBubble.svg';
 import useSpeechBubbleStore from '../../store/speechBubbleStore';
 import ImageModal from './ImageModal';
+import prevIcon from '../../../public/icon/prevBoldIcon.svg';
 
 const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { speechBubble, setSpeechBubble } = useSpeechBubbleStore();
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
+  const navigate = useNavigate();
+
   const {
     isError,
     data: diary,
@@ -56,8 +60,17 @@ const DiarySection = ({ diaryId }) => {
   };
   return (
     <div>
+      {/* 상단바 */}
       <EditBar diaryId={diaryId} />
 
+      {/* 뒤로가기 버튼 */}
+      <div className="relative">
+        <button onClick={() => navigate(-1)} className="absolute left-[-45px] top-[48px]">
+          <img src={prevIcon} alt="prevIcon" className="w-[18px]"/>
+        </button>
+      </div>
+
+      {/* 일기 세부내용 */}
       <div className="bg-[#F7F3EF] w-[1080px] h-full rounded-[36px] px-16 py-12 mb-16 ">
         <div className="flex justify-between relative">
           <div>

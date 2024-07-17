@@ -1,16 +1,24 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../../apis/user';
+import ProfileInfo from './ProfileInfo';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
+  const [showProfileDetails, setShowProfileDetails] = useState(false);
+
   const handleMouseEnter = () => {
     setHoveredMyPage(true);
   };
+
   const handleMouseLeave = () => {
     setHoveredMyPage(false);
+  };
+
+  const handleProfileClick = () => {
+    setShowProfileDetails(!showProfileDetails);
   };
 
   const { isError, data, error } = useQuery({
@@ -87,15 +95,20 @@ const NavBar = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-3 ml-12">
-          <Link>
+        <div className="flex items-center ml-12 relative">
+          <div
+            onClick={handleProfileClick}
+            className="flex items-center cursor-pointer gap-3"
+          >
             <img
               src={data.url}
               alt="profileImgURL"
               className="w-8 h-8 rounded-full"
             />
-          </Link>
-          <h1 className="text-lg font-medium">{data.nickname}</h1>
+            <h1 className="text-lg font-medium">{data.nickname}</h1>
+          </div>
+
+          {showProfileDetails && <ProfileInfo data={data} />}
         </div>
       </div>
 
