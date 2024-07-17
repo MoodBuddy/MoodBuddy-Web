@@ -29,7 +29,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="flex relative w-full z-20 bg-[#E8DBCF] h-[63px] justify-around ">
+      <div className="flex relative w-full z-20 bg-[#E8DBCF] h-[75px] justify-around ">
         <div className="flex items-center text-2xl mr-12 ">
           <h1 className="font-meetme">MOODBUDDY</h1>
         </div>
@@ -54,7 +54,7 @@ const NavBar = () => {
                 {item.name}
               </NavLink>
               {hoveredMyPage && item.id === 5 && (
-                <div className="absolute z-10 top-[63px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
+                <div className="absolute z-10 top-[75px] left-[-25px] w-max bg-[#E8DBCF] border border-[#B98D6D]">
                   <div className="flex flex-col items-start p-2">
                     <NavLink
                       to="/editProfile"
@@ -92,10 +92,10 @@ const NavBar = () => {
             <img
               src={data.url}
               alt="profileImgURL"
-              className="w-10 h-10 rounded-full"
+              className="w-8 h-8 rounded-full"
             />
           </Link>
-          <h1 className="text-[22px] font-medium">{data.nickname}</h1>
+          <h1 className="text-lg font-medium">{data.nickname}</h1>
         </div>
       </div>
 
