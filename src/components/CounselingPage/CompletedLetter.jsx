@@ -13,21 +13,23 @@ const CompletedLetter = () => {
   const todayDate = formatDate();
 
   return (
-    <div>
-      <div className="transform scale-[85%] relative top-[-135px]">
-        <div className="box-content border-[1px] border-black w-[1570px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
-          <div className="px-[23px] w-full h-[98px] border-b-[1px] border-black flex justify-start gap-[616px] items-center">
-            <img src={back} onClick={handleBack} className="cursor-pointer" />
-            <div className="font-medium text-[35px] ml-[26px]">To.QUDDY</div>
+    <div className="z-10">
+      <div className="box-content border-[1px] w-[1000px] h-[900px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-20">
+        <div className="px-[23px] w-full py-[19px] border-b-[1px] border-black flex justify-start gap-[330px] items-center">
+          <img
+            src={back}
+            onClick={handleBack}
+            className="cursor-pointer w-6 h-6"
+          />
+          <div className="font-medium text-2xl ml-20">To.QUDDY</div>
+        </div>
+        <div className="flex flex-col">
+          <div className="text-center mt-[150px] mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[1000px] h-[600px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+            {content}
           </div>
-          <div className="flex flex-col">
-            <div className="text-center mt-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] h-[1100px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-              {content}
-            </div>
-            <div className="flex flex-col items-end font-medium text-[30px] pr-[80px] gap-[10px] ">
-              <div>{todayDate}</div>
-              <div>From.닉네임</div>
-            </div>
+          <div className="flex flex-col items-end font-medium text-xl gap-[10px] mr-10">
+            <div>{todayDate}</div>
+            <div>From.닉네임</div>
           </div>
         </div>
       </div>

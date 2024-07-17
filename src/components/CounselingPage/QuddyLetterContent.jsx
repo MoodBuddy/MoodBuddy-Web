@@ -38,36 +38,40 @@ const QuddyLetterContent = ({ data }) => {
   }
 
   return (
-    <div>
-      <div className="transform scale-[85%] relative top-[-135px]">
-        <div className="box-content border-[1px] border-black w-[1600px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
-          <div className="px-[23px] w-full h-[98px] border-b-[1px] border-black flex justify-start gap-[616px] items-center">
-            <img src={back} onClick={handleBack} className="cursor-pointer" />
-            <div className="font-medium text-[35px] ml-12">To.QUDDY</div>
-          </div>
+    <div className="z-10">
+      <div className="box-content border-[1px] w-[1000px] h-[900px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-20">
+        <div className="px-[23px] w-full py-[19px] border-b-[1px] border-black flex justify-start gap-[316px] items-center">
+          <img
+            src={back}
+            onClick={handleBack}
+            className="cursor-pointer w-6 h-6"
+          />
+          <div className="font-medium text-2xl ml-[80px]">To.QUDDY</div>
+        </div>
 
-          <div className="text-center my-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-            {data.letterWorryContent}
-          </div>
+        <div className="text-center my-28 mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+          {data.letterWorryContent}
+        </div>
 
-          <div className="flex items-center justify-center h-[86px] border-y-[1px] border-black font-medium text-[35px]">
-            From. QUDDY
-          </div>
+        <div className="flex items-center justify-center py-[19px] border-y-[1px] border-black font-medium text-2xl">
+          From. QUDDY
+        </div>
 
-          <div className="flex flex-col justify-center items-center  mt-[159px] gap-[70px]">
-            {showAnswer ? (
-              <div className="text-center my-[150px] mx-auto font-light text-[30px] leading-[66px] bg-[#F7F3EF] outline-none w-[1300px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-                {data.letterAnswerContent}
+        <div className="flex flex-col justify-center items-center gap-12">
+          {showAnswer ? (
+            <div className="text-center mt-20 px-20 mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[900px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+              {data.letterAnswerContent}
+            </div>
+          ) : (
+            <>
+              <div className="font-light text-3xl mt-28 text-[#7c7c7c]">
+                답장이 오는 중입니다! 조금만 기다려주세요 :)
               </div>
-            ) : (
-              <>
-                <div className="font-light text-[46px] text-[#7c7c7c]">
-                  답장이 오는 중입니다! 조금만 기다려주세요 :)
-                </div>
+              <div className="transform scale-75">
                 <Timer displayTime={timeToDisplayAnswer} />
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
