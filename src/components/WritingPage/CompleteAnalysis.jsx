@@ -71,7 +71,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', todayUTC.slice(0, -5));
+      formData.append('diaryDate', todayUTC.slice(0, -14));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {

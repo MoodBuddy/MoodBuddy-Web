@@ -12,26 +12,27 @@ import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useweatherStore from '../../store/weatherStore';
 import ImageModal from '../DiaryPage/ImageModal';
 import useDiaryDateStore from '../../store/diaryDateStore';
+import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
 
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
   const { content, setContent, addTemplate } = useDiaryContentStore();
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
-  const { removeImageFile } = useDiaryImgFileStore();
+  const { setImageFiles, removeImageFile } = useDiaryImgFileStore();
   const { updateDiary, setUpdateDiary } = useUpdateDiaryStore();
   const { setSelectedOption } = useweatherStore();
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
   const { diaryDate } = useDiaryDateStore();
-
+  const { setDiaryKeepImg } = useDiaryKeepImgUrlStore();
   const diaryDateValue = new Date(diaryDate);
   const isValidDate = !isNaN(diaryDateValue);
-  
+
   const updateDate = format(
     isValidDate ? diaryDateValue : new Date(),
     'yyyy년 MM월 dd일 EEEE',
-    { locale: ko }
+    { locale: ko },
   );
 
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
@@ -47,6 +48,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       setContent('');
       setSelectedOption(null);
       setDiaryImg([]);
+      setImageFiles([]);
       setUpdateDiary(false);
       removeImageFile([]);
     };
@@ -71,6 +73,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const handleImageRemove = (indexToRemove) => {
     const newDiaryImg = diaryImg.filter((_, index) => index !== indexToRemove);
     setDiaryImg(newDiaryImg);
+    setDiaryKeepImg(newDiaryImg);
     removeImageFile(indexToRemove);
   };
 

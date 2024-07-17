@@ -22,6 +22,7 @@ import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
 import { useNavigate } from 'react-router-dom';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 import useDiaryDateStore from '../../store/diaryDateStore.js';
+import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -38,6 +39,7 @@ const TopBar = ({ setTemplateOn }) => {
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { temporaryDiary } = useTemporaryDiaryStore();
   const { diaryDate } = useDiaryDateStore();
+  const { diaryKeepImg } = useDiaryKeepImgUrlStore();
   const navigate = useNavigate();
 
   const today = new Date();
@@ -118,13 +120,18 @@ const TopBar = ({ setTemplateOn }) => {
       formData.append('diaryTitle', title);
       formData.append(
         'diaryDate',
-        new Date(diaryDate).toISOString().slice(0, -5),
+        new Date(diaryDate).toISOString().slice(0, -14),
       );
       formData.append('diaryStatus', 'PUBLISHED');
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
+
       for (let i = 0; i < imageFiles.length; i++) {
         imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
+      for (let i = 0; i < diaryKeepImg.length; i++) {
+        diaryKeepImg.length > 0 &&
+          formData.append('existingDiaryImgList', diaryKeepImg[i]);
       }
       console.log(...formData);
       await updateDiaryOne(formData);
