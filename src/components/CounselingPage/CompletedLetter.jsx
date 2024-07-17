@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import back from '../../../public/icon/back.svg';
 import letterContent from '../../store/contentStore';
 import { formatDate } from '../../utils/format';
+import { getProfile } from '../../apis/user';
+import { useQuery } from '@tanstack/react-query';
 
 const CompletedLetter = () => {
   const { content } = letterContent();
@@ -9,6 +11,11 @@ const CompletedLetter = () => {
   const handleBack = () => {
     navigate('/counseling');
   };
+
+  const { isError, data, error } = useQuery({
+    queryKey: ['getProfile'],
+    queryFn: getProfile,
+  });
 
   const todayDate = formatDate();
 
@@ -29,7 +36,7 @@ const CompletedLetter = () => {
           </div>
           <div className="flex flex-col items-end font-medium text-xl gap-[10px] mr-10">
             <div>{todayDate}</div>
-            <div>From.닉네임</div>
+            <div>From.{data.nickname}</div>
           </div>
         </div>
       </div>
