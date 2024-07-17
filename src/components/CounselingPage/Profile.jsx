@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Button from '../common/button/Button';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate();
@@ -9,12 +10,12 @@ const Profile = ({ data }) => {
   return (
     <div className=" flex flex-col items-center w-[286px] h-[619px] bg-[#F7F3EF] rounded-2xl">
       <div className="transform scale-75 relative top-[-110px]">
-        <button
+        <Button
           onClick={handleWritingLetter}
           className="w-[332px] h-[71px] rounded-[30px] bg-[#C79A76] font-semibold text-[30px] mt-[58px]"
         >
           편지 쓰기
-        </button>
+        </Button>
         <div className="flex justify-between items-center w-[283px] mt-[25px] ml-[20px]">
           <div className="text-[28px] ">남은 편지지 개수</div>
           <div className="font-semibold text-[40px]">{data.userLetterNums}</div>

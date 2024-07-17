@@ -11,6 +11,7 @@ import useDiaryItemIdStore from '../../store/diaryItemIdStore';
 import useSpeechBubble from '../../store/speechBubbleStore';
 import { ko } from 'date-fns/locale';
 import ModalLoadingSpinner from '../common/loading/ModalLoadingSpinner';
+import Button from '../common/button/Button';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { title } = useTitleStore();
@@ -118,12 +119,12 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
                   </div>
                 </div>
 
-                <button
+                <Button
                   onClick={isSave}
-                  className="ml-auto mr-[25px] relative top-[-10px] bg-[#D8B18E] font-medium text-[20px] w-[120px] h-[40px] rounded-[13px] "
+                  className="ml-auto mr-[25px] relative top-[-10px] bg-[#D8B18E] font-medium text-[20px] w-[120px]  rounded-[13px] "
                 >
-                  저장하기
-                </button>
+                  <p className="">저장하기</p>
+                </Button>
               </div>
             </div>
           )}
