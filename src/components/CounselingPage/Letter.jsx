@@ -3,30 +3,34 @@ import back from '../../../public/icon/back.svg';
 import SelectModal from './SelectModal';
 import useContentStore from '../../store/contentStore';
 import { formatDate } from '../../utils/format';
+import { useNavigate } from 'react-router-dom';
+import Button from '../common/button/Button';
 
 const Letter = () => {
   const { content, setContent } = useContentStore();
-
   const [sending, setSending] = useState(false);
   const isSending = () => {
     setSending(!sending);
   };
+  const navigate = useNavigate();
 
   const todayDate = formatDate();
 
   return (
     <div>
       <div className="transform scale-[85%] relative top-[-135px]">
-        <div className="box-content border-[1px] border-black w-[1560px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
+        <div className="box-content border-[1px] border-black w-[1570px] h-[1477px] bg-[#F7F3EF] rounded-[25px] transform scale-75 relative top-[-200px] pb-[20px]">
           <div className="px-[23px] w-full h-[98px] border-b-[1px] border-black flex justify-between items-center ">
-            <img src={back} />
-            <div className="font-medium text-[35px]">To.QUDDY</div>
-            <button
+            <button onClick={() => navigate(-1)}>
+              <img src={back} />
+            </button>
+            <div className="font-medium text-[35px] ml-20">To.QUDDY</div>
+            <Button
               onClick={isSending}
               className="w-[130px] h-[62px] rounded-[13px] bg-[#D8B18E] font-bold text-[20px]"
             >
               보내기
-            </button>
+            </Button>
           </div>
           <div className="gap-[95px] flex flex-col justify-center items-center ">
             <textarea
