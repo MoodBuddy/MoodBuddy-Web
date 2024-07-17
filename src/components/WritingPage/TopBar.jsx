@@ -21,6 +21,7 @@ import useUpdateDiaryStore from '../../store/updateDiaryStore.js';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore.js';
 import { useNavigate } from 'react-router-dom';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
+import useDiaryDateStore from '../../store/diaryDateStore.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -36,6 +37,7 @@ const TopBar = ({ setTemplateOn }) => {
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { temporaryDiary } = useTemporaryDiaryStore();
+  const { diaryDate } = useDiaryDateStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -110,7 +112,10 @@ const TopBar = ({ setTemplateOn }) => {
       const formData = new FormData();
       formData.append('diaryId', diaryItemId);
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', new Date().toISOString().slice(0, -5));
+      formData.append(
+        'diaryDate',
+        new Date(diaryDate).toISOString().slice(0, -5),
+      );
       formData.append('diaryStatus', 'PUBLISHED');
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
@@ -119,7 +124,6 @@ const TopBar = ({ setTemplateOn }) => {
       }
       console.log(...formData);
       await updateDiaryOne(formData);
-      await setDiaryDeleteImg([]);
       navigate(`/diary/${diaryItemId}`);
     } catch (error) {
       console.error('일기 수정 오류', error);

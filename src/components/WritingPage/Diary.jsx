@@ -11,18 +11,22 @@ import { ko } from 'date-fns/locale';
 import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useweatherStore from '../../store/weatherStore';
 import ImageModal from '../DiaryPage/ImageModal';
+import useDiaryDateStore from '../../store/diaryDateStore';
 const Diary = ({ templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
   const { content, setContent, addTemplate } = useDiaryContentStore();
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
   const { removeImageFile } = useDiaryImgFileStore();
-  const { setUpdateDiary } = useUpdateDiaryStore();
+  const { updateDiary, setUpdateDiary } = useUpdateDiaryStore();
   const { setSelectedOption } = useweatherStore();
-  const { setImageFiles } = useDiaryImgFileStore();
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
-  const { updateDiary } = useUpdateDiaryStore();
+  const { diaryDate } = useDiaryDateStore();
+
+  const updateDate = format(new Date(diaryDate), 'yyyy년 MM월 dd일 EEEE', {
+    locale: ko,
+  });
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
     locale: ko,
   });
@@ -36,9 +40,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       setContent('');
       setSelectedOption(null);
       setDiaryImg([]);
-      {
-        updateDiary ?? setImageFiles([]);
-      }
       setUpdateDiary(false);
       removeImageFile([]);
     };
@@ -77,7 +78,9 @@ const Diary = ({ templateOn, setTemplateOn }) => {
         <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px]">
           <div className="flex flex-row justify-between items-center ml-[121px] mr-[45px] mt-[149px]">
             <div className="flex flex-col gap-[41px]">
-              <div className="text-[25px]">{formattedDate}</div>
+              <div className="text-[25px]">
+                {updateDiary ? updateDate : formattedDate}
+              </div>
               <input
                 type="text"
                 className="font-meetme text-[75px] bg-[#F7F3EF] outline-none"
@@ -118,7 +121,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
             </div>
             <textarea
               type="text"
-              className={`my-[70px] font-light text-[20px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'}  overflow-y-auto custom-scrollbar `}
+              className={`my-[70px] font-light text-[25px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'}  overflow-y-auto custom-scrollbar `}
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
@@ -128,7 +131,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
 오늘 하루도 행복하게 마무리 해볼까요? 
 오늘 어떤 일이 있었는지, 기록하고 싶은 이야기는 무엇인지 솔직하게 적어보세요. 
 일기 작성이 어렵다면, 질문 템플릿을 이용해 다양한 생각을 적어볼 수 있어요. 
-일기 작성 후 감정분석하기를 누르면, 감정에 맞는 쿼디가 나타나요!`}
+일기 작성 후 저장하기를 누르면, 쿼디가 감정을 분석해줘요 !`}
             />
           </div>
         </div>

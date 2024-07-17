@@ -101,27 +101,32 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
           ) : (
             <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
               <div className="flex flex-col items-center gap-[5px] ">
-                <div className="font-meetme font-bold text-[32.6px] mx-auto mt-[40px] ">
-                  {comment}
+                <div className="w-[600px] flex items-center justify-center relative">
+                  <div className="font-meetme font-bold text-[30px] mx-auto mt-[60px] whitespace-pre-wrap text-center leading-9 absolute bottom-[-120px]">
+                    {comment}
+                  </div>
                 </div>
-
-                <div className="text-[18px] font-medium">{formattedDate}</div>
-                <div className="flex flex-col gap-[5px] justify-center items-center ">
-                  <img
-                    className="transform scale-75 w-[182px] h-[193px]"
-                    src={item.imgSrc}
-                  />
-                  <div
-                    className="text-[25px] font-meetme relative top-[-20px]"
-                    style={{ color: item.color }}
-                  >
-                    {item.name}
+                <div className="flex flex-col items-center absolute top-[120px]">
+                  <div className="text-[18px] font-medium relative top-[10px]">
+                    {formattedDate}
+                  </div>
+                  <div className="flex flex-col gap-[5px] justify-center items-center ">
+                    <img
+                      className="transform scale-75 w-[182px] h-[193px]"
+                      src={item.imgSrc}
+                    />
+                    <div
+                      className="text-[25px] font-meetme relative top-[-20px]"
+                      style={{ color: item.color }}
+                    >
+                      {item.name}
+                    </div>
                   </div>
                 </div>
 
                 <Button
                   onClick={isSave}
-                  className="ml-auto mr-[25px] relative top-[-10px] bg-[#D8B18E] font-medium text-[20px] w-[120px]  rounded-[13px] "
+                  className="ml-auto mr-[25px] absolute bottom-[20px] right-[10px]  w-[120px]"
                 >
                   <p className="">저장하기</p>
                 </Button>

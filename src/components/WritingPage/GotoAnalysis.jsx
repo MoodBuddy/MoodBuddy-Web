@@ -62,10 +62,10 @@ const GotoAnalysis = ({
               <img className=" w-[120px] h-[120px]" src={analysisEmotion} />
               <div>
                 <Button
+                  className=" w-[223px] h-[50px] mt-[20px] "
                   onClick={isAnalysisEmotionModal}
-                  className="bg-[#D8B18E] font-medium text-[20px] w-[223px] h-[50px] rounded-[13px] mt-[20px] "
                 >
-                  감정분석하기
+                  <p>감정분석하기</p>
                 </Button>
               </div>
             </div>

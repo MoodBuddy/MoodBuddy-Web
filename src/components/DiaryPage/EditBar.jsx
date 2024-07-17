@@ -10,6 +10,8 @@ import useUpdateDiaryStore from '../../store/updateDiaryStore';
 import useDiaryImgStore from '../../store/diaryImgStore';
 import useweatherStore from '../../store/weatherStore';
 import useDiaryItemIdStore from '../../store/diaryItemIdStore';
+import useDiaryDateStore from '../../store/diaryDateStore';
+import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 
 const EditBar = ({ diaryId }) => {
   const queryClient = useQueryClient();
@@ -22,6 +24,7 @@ const EditBar = ({ diaryId }) => {
   const { setDiaryImg } = useDiaryImgStore();
   const { setSelectedOption } = useweatherStore();
   const { setDiaryItemId } = useDiaryItemIdStore();
+  const { setDiaryDate } = useDiaryDateStore();
   const getOriginalDiary = async (id) => {
     if (id) {
       const res = await getFindOne(id);
@@ -87,6 +90,7 @@ const EditBar = ({ diaryId }) => {
       setTitle(res.diaryTitle);
       setDiaryImg(res.diaryImgList);
       setSelectedOption(res.diaryWeather);
+      setDiaryDate(res.diaryDate);
       navigate('/writing');
     } catch (error) {
       console.error('error:', error);
