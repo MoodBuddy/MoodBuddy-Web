@@ -5,6 +5,7 @@ import TimePicker from '../../common/timePicker/TimePicker';
 import { getProfile, postProfileEdit } from '../../../apis/user';
 import { useQuery } from '@tanstack/react-query';
 import Button from '../../common/button/Button';
+import ProfileEditModal from './ProfileEditModal';
 
 const EditProfileCard = () => {
   const { isError, data, error } = useQuery({
@@ -15,7 +16,9 @@ const EditProfileCard = () => {
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const [notificationTime, setNotificationTime] = useState('');
   const [profileImage, setProfileImage] = useState(profile);
-
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [state, setState] = useState({
     nickname: '',
     birthDate: '',
@@ -47,9 +50,18 @@ const EditProfileCard = () => {
   }
 
   const handleChangeState = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'birthDate') {
+      const regex = /^[0-9-]*$/;
+      if (!regex.test(value)) {
+        return;
+      }
+    }
+
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -79,27 +91,37 @@ const EditProfileCard = () => {
   };
 
   const handleSubmit = async () => {
-    const profileData = {
-      profileComment: state.profileComment,
-      alarm: isNotificationEnabled,
-      alarmTime: notificationTime,
-      newProfileImg: state.newProfileImg,
-      nickname: state.nickname,
-      gender: state.gender,
-      birthday: state.birthDate,
-    };
+    // 프로필 유효성 검증
+    const birthDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (state.nickname.trim() === '') {
+      setModalMessage('닉네임을 입력해주세요!');
+      setShowModal(true);
+      return;
+    }
+    if (!birthDateRegex.test(state.birthDate)) {
+      setModalMessage('생년월일을 2000-01-01 형식으로 입력해주세요 !');
+      setShowModal(true);
+      return;
+    }
 
     try {
-      console.log(profileData);
-      const response = await postProfileEdit(profileData);
-      console.log('프로필 저장 성공', response);
+      setModalMessage('');
+      setShowModal(true);
+      setIsValid(true);
     } catch (error) {
-      console.error('프로필 변경에 실패했습니다.', error);
+      setModalMessage('프로필 저장에 실패했습니다. 다시 시도해주세요.');
+      setShowModal(true);
+      setIsValid(false);
     }
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className="w-[1180px] h-[679px] bg-[#F7F3EF] border-[3px] border-black rounded-[30px]">
+    <div className="w-[1180px] h-[679px] bg-[#F7F3EF] border-[3px] border-black rounded-[30px] relative">
       <div className="flex flex-row">
         <div className="flex flex-col mt-[35px] ml-[65px]">
           <div className="text-[20px] ml-[15px] mb-[10px] font-bold">
@@ -184,6 +206,14 @@ const EditProfileCard = () => {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <ProfileEditModal
+          message={modalMessage}
+          onClose={handleCloseModal}
+          isValid={isValid}
+        />
+      )}
     </div>
   );
 };
