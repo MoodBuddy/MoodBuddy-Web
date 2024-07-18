@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const ProfileInfo = ({ data }) => {
   const navigate = useNavigate();
@@ -9,18 +9,28 @@ const ProfileInfo = ({ data }) => {
     navigate('/');
   };
 
+  const handleMyPage = () => {
+    navigate('/mypage/editProfile');
+  };
+
   return (
     <div className="absolute flex top-20 right-[-40px] mt-2 w-[340px] bg-[#F8EFE8] border border-[#B98D6D] shadow-lg z-20 rounded-xl p-4">
-      <div>
+      <div onClick={handleMyPage}>
         <img
           src={data.url}
           alt="profileImgURL"
-          className="relative w-[70px] h-[70px] rounded-full top-1"
+          className="relative w-[70px] h-[70px] rounded-full top-1 cursor-pointer"
         />
       </div>
       <div className="flex flex-col items-start ml-4">
         <div className="flex items-center text-ellipsis overflow-hidden w-28">
-          <p className="text-[22px] font-bold overflow-hidden text-ellipsis">{data.nickname}</p>
+          <p
+            div
+            onClick={handleMyPage}
+            className="text-[22px] font-bold overflow-hidden text-ellipsis cursor-pointer"
+          >
+            {data.nickname}
+          </p>
           <p className="text-[22px]">님</p>
         </div>
         <p className="text-sm font-light">{data.birthday}</p>
