@@ -82,6 +82,15 @@ export const postShortWordToNextMonth = async (comment) => {
   }
 };
 
+export const checkTodayDiary = async () => {
+  try {
+    const data = await get('/api/v1/member/checkTodayDiary');
+    return data.data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};
+
 export const postFcmToken = async (token) => {
   try {
     const data = await post('/api/v1/member/main/fcmToken', {

@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 import useDiaryDateStore from '../../store/diaryDateStore.js';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
+import { checkTodayDiary } from '../../apis/user.js';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -35,7 +36,7 @@ const TopBar = ({ setTemplateOn }) => {
   const { selectedOption } = useweatherStore();
   const { draftDiaryNum, setDraftDiaryNum } = useDraftNumStore();
   const { setDraftList } = useDraftListStore();
-  const { updateDiary } = useUpdateDiaryStore();
+  const { updateDiary, setUpdateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
   const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const { diaryDate } = useDiaryDateStore();
@@ -70,6 +71,26 @@ const TopBar = ({ setTemplateOn }) => {
       };
       reader.readAsDataURL(file);
     });
+  };
+
+  const handleDiarySave = async () => {
+    const res = await checkTodayDiary();
+    console.log(res);
+    const canWrite = res.checkTodayDiary;
+    if (canWrite) {
+      console.log('일기못씀');
+      alert('오늘 일기를 이미 작성하였습니다!');
+    } else {
+      console.log('일기씀');
+
+      if (updateDiary && !temporaryDiary) {
+        console.log(updateDiary);
+        console.log(temporaryDiary);
+        handleupdateDiary();
+      } else {
+        isGotoAnalysisEmotionModal();
+      }
+    }
   };
 
   const isTemporaryStorageModal = () => {
@@ -135,6 +156,7 @@ const TopBar = ({ setTemplateOn }) => {
       }
       console.log(...formData);
       await updateDiaryOne(formData);
+      setUpdateDiary(false);
       navigate(`/diary/${diaryItemId}`);
     } catch (error) {
       console.error('일기 수정 오류', error);
@@ -180,11 +202,7 @@ const TopBar = ({ setTemplateOn }) => {
             </button>
 
             <button
-              onClick={
-                updateDiary && !temporaryDiary
-                  ? handleupdateDiary
-                  : isGotoAnalysisEmotionModal
-              }
+              onClick={handleDiarySave}
               className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-col justify-center items-center gap-[13.5px]"
             >
               <img src={save}></img>
