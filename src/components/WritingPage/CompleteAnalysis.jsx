@@ -84,7 +84,6 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
 
       console.log(res);
       setComment(res.data.comment);
-
       setEmotion(res.data.emotion);
       setLoading(false);
       console.log(emotion);

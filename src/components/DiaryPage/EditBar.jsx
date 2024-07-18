@@ -38,16 +38,11 @@ const EditBar = ({ diaryId }) => {
   };
 
   useEffect(() => {
-    setUpdateDiary(true);
-  }, []);
-
-  useEffect(() => {
     const diaryId = async () => {
       try {
         const res = await getOriginalDiary(id);
         console.log(res);
         if (res) {
-          console.log(res.diaryBookMarkCheck);
           setIsBookMark(res.diaryBookMarkCheck);
         }
       } catch (error) {
@@ -90,6 +85,7 @@ const EditBar = ({ diaryId }) => {
   };
 
   const handleDiaryUpdate = async () => {
+    setUpdateDiary(true);
     try {
       const res = await getOriginalDiary(id);
 

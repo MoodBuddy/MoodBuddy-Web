@@ -34,7 +34,6 @@ const StatsPage = () => {
   useEffect(() => {
     fetchDiaryList();
   }, [currentDate, fetchDiaryList]);
-  
 
   if (isError) {
     console.error('Error fetching letter:', error);
@@ -69,7 +68,7 @@ const StatsPage = () => {
             />
           </div>
 
-          <MemoSection />
+          <MemoSection currentDate={currentDate} />
         </div>
       </div>
 
