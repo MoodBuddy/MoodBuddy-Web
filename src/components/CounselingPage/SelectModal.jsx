@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import useContentStore from '../../store/contentStore';
 import { postLetter } from '../../apis/letter';
 import FakeTimer from './FakeTimer';
+import close from '../../../public/icon/close.svg';
+
 const SelectModal = ({ sending, setSending }) => {
   const { content } = useContentStore();
   const [selectedFormat, setSelectedFormat] = useState(null);
@@ -39,12 +41,21 @@ const SelectModal = ({ sending, setSending }) => {
     }
   };
 
+  const handleClose = () => {
+    setSending(false);
+  };
+
   return (
     <>
       {sending ? (
         <div className="z-40 fixed top-0 left-0 w-full h-full bg-stone-600/60">
           <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[900px] h-[600px] rounded-[60px] bg-lightbeige transform scale-75">
             <div className="flex flex-col items-center">
+              <img
+                src={close}
+                onClick={handleClose}
+                className="cursor-pointer absolute top-8 right-10 w-7 h-7"
+              />
               <div className="font-meetme text-[49px] text-center mt-[60px]">
                 쿼디에게 <br /> 어떤 답장을 받고 싶나요?
               </div>
@@ -77,9 +88,7 @@ const SelectModal = ({ sending, setSending }) => {
               <div className="font-meetme text-[78px] text-center mt-[88px]">
                 고민 전송 완료 !
               </div>
-              <div className="text-[30px] mb-[30px]">
-                10분 뒤에 답장이 와요
-              </div>
+              <div className="text-[30px] mb-[30px]">10분 뒤에 답장이 와요</div>
               <FakeTimer hh={'00'} mm={'10'} ss={'00'} />
 
               <Button
