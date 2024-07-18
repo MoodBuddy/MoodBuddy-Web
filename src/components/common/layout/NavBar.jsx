@@ -1,14 +1,16 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '../../../apis/user';
 import ProfileInfo from './ProfileInfo';
+import MyPageDropdown from './MyPageDropdown';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
   const [showProfileDetails, setShowProfileDetails] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMouseEnter = () => {
     setHoveredMyPage(true);
@@ -58,7 +60,8 @@ const NavBar = () => {
               <NavLink
                 to={item.to}
                 className={({ isActive }) =>
-                  isActive
+                  isActive ||
+                  (item.id === 5 && location.pathname.startsWith('/mypage'))
                     ? 'text-[#B98D6D]'
                     : 'hover:text-[#B98D6D] transition-colors duration-75'
                 }
@@ -67,34 +70,7 @@ const NavBar = () => {
                 {item.name}
               </NavLink>
               {hoveredMyPage && item.id === 5 && (
-                <div className="absolute z-10 top-[75px] left-[-25px] w-max h-[157px] bg-[#E8DBCF] border border-[#B98D6D]">
-                  <div className="flex flex-col items-start p-2">
-                    <NavLink
-                      to="/editProfile"
-                      className="py-1 px-4 hover:text-[#B98D6D]"
-                    >
-                      프로필 수정
-                    </NavLink>
-                    <NavLink
-                      to="/myActivity"
-                      className="py-1 px-4 hover:text-[#B98D6D]"
-                    >
-                      내 활동
-                    </NavLink>
-                    <NavLink
-                      to="/bookMark"
-                      className="py-1 px-4 hover:text-[#B98D6D]"
-                    >
-                      북마크 일기
-                    </NavLink>
-                    <NavLink
-                      to="/stats"
-                      className="py-1 px-4 hover:text-[#B98D6D]"
-                    >
-                      통계목록
-                    </NavLink>
-                  </div>
-                </div>
+                <MyPageDropdown subMenu={item.subMenu} />
               )}
             </div>
           ))}

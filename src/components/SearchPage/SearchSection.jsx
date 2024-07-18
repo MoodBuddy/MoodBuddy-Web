@@ -56,7 +56,7 @@ const SearchSection = () => {
     };
     setSearchParams(searchParams);
     setShowDetailOptions(false);
-    navigate('/searchList');
+    navigate('/search/searchList');
   };
 
   const handleKeyDown = (event) => {

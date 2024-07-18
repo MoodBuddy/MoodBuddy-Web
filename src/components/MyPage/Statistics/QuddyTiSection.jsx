@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const QuddyTiSection = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/quddyti');
+    navigate('/mypage/quddyti');
   };
 
   return (

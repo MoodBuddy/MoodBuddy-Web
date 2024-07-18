@@ -29,7 +29,7 @@ const Router = () => (
           { path: '/home', element: <MainPage /> },
           { path: '/writing', element: <WritingPage /> },
           { path: '/search', element: <SearchPage /> },
-          { path: '/searchlist', element: <SearchListPage /> },
+          { path: '/search/searchlist', element: <SearchListPage /> },
           { path: '/diary/:id', element: <DiaryPage /> },
           { path: '/counseling', element: <CounselingPage /> },
           { path: '/counseling/writingLetter', element: <WritingLetterPage /> },
@@ -50,11 +50,13 @@ const Router = () => (
             element: <KakaoLoginAuth />,
           },
           { path: '/complete', element: <CompletePage /> },
-          { path: '/stats', element: <StatsPage /> },
-          { path: '/quddyti', element: <QuddyTiPage /> },
-          { path: '/editProfile', element: <EditProfilePage /> },
-          { path: '/myActivity', element: <MyActivityPage /> },
-          { path: '/bookMark', element: <BookMarkPage /> },
+
+          { path: '/mypage/stats', element: <StatsPage /> },
+          { path: '/mypage/quddyti', element: <QuddyTiPage /> },
+          { path: '/mypage/editProfile', element: <EditProfilePage /> },
+          { path: '/mypage/myActivity', element: <MyActivityPage /> },
+
+          { path: '/mypage/bookMark', element: <BookMarkPage /> },
         ],
       },
     ])}

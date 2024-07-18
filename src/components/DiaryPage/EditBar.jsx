@@ -63,7 +63,7 @@ const EditBar = ({ diaryId }) => {
     mutationFn: (id) => deleteDiary(id),
     onSuccess: () => {
       queryClient.invalidateQueries('diaries');
-      navigate('/searchList');
+      navigate('/search/searchList');
     },
   });
 
