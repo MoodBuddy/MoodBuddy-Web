@@ -13,6 +13,7 @@ import useDiaryItemIdStore from '../../store/diaryItemIdStore';
 import useDiaryDateStore from '../../store/diaryDateStore';
 import useDiaryImgFileStore from '../../store/diaryImgFileStore';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 
 const EditBar = ({ diaryId }) => {
   const queryClient = useQueryClient();
@@ -28,12 +29,17 @@ const EditBar = ({ diaryId }) => {
   const { setDiaryDate } = useDiaryDateStore();
   const { setImageFiles } = useDiaryImgFileStore();
   const { setDiaryKeepImg } = useDiaryKeepImgUrlStore();
+  const { temporaryDiary } = useTemporaryDiaryStore();
   const getOriginalDiary = async (id) => {
     if (id) {
       const res = await getFindOne(id);
       return res;
     }
   };
+
+  useEffect(() => {
+    setUpdateDiary(true);
+  }, []);
 
   useEffect(() => {
     const diaryId = async () => {
@@ -87,7 +93,6 @@ const EditBar = ({ diaryId }) => {
     try {
       const res = await getOriginalDiary(id);
 
-      setUpdateDiary(true);
       setDiaryItemId(id);
       setContent(res.diaryContent);
       setTitle(res.diaryTitle);
@@ -103,13 +108,17 @@ const EditBar = ({ diaryId }) => {
   };
   return (
     <div className="flex justify-end gap-4 mt-8 mb-4">
-      <Button
-        onClick={handleBookMark}
-        color="lightBeige"
-        className="border-black rounded-[10px] text-xl"
-      >
-        {isBookMark ? '북마크취소' : '북마크하기'}
-      </Button>
+      {!temporaryDiary ? (
+        <Button
+          onClick={handleBookMark}
+          color="lightBeige"
+          className="border-black rounded-[10px] text-xl"
+        >
+          {isBookMark ? '북마크취소' : '북마크하기'}
+        </Button>
+      ) : (
+        <></>
+      )}
       <Button
         onClick={handleDiaryUpdate}
         color="lightBeige"

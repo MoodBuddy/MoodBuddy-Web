@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
-import { diaryDescription, saveDiary } from '../../apis/diary';
+import { diaryDescription, saveDiary, updateDiaryOne } from '../../apis/diary';
 import useTitleStore from '../../store/titleStore';
 import useDiaryContentStore from '../../store/diaryContentStore';
 import useweatherStore from '../../store/weatherStore';
@@ -12,12 +12,15 @@ import useSpeechBubble from '../../store/speechBubbleStore';
 import { ko } from 'date-fns/locale';
 import ModalLoadingSpinner from '../common/loading/ModalLoadingSpinner';
 import Button from '../common/button/Button';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
+import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { title } = useTitleStore();
   const { content } = useDiaryContentStore();
   const { selectedOption } = useweatherStore();
   const { imageFiles } = useDiaryImgFileStore();
+  const { diaryKeepImg } = useDiaryKeepImgUrlStore();
   const [comment, setComment] = useState('');
   const [emotion, setEmotion] = useState('');
   const [item, setItem] = useState('');
@@ -25,6 +28,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { setSpeechBubble } = useSpeechBubble();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
   });
@@ -36,12 +40,43 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
   useEffect(() => {
     if (completeAnaylsis) {
       const result = async () => {
-        await isCompleteSave();
+        console.log(temporaryDiary);
+        if (!temporaryDiary) {
+          await isCompleteSave();
+        } else {
+          await updateDiary();
+        }
+        setTemporaryDiary(false);
         await getDescription();
       };
       result();
     }
   }, [completeAnaylsis]);
+
+  const updateDiary = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('diaryId', diaryItemId);
+      formData.append('diaryTitle', title);
+      formData.append('diaryDate', todayUTC.slice(0, -14));
+      formData.append('diaryStatus', 'DRAFT');
+      formData.append('diaryContent', content);
+      formData.append('diaryWeather', selectedOption);
+
+      for (let i = 0; i < imageFiles.length; i++) {
+        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+      }
+      for (let i = 0; i < diaryKeepImg.length; i++) {
+        diaryKeepImg.length > 0 &&
+          formData.append('existingDiaryImgList', diaryKeepImg[i]);
+      }
+      console.log(...formData);
+      await updateDiaryOne(formData);
+      navigate(`/diary/${diaryItemId}`);
+    } catch (error) {
+      console.error('임시저장 일기 저장 오류', error);
+    }
+  };
 
   const getDescription = async () => {
     try {

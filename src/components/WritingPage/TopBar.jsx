@@ -37,7 +37,7 @@ const TopBar = ({ setTemplateOn }) => {
   const { setDraftList } = useDraftListStore();
   const { updateDiary } = useUpdateDiaryStore();
   const { diaryItemId, setDiaryItemId } = useDiaryItemIdStore();
-  const { temporaryDiary } = useTemporaryDiaryStore();
+  const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const { diaryDate } = useDiaryDateStore();
   const { diaryKeepImg } = useDiaryKeepImgUrlStore();
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const TopBar = ({ setTemplateOn }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', todayUTC.slice(0, -5));
+      formData.append('diaryDate', todayUTC.slice(0, -14));
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {
