@@ -61,7 +61,8 @@ const NavBar = () => {
                 to={item.to}
                 className={({ isActive }) =>
                   isActive ||
-                  (item.id === 5 && location.pathname.startsWith('/mypage'))
+                  (item.id === 5 && location.pathname.startsWith('/mypage')) ||
+                  (item.id === 3 && location.pathname.startsWith('/diary'))
                     ? 'text-[#B98D6D]'
                     : 'hover:text-[#B98D6D] transition-colors duration-75'
                 }
