@@ -51,7 +51,7 @@ const QuddyLetterContent = ({ data }) => {
           <div className="font-medium text-2xl ml-[80px]">To.QUDDY</div>
         </div>
 
-        <div className="text-center my-28 mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+        <div className="text-center my-28 mx-auto font-light text-xl leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
           {data.letterWorryContent}
         </div>
 
@@ -59,10 +59,10 @@ const QuddyLetterContent = ({ data }) => {
           From. QUDDY
         </div>
 
-        <div className="flex flex-col justify-center items-center gap-12">
+        <div className="flex flex-col justify-center items-center h-[485px]">
           {showAnswer ? (
-            <div className="text-center mt-20 px-20 mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[900px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-              {data.letterAnswerContent}
+            <div className="text-center font-light text-xl mb-10 leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+              <p className="px-20">{data.letterAnswerContent}</p>
             </div>
           ) : (
             <>
