@@ -6,7 +6,11 @@ import '@styles/slick.css';
 import banner_1 from '@assets/banner/banner_1.svg';
 import banner_1_1 from '@assets/banner/banner_1_1.svg';
 import banner_1_2 from '@assets/banner/banner_1_2.svg';
+
 import banner_2 from '@assets/banner/banner_2.svg';
+import banner_2_1 from '@assets/banner/banner_2_1.svg';
+import banner_2_2 from '@assets/banner/banner_2_2.svg';
+
 import banner_3 from '@assets/banner/banner_3.svg';
 import banner_4 from '@assets/banner/banner_4.svg';
 import banner_5 from '@assets/banner/banner_5.svg';
@@ -46,7 +50,7 @@ const IntroduceSection = () => {
     slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
     slidesToScroll: 1, // 한 번에 스크롤할 슬라이드 수
     autoplay: true, // 자동 재생 여부
-    autoplaySpeed: 6000, // 자동 재생 속도 (6초)
+    autoplaySpeed: 1000000, // 자동 재생 속도 (6초)
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     appendDots: (dots) => (
@@ -77,7 +81,7 @@ const IntroduceSection = () => {
             <img
               src={banner_1_2}
               alt="Banner 1_2"
-              className="w-[467px] h-[152px] left-[190px] absolute top-[110px] z-30"
+              className="w-full x absolute z-30"
             />
             <img
               className="animate-bounce w-full  absolute top-[-25px] z-20"
@@ -88,6 +92,24 @@ const IntroduceSection = () => {
           <img src={banner_1} alt="Banner 1" className="w-full" />
         </Link>
         <Link to="/writing">
+          {/* <div className="relative">
+            <img
+              src={banner_2}
+              alt="Banner 2"
+              className="w-full absolute top-[-16px]  z-10 "
+            />
+            <img
+              src={banner_2_1}
+              alt="Banner 2_1"
+              className="animate-spin w-[45%] absolute z-20 right-[180px] top-[70px]"
+            />
+            <img
+              src={banner_2_2}
+              alt="Banner 2_2"
+              className="absolute z-30 w-full "
+            />
+          </div>
+          <div className="absolute bottom-0 z-30 w-full h-[10px] bg-[#E8DBCF]"></div> */}
           <img src={banner_2} alt="Banner 2" className="w-full" />
         </Link>
         <Link to="/writing">

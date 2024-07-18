@@ -65,8 +65,11 @@ const DiarySection = ({ diaryId }) => {
 
       {/* 뒤로가기 버튼 */}
       <div className="relative">
-        <button onClick={() => navigate(-1)} className="absolute left-[-45px] top-[48px]">
-          <img src={prevIcon} alt="prevIcon" className="w-[18px]"/>
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute left-[-45px] top-[48px]"
+        >
+          <img src={prevIcon} alt="prevIcon" className="w-[18px]" />
         </button>
       </div>
 
@@ -105,7 +108,18 @@ const DiarySection = ({ diaryId }) => {
               </div>
             </div>
           ) : (
-            <></>
+            <>
+              <div className="mr-12 mb-6">
+                <img
+                  src={imgSrc}
+                  alt={imgSrc}
+                  className="w-[150px] h-[170px]"
+                />
+                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+                  {text}쿼디
+                </p>
+              </div>
+            </>
           )}
         </div>
 
