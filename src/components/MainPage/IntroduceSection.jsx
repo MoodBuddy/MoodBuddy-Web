@@ -104,16 +104,16 @@ const IntroduceSection = () => {
               alt="Banner 2"
               className="w-full absolute top-[-16px]  z-10 "
             />
-            {/* <img
+            <img
               src={banner_2_1}
               alt="Banner 2_1"
-              className="animate-spin w-[45%] absolute z-20 right-[180px] top-[70px]"
+              className="animate-spin w-[60%] absolute z-20 right-[70px] top-[-20px]"
             />
             <img
               src={banner_2_2}
               alt="Banner 2_2"
               className="absolute z-30 w-full "
-            /> */}
+            />
           </div>
           <div className="absolute bottom-0 z-30 w-full h-[10px] bg-[#E8DBCF]"></div>
         </Link>
