@@ -28,23 +28,16 @@ const SearchSection = () => {
   };
 
   const handleTopicClick = (index) => {
-    if (selectedTopic === index) {
-      setSelectedTopic(null);
-    } else {
-      setSelectedTopic(index);
-    }
+    setSelectedTopic(selectedTopic === index ? null : index);
   };
+
   const handleQuddyClick = (index) => {
-    if (selectedQuddy === index) {
-      setSelectedQuddy(null);
-    } else {
-      setSelectedQuddy(index);
-    }
+    setSelectedQuddy(selectedQuddy === index ? null : index);
   };
 
   const handleSearch = () => {
-    const parsedYear = year === '' ? null : parseInt(year, 10);
-    const parsedMonth = month === '' ? null : parseInt(month, 10);
+    const parsedYear = year ? parseInt(year, 10) : null;
+    const parsedMonth = month ? parseInt(month, 10) : null;
 
     const searchParams = {
       keyword: searchQuery,
