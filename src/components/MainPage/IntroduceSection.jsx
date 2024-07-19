@@ -7,9 +7,6 @@ import banner_1 from '@assets/banner/banner_1.svg';
 import banner_1_1_1 from '@assets/banner/banner_1_1_1.svg';
 import banner_1_1_2 from '@assets/banner/banner_1_1_2.svg';
 import banner_1_1_3 from '@assets/banner/banner_1_1_3.svg';
-
-import banner_1_2 from '@assets/banner/banner_1_2.svg';
-
 import banner_2 from '@assets/banner/banner_2.svg';
 import banner_2_1 from '@assets/banner/banner_2_1.svg';
 import banner_2_2 from '@assets/banner/banner_2_2.svg';
@@ -81,11 +78,7 @@ const IntroduceSection = () => {
               alt="Banner 1"
               className="w-full absolute top-[-15px] z-10"
             />
-            <img
-              src={banner_1_2}
-              alt="Banner 1_2"
-              className="w-full x absolute z-30"
-            />
+        
             <img
               className="animate-bounce w-full  absolute top-[-25px] z-20"
               src={banner_1_1_1}
@@ -105,13 +98,13 @@ const IntroduceSection = () => {
           <img src={banner_1} alt="Banner 1" className="w-full" />
         </Link>
         <Link to="/writing">
-          {/* <div className="relative">
+          <div className="relative">
             <img
               src={banner_2}
               alt="Banner 2"
               className="w-full absolute top-[-16px]  z-10 "
             />
-            <img
+            {/* <img
               src={banner_2_1}
               alt="Banner 2_1"
               className="animate-spin w-[45%] absolute z-20 right-[180px] top-[70px]"
@@ -120,10 +113,9 @@ const IntroduceSection = () => {
               src={banner_2_2}
               alt="Banner 2_2"
               className="absolute z-30 w-full "
-            />
+            /> */}
           </div>
-          <div className="absolute bottom-0 z-30 w-full h-[10px] bg-[#E8DBCF]"></div> */}
-          <img src={banner_2} alt="Banner 2" className="w-full" />
+          <div className="absolute bottom-0 z-30 w-full h-[10px] bg-[#E8DBCF]"></div>
         </Link>
         <Link to="/writing">
           <img src={banner_3} alt="Banner 3" className="w-full" />
