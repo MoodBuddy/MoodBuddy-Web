@@ -92,7 +92,7 @@
   animation: bounce 1.5s infinite;
 }
 .animate-spin {
-  animation: spinSlowEnd 5s linear infinite;
+  animation: spinSlowEnd 4s linear infinite;
   transform-origin: 50% 50%;
 }
 
@@ -102,7 +102,7 @@
     animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
   }
 
-  70% {
+  60% {
     transform: rotate(1080deg);
     animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
   }
