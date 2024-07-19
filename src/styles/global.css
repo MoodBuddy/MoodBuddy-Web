@@ -85,7 +85,12 @@
 .animate-bounce {
   animation: bounce 1.5s infinite;
 }
-
+.animate-bounce2 {
+  animation: bounce 1.5s infinite;
+}
+.animate-bounce3 {
+  animation: bounce 1.5s infinite;
+}
 .animate-spin {
   animation: spinSlowEnd 5s linear infinite;
   transform-origin: 50% 50%;

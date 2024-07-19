@@ -77,7 +77,7 @@ const TopBar = ({ setTemplateOn }) => {
     const res = await checkTodayDiary();
     console.log(res);
     const canWrite = res.checkTodayDiary;
-    if (canWrite) {
+    if (!canWrite) {
       console.log('일기못씀');
       alert('오늘 일기를 이미 작성하였습니다!');
     } else {

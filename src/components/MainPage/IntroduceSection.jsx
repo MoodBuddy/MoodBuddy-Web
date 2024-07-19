@@ -4,7 +4,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '@styles/slick.css';
 import banner_1 from '@assets/banner/banner_1.svg';
-import banner_1_1 from '@assets/banner/banner_1_1.svg';
+import banner_1_1_1 from '@assets/banner/banner_1_1_1.svg';
+import banner_1_1_2 from '@assets/banner/banner_1_1_2.svg';
+import banner_1_1_3 from '@assets/banner/banner_1_1_3.svg';
+
 import banner_1_2 from '@assets/banner/banner_1_2.svg';
 
 import banner_2 from '@assets/banner/banner_2.svg';
@@ -50,7 +53,7 @@ const IntroduceSection = () => {
     slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
     slidesToScroll: 1, // 한 번에 스크롤할 슬라이드 수
     autoplay: true, // 자동 재생 여부
-    autoplaySpeed: 1000000, // 자동 재생 속도 (6초)
+    autoplaySpeed: 10000000, // 자동 재생 속도 (6초)
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     appendDots: (dots) => (
@@ -85,8 +88,18 @@ const IntroduceSection = () => {
             />
             <img
               className="animate-bounce w-full  absolute top-[-25px] z-20"
-              src={banner_1_1}
-              alt="Banner 1_1"
+              src={banner_1_1_1}
+              alt="Banner 1_1_1"
+            />
+            <img
+              className="animate-bounce2 w-full  absolute top-[-25px] z-20"
+              src={banner_1_1_2}
+              alt="Banner 1_1_2"
+            />
+            <img
+              className="animate-bounce3 w-full  absolute top-[-25px] z-20"
+              src={banner_1_1_3}
+              alt="Banner 1_1_3"
             />
           </div> */}
           <img src={banner_1} alt="Banner 1" className="w-full" />

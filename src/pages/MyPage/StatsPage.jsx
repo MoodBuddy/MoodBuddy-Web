@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { getEmotionStatic } from '../../apis/user';
@@ -13,6 +13,7 @@ import MyCalendarSection from '../../components/MyPage/Statistics/MyCalendarSect
 import MemoSection from '../../components/MyPage/Statistics/MemoSection';
 
 const StatsPage = () => {
+  const [shortWord, setShortWord] = useState('');
   const {
     currentDate,
     handlePrevMonth,
@@ -65,10 +66,15 @@ const StatsPage = () => {
             <MyCalendarSection
               currentDate={currentDate}
               daysInMonth={daysInMonth}
+              shortWord={shortWord}
             />
           </div>
 
-          <MemoSection currentDate={currentDate} />
+          <MemoSection
+            setShortWord={setShortWord}
+            shortWord={shortWord}
+            currentDate={currentDate}
+          />
         </div>
       </div>
 
