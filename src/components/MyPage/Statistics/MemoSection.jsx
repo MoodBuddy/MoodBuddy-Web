@@ -7,10 +7,7 @@ const MemoSection = ({ currentDate, shortWord, setShortWord }) => {
   const [text, setText] = useState('');
   const [nextMonth, setNextMonth] = useState('');
   const [nextMonthOnly, setNextMonthOnly] = useState('');
-
   const maxLength = 150;
-  const [comment, setComment] = useState('');
-  const [lastComment, setLastComment] = useState('');
 
   const date = new Date(currentDate).toISOString().slice(0, -14);
 

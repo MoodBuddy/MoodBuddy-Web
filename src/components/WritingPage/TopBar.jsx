@@ -76,13 +76,25 @@ const TopBar = ({ setTemplateOn }) => {
   const handleDiarySave = async () => {
     const res = await checkTodayDiary();
     console.log(res);
-    const canWrite = res.checkTodayDiary;
-    if (!canWrite) {
-      console.log('일기못씀');
-      alert('오늘 일기를 이미 작성하였습니다!');
-    } else {
-      console.log('일기씀');
+    const canWrite = res.checkTodayDairy;
+    console.log(canWrite);
+    console.log(updateDiary);
+    if (!updateDiary) {
+      if (!canWrite) {
+        console.log('일기못씀');
+        alert('오늘 일기를 이미 작성하였습니다!');
+      } else {
+        console.log('일기씀');
 
+        if (updateDiary && !temporaryDiary) {
+          console.log(updateDiary);
+          console.log(temporaryDiary);
+          handleupdateDiary();
+        } else {
+          isGotoAnalysisEmotionModal();
+        }
+      }
+    } else {
       if (updateDiary && !temporaryDiary) {
         console.log(updateDiary);
         console.log(temporaryDiary);
