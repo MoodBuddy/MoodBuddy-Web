@@ -19,6 +19,8 @@ import EditProfilePage from '../pages/MyPage/EditProfilePage';
 import MyActivityPage from '../pages/MyPage/MyActivityPage';
 import BookMarkPage from '../pages/MyPage/BookMarkPage';
 import NoWritingLetterPage from '../pages/CounselingPage/NoWritingLetterPage';
+import ProtectedRoute from '../components/AuthPage/ProtectedRoute';
+
 const Router = () => (
   <RouterProvider
     router={createBrowserRouter([
@@ -26,37 +28,72 @@ const Router = () => (
         element: <Layout />,
         children: [
           { path: '/', element: <WelcomePage /> },
-          { path: '/home', element: <MainPage /> },
-          { path: '/writing', element: <WritingPage /> },
-          { path: '/search', element: <SearchPage /> },
-          { path: '/search/searchlist', element: <SearchListPage /> },
-          { path: '/diary/:id', element: <DiaryPage /> },
-          { path: '/counseling', element: <CounselingPage /> },
-          { path: '/counseling/writingLetter', element: <WritingLetterPage /> },
+          { path: '/home', element: <ProtectedRoute element={<MainPage />} /> },
+          {
+            path: '/writing',
+            element: <ProtectedRoute element={<WritingPage />} />,
+          },
+          {
+            path: '/search',
+            element: <ProtectedRoute element={<SearchPage />} />,
+          },
+          {
+            path: '/search/searchlist',
+            element: <ProtectedRoute element={<SearchListPage />} />,
+          },
+          {
+            path: '/diary/:id',
+            element: <ProtectedRoute element={<DiaryPage />} />,
+          },
+          {
+            path: '/counseling',
+            element: <ProtectedRoute element={<CounselingPage />} />,
+          },
+          {
+            path: '/counseling/writingLetter',
+            element: <ProtectedRoute element={<WritingLetterPage />} />,
+          },
           {
             path: '/counseling/noWritingLetter',
-            element: <NoWritingLetterPage />,
+            element: <ProtectedRoute element={<NoWritingLetterPage />} />,
           },
-
           {
             path: '/counseling/completedWriting',
-            element: <CompletedWriting />,
+            element: <ProtectedRoute element={<CompletedWriting />} />,
           },
-
-          { path: 'counseling/letter/:id', element: <QuddyLetter /> },
-          { path: '/user', element: <AuthPage /> },
+          {
+            path: 'counseling/letter/:id',
+            element: <ProtectedRoute element={<QuddyLetter />} />,
+          },
+          { path: '/user', element: <ProtectedRoute element={<AuthPage />} /> },
           {
             path: '/api/v1/user/login/oauth2/code/kakao',
             element: <KakaoLoginAuth />,
           },
-          { path: '/complete', element: <CompletePage /> },
-
-          { path: '/mypage/stats', element: <StatsPage /> },
-          { path: '/mypage/quddyti', element: <QuddyTiPage /> },
-          { path: '/mypage/editProfile', element: <EditProfilePage /> },
-          { path: '/mypage/myActivity', element: <MyActivityPage /> },
-
-          { path: '/mypage/bookMark', element: <BookMarkPage /> },
+          {
+            path: '/complete',
+            element: <ProtectedRoute element={<CompletePage />} />,
+          },
+          {
+            path: '/mypage/stats',
+            element: <ProtectedRoute element={<StatsPage />} />,
+          },
+          {
+            path: '/mypage/quddyti',
+            element: <ProtectedRoute element={<QuddyTiPage />} />,
+          },
+          {
+            path: '/mypage/editProfile',
+            element: <ProtectedRoute element={<EditProfilePage />} />,
+          },
+          {
+            path: '/mypage/myActivity',
+            element: <ProtectedRoute element={<MyActivityPage />} />,
+          },
+          {
+            path: '/mypage/bookMark',
+            element: <ProtectedRoute element={<BookMarkPage />} />,
+          },
         ],
       },
     ])}

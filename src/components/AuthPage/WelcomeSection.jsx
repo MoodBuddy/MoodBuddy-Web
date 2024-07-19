@@ -7,11 +7,13 @@ import gloomyQuddy from '@assets/gloomyQuddy.svg';
 import Button from '../common/button/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useAuthStore from '../../store/authStore';
 
 const WelcomeSection = () => {
   const [kakaoId, setKakaoId] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { setAuthenticated } = useAuthStore();
 
   const handleLogin = async () => {
     try {
@@ -33,7 +35,7 @@ const WelcomeSection = () => {
           JSON.stringify({ token: accessToken }),
         );
         sessionStorage.setItem('i', refreshToken);
-        console.log('로그인 성공:', res.data);
+        setAuthenticated(true); // 인증 상태 업데이트
         navigate('/home');
       } else {
         throw new Error('로그인에 실패하였습니다.');
