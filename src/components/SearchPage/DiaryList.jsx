@@ -43,7 +43,7 @@ const DiaryList = ({ filterType, emotion, onClose }) => {
   };
 
   const { isError, data, error } = useQuery({
-    queryKey: ['diaries', filterType, emotion],
+    queryKey: ['diaries', filterType, emotion, searchParams],
     queryFn: getDiariesQuery,
   });
 
