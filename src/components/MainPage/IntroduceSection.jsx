@@ -50,7 +50,7 @@ const IntroduceSection = () => {
     slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
     slidesToScroll: 1, // 한 번에 스크롤할 슬라이드 수
     autoplay: true, // 자동 재생 여부
-    autoplaySpeed: 10000000, // 자동 재생 속도 (6초)
+    autoplaySpeed: 6000, // 자동 재생 속도 (6초)
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     appendDots: (dots) => (
