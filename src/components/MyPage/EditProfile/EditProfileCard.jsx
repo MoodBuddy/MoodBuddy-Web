@@ -6,6 +6,7 @@ import { getProfile, postProfileEdit } from '../../../apis/user';
 import { useQuery } from '@tanstack/react-query';
 import Button from '../../common/button/Button';
 import ProfileEditModal from './ProfileEditModal';
+import defaultProfile from '../../../../public/image/defaultProfile.png';
 
 const EditProfileCard = () => {
   const { isError, data, error } = useQuery({
@@ -77,21 +78,20 @@ const EditProfileCard = () => {
     const file = e.target.files[0];
     if (file) {
       setState({ ...state, newProfileImg: file });
-      setProfileImage(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleImageDelete = () => {
     setState({ ...state, newProfileImg: null });
-    setProfileImage(profile);
-  };
-
-  const handleResetNotification = () => {
-    // fcm 토큰 로직 추가
+    setProfileImage(defaultProfile);
   };
 
   const handleSubmit = async () => {
-    // 프로필 유효성 검증
     const birthDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
     if (state.nickname.trim() === '') {
@@ -99,19 +99,29 @@ const EditProfileCard = () => {
       setShowModal(true);
       return;
     }
+
     if (!birthDateRegex.test(state.birthDate)) {
       setModalMessage('생년월일을 2000-01-01 형식으로 입력해주세요 !');
       setShowModal(true);
       return;
+    }
+    const formData = new FormData();
+    formData.append('nickname', state.nickname);
+    formData.append('birthday', state.birthDate);
+    formData.append('profileComment', state.profileComment);
+
+    if (state.newProfileImg) {
+      formData.append('newProfileImg', state.newProfileImg);
     }
 
     try {
       setModalMessage('');
       setShowModal(true);
       setIsValid(true);
+      await postProfileEdit(formData);
+      setModalMessage('프로필이 성공적으로 저장되었습니다.');
     } catch (error) {
       setModalMessage('프로필 저장에 실패했습니다. 다시 시도해주세요.');
-      setShowModal(true);
       setIsValid(false);
     }
   };

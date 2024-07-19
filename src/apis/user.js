@@ -64,9 +64,13 @@ export const getquddyTI = async () => {
   }
 };
 
-export const postProfileEdit = async (profile) => {
+export const postProfileEdit = async (formData) => {
   try {
-    const data = await post('/api/v1/member/main/profile-edit', profile);
+    const data = await client.post(
+      '/api/v1/member/main/profile-edit',
+      formData,
+    );
+
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');
