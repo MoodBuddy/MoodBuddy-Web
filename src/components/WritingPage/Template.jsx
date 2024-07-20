@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import close from '../../../public/icon/close.svg';
 import DailyQuestion from './DailyQuestion';
 import EmotionQuestion from './EmotionQuestion';
@@ -11,14 +11,19 @@ const Template = ({
   selectedTemplate,
 }) => {
   const [tab, setTab] = useState('left');
+  const [animationClass, setAnimationClass] = useState('');
+  useEffect(() => {
+    if (templateOn) {
+      setAnimationClass('template-enter');
+    } else {
+      setAnimationClass('template-exit');
+    }
+  }, [templateOn]);
   return (
     <div
-      className={`flex flex-col z-20 absolute top-0 right-0 h-[1600px] bg-[#E8DBCF] rounded-tl-[36px] shadow-2xl transition-transform transition-opacity duration-500 ${
-        templateOn
-          ? 'translate-x-[400px] opacity-100'
-          : 'translate-x-[600px] opacity-0'
-      }`}
-      style={{ width: '400px', visibility: templateOn ? 'visible' : 'hidden' }}
+      className={`flex flex-col z-20 absolute top-0 right-[-390px] h-[1600px] bg-[#E8DBCF] rounded-tl-[36px] shadow-2xl 
+      ${animationClass}`}
+      style={{ width: '400px' }}
     >
       <div className="flex justify-between w-[350px] mx-auto mt-[66px]">
         <div className="font-meetme text-[42px]">템플릿</div>

@@ -72,6 +72,36 @@
   padding-bottom: 16px;
 }
 
+@keyframes slide-fade-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-fade-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.template-enter {
+  animation: slide-fade-in 1s forwards;
+}
+
+.template-exit {
+  animation: slide-fade-out 1s forwards;
+}
+
 @keyframes bounce {
   0%,
   100% {
