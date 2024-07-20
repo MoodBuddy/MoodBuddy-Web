@@ -30,7 +30,7 @@ const CounselingPage = () => {
         className={`flex flex-col justify-center items-center ${styles.check}`}
       >
         <CounselingTopBar />
-        <div className=" transform scale-[85%] relative top-[-80px]">
+        <div className="transform scale-[85%] relative top-[-80px]">
           <div className="flex justify-center gap-[19px]">
             <Profile data={letter} />
             <MailBox letters={letter.letterResPageAnswerDTOList} />

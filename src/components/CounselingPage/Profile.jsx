@@ -26,7 +26,7 @@ const Profile = ({ data }) => {
           <div className="text-[28px] ">남은 편지지 개수</div>
           <div className="font-semibold text-[40px]">{data.userLetterNums}</div>
         </div>
-        <div className="text-[18px] mt-[10px] flex justify-start w-[285px] text-[#676767]  ml-[20px] ">
+        <div className="text-xl mt-[10px] flex justify-start w-[285px] text-[#676767]  ml-[20px] ">
           일기를 작성하면 편지지가 주어져요!
         </div>
         <div className="w-full border-b-[1px] border-[#888888] mt-[26px]"></div>
