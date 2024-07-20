@@ -9,96 +9,96 @@ import {
 
 const MemoSection = ({ currentDate, shortWord, setShortWord }) => {
   const [text, setText] = useState('');
-  const [nextMonthOnly, setNextMonthOnly] = useState('');
-  const [isFirst, setIsFirst] = useState(false);
+  const [date, setDate] = useState('');
+  const [nextDate, setNextDate] = useState('');
+  const [nextMonth, setNextMonth] = useState('');
+  const [isEditing, setIsEditing] = useState(false); // 수정 모드 관리 상태 변수
+  const [isFirstComment, setIsFirstComment] = useState(true);
   const [existingComment, setExistingComment] = useState('');
 
   const maxLength = 150;
+  /* get : 이번 달 코멘트(이번 달 연 월 일), 다음 달 작성 여부(다음 달 연 월 일)
+    post : 다음 달 코멘트 저장, 다음 달 코멘트 업데이트 (다음 달 월)*/
 
-  const date = new Date(currentDate).toISOString().slice(0, -14);
-  const nextMonthDate = addMonths(currentDate, 1);
-  const formattedNextMonthonly = format(nextMonthDate, 'yyyy-MM');
-  useEffect(() => {
-    const isFirstComment = async () => {
-      try {
-        const res = await getMonthStatic(formattedNextMonthonly);
-
-        console.log(res.error);
-        if (res.error === 'Bad Request') {
-        } else {
-          isFirst(true);
-        }
-        //     const existing = res.monthComment;
-        //     if (existing) {
-        //       setText(existing);
-        //       console.log(existingComment);
-        //       setExistingComment(existing);
-        //       console.log(existingComment);
-        //     }
-        //   } else {
-        //     setIsFirst(true);
-        //     setText('');
-        //   }
-        // } catch (error) {
-        //   throw new Error(
-        //     '다음 달 한 마디가 있는지 여부 불러오기에 실패하였습니다.',
-        //   );
-      } catch (error) {
-        throw new Error(
-          '다음 달 한 마디가 있는지 여부 불러오기에 실패하였습니다.',
-        );
-      }
-    };
-    isFirstComment();
-  }, [currentDate]);
-
-  useEffect(() => {
-    const getComment = async () => {
-      try {
-        const res = await getMonthStatic(date);
-        const monthComment = res.monthComment;
-        setShortWord(monthComment);
-      } catch (error) {
-        throw new Error('데이터 불러오기에 실패하였습니다.');
-      }
-    };
-    getComment();
-  }, [currentDate]);
-
-  useEffect(() => {
-    setNextMonthOnly(formattedNextMonthonly);
+  const updateDates = () => {
+    const formattedDate = format(currentDate, 'yyyy-MM-dd'); // 현재 보이는 날짜 2024-07-11 형태로
+    const nextMonthDate = addMonths(currentDate, 1);
+    const formattedNextMonth = format(nextMonthDate, 'yyyy-MM-dd'); // 다음 달 2024-07-11 형태로
+    const formattedNextMonthonly = format(nextMonthDate, 'yyyy-MM'); // 다음 달 2024-07 형태로
+    setIsFirstComment(true);
     setText('');
-    console.log(formattedNextMonthonly);
+
+    setDate(formattedDate);
+    setNextDate(formattedNextMonth);
+    setNextMonth(formattedNextMonthonly);
+  };
+
+  const getComment = async (date) => {
+    try {
+      const res = await getMonthStatic(date);
+      console.log(res);
+      const monthComment = res.monthComment;
+      setShortWord(monthComment);
+    } catch (error) {
+      console.error('데이터 불러오기에 실패하였습니다.', error);
+    }
+  };
+
+  const checkIsFirstComment = async (nextMonth) => {
+    console.log(nextMonth);
+    try {
+      const res = await getMonthStatic(nextMonth);
+      console.log(res);
+      const isMonthComment = res.commentCheck;
+      const existing = res.monthComment;
+      console.log(isMonthComment);
+      isMonthComment
+        ? (setIsFirstComment(false), setExistingComment(existing))
+        : setIsFirstComment(true);
+      return existing;
+    } catch (error) {
+      console.error('데이터 불러오기에 실패했습니다.', error);
+    }
+  };
+
+  useEffect(() => {
+    updateDates();
   }, [currentDate]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (date && nextDate && nextMonth) {
+        await getComment(date);
+        await checkIsFirstComment(nextDate);
+      }
+    };
+
+    fetchData();
+  }, [date, nextDate, nextMonth]);
+
+  /*저장 버튼 눌렀을 때 (다음 달 연 월 전송)*/
   const saveComment = async () => {
-    console.log(existingComment);
-    if (!existingComment) {
-      console.log(existingComment);
-      try {
-        const comment = {
-          chooseMonth: nextMonthOnly,
-          monthComment: text,
-        };
-        const res = await postShortWordToNextMonth(comment);
-        console.log(res);
-        alert('저장되었습니다!');
-      } catch (error) {
-        throw new Error('데이터 불러오기에 실패하였습니다.');
+    console.log(isFirstComment);
+    try {
+      const comment = {
+        chooseMonth: nextMonth,
+        monthComment: text,
+      };
+      let res;
+      if (isFirstComment) {
+        console.log('처음 저장');
+        res = await postShortWordToNextMonth(comment);
+      } else {
+        console.log('업데이트');
+        res = await updateShortWordToNextMonth(comment);
       }
-    } else {
-      try {
-        console.log(existingComment);
-        const comment = {
-          chooseMonth: nextMonthOnly,
-          monthComment: text,
-        };
-        const res = await updateShortWordToNextMonth(comment);
-        console.log(res);
-        alert('저장되었습니다!');
-      } catch (error) {
-        throw new Error('데이터 불러오기에 실패하였습니다.');
-      }
+
+      console.log(res);
+      alert('저장되었습니다!');
+      setIsEditing(false);
+      await checkIsFirstComment(nextDate);
+    } catch (error) {
+      throw new Error('데이터 불러오기에 실패하였습니다.');
     }
   };
 
@@ -108,24 +108,35 @@ const MemoSection = ({ currentDate, shortWord, setShortWord }) => {
         다음 달 나에게 짧은 한 마디
       </h1>
 
-      {isFirst ? (
-        <div className="relative w-[1000px]">
-          <div className="w-full h-[180px] text-lg p-4 bg-white rounded-2xl border-[1px] border-black resize-none"></div>
-        </div>
+      <div className="relative w-[1000px]">
+        {!isFirstComment && !isEditing ? (
+          <div className="w-full h-[180px] text-lg p-4 bg-[#F7F3EF] rounded-2xl border-[1px] border-black resize-none">
+            {existingComment}
+          </div>
+        ) : (
+          <>
+            <textarea
+              type="text"
+              maxLength={maxLength}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="w-full h-[180px] text-lg p-4 bg-white rounded-2xl border-[1px] border-black resize-none"
+            />
+            <div className="absolute bottom-4 right-6 text-neutral-400">{`${text.length} / ${maxLength}`}</div>{' '}
+          </>
+        )}
+      </div>
+      {!isFirstComment && !isEditing ? (
+        <Button
+          onClick={() => {
+            setIsEditing(true);
+            setText(existingComment);
+          }}
+          className="self-end mr-2 my-5"
+        >
+          <p className="text-lg px-16 font-normal">수정</p>
+        </Button>
       ) : (
-        <div className="relative w-[1000px]">
-          <textarea
-            type="text"
-            maxLength={maxLength}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="w-full h-[180px] text-lg p-4 bg-white rounded-2xl border-[1px] border-black resize-none"
-          />
-          <div className="absolute bottom-4 right-6 text-neutral-400">{`${text.length} / ${maxLength}`}</div>
-        </div>
-      )}
-
-      {!isFirst && (
         <Button onClick={saveComment} className="self-end mr-2 my-5">
           <p className="text-lg px-16 font-normal">저장</p>
         </Button>
