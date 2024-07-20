@@ -24,6 +24,7 @@ import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 import useDiaryDateStore from '../../store/diaryDateStore.js';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 import { checkTodayDiary } from '../../apis/user.js';
+import SaveModal from './SaveModal.jsx';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -41,6 +42,10 @@ const TopBar = ({ setTemplateOn }) => {
   const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const { diaryDate } = useDiaryDateStore();
   const { diaryKeepImg } = useDiaryKeepImgUrlStore();
+  const [isModal, setIsModal] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [message, setMessage] = useState('');
+
   const navigate = useNavigate();
 
   const today = new Date();
@@ -89,6 +94,7 @@ const TopBar = ({ setTemplateOn }) => {
         if (updateDiary && !temporaryDiary) {
           console.log(updateDiary);
           console.log(temporaryDiary);
+
           handleupdateDiary();
         } else {
           isGotoAnalysisEmotionModal();
@@ -111,6 +117,10 @@ const TopBar = ({ setTemplateOn }) => {
 
   const isGotoAnalysisEmotionModal = () => {
     setGotoAnalysisEmotionModal(!gotoAnalysisEmotionModal);
+  };
+
+  const handleButtonClick = () => {
+    navigate(`/diary/${diaryItemId}`);
   };
 
   const CheckDraftDiary = () => {
@@ -169,9 +179,12 @@ const TopBar = ({ setTemplateOn }) => {
       console.log(...formData);
       await updateDiaryOne(formData);
       setUpdateDiary(false);
-      navigate(`/diary/${diaryItemId}`);
+      setIsModal(true);
+      setIsValid(true);
     } catch (error) {
       console.error('일기 수정 오류', error);
+      setMessage('일기 수정에 실패했습니다. 다시 시도해주세요');
+      setIsValid(false);
     }
   };
 
@@ -238,6 +251,15 @@ const TopBar = ({ setTemplateOn }) => {
         gotoAnalysisEmotionModal={gotoAnalysisEmotionModal}
         setGotoAnalysisEmotionModal={setGotoAnalysisEmotionModal}
       />
+      {isModal && (
+        <SaveModal
+          handleButtonClick={handleButtonClick}
+          setIsModal={setIsModal}
+          isValid={isValid}
+          message={message}
+          diary={true}
+        />
+      )}
     </>
   );
 };

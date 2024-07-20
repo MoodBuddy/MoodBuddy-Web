@@ -32,7 +32,7 @@ const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
         });
       }, 50); // 5초 동안 100% => 50ms 동안 1%
     }
-    return () => clearInterval(interval); // Cleanup interval on component unmount or when modal is closed
+    return () => clearInterval(interval);
   }, [AnalysisEmotionModal]);
 
   useEffect(() => {

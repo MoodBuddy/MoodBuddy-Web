@@ -1,14 +1,18 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { MenuList } from '../../../constants/MenuList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getProfile } from '../../../apis/user';
+import { checkTodayDiary, getProfile } from '../../../apis/user';
 import ProfileInfo from './ProfileInfo';
 import MyPageDropdown from './MyPageDropdown';
+import AlertModal from './AlertModal';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
   const [showProfileDetails, setShowProfileDetails] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const [writing, setWriting] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -38,8 +42,35 @@ const NavBar = () => {
     return <div>오류 발생: {error.message}</div>;
   }
 
+  const {
+    data: diaryData,
+    isError: diaryError,
+    error: diaryErrorDetail,
+  } = useQuery({
+    queryKey: ['checkTodayDiary'],
+    queryFn: checkTodayDiary,
+  });
+
+  useEffect(() => {
+    console.log(diaryData);
+  }, [diaryData]);
+
+  const handleMenuClick = (event, to) => {
+    event.preventDefault(); // 기본 동작 방지
+    if (!diaryData.checkTodayDairy) {
+      setIsModal(true);
+    } else {
+      navigate(to);
+    }
+  };
+
   const handleLogo = () => {
     navigate('/home');
+  };
+
+  const handleButtonClick = () => {
+    setIsModal(false);
+    navigate('/search');
   };
 
   return (
@@ -59,6 +90,11 @@ const NavBar = () => {
             >
               <NavLink
                 to={item.to}
+                onClick={
+                  item.id === 2
+                    ? (event) => handleMenuClick(event, item.to)
+                    : undefined
+                }
                 className={({ isActive }) =>
                   isActive ||
                   (item.id === 5 && location.pathname.startsWith('/mypage')) ||
@@ -93,8 +129,14 @@ const NavBar = () => {
           {showProfileDetails && <ProfileInfo data={data} />}
         </div>
       </div>
-
       <div className="border-b-[1px] border-[#B98D6D]"> </div>
+      {isModal && (
+        <AlertModal
+          handleButtonClick={handleButtonClick}
+          setIsModal={setIsModal}
+          isModal={isModal}
+        />
+      )}
     </div>
   );
 };
