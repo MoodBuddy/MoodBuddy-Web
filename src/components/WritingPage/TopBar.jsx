@@ -25,6 +25,7 @@ import useDiaryDateStore from '../../store/diaryDateStore.js';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 import { checkTodayDiary } from '../../apis/user.js';
 import SaveModal from './SaveModal.jsx';
+import TemporaryModal from './TemporaryModal.jsx';
 
 const TopBar = ({ setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -45,6 +46,7 @@ const TopBar = ({ setTemplateOn }) => {
   const [isModal, setIsModal] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [message, setMessage] = useState('');
+  const [isTemporaryModal, setIsTemporaryModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -111,6 +113,10 @@ const TopBar = ({ setTemplateOn }) => {
     }
   };
 
+  const handleTemporaryModal = () => {
+    setIsTemporaryModal(!isTemporaryModal);
+  };
+
   const isTemporaryStorageModal = () => {
     setTemporaryStorageModal(!temporaryStorageModal);
   };
@@ -124,9 +130,12 @@ const TopBar = ({ setTemplateOn }) => {
   };
 
   const CheckDraftDiary = () => {
-    if (window.confirm('일기를 임시저장 하시겠습니까?')) {
-      handleDraftDiary();
-    }
+    handleTemporaryModal();
+  };
+
+  const handleTemporaryClick = () => {
+    handleDraftDiary();
+    handleTemporaryModal();
   };
   const handleDraftDiary = async () => {
     try {
@@ -258,6 +267,12 @@ const TopBar = ({ setTemplateOn }) => {
           isValid={isValid}
           message={message}
           diary={true}
+        />
+      )}
+      {isTemporaryModal && (
+        <TemporaryModal
+          setIsTemporaryModal={setIsTemporaryModal}
+          handleButtonClick={handleTemporaryClick}
         />
       )}
     </>

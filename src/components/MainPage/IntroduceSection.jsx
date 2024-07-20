@@ -126,7 +126,7 @@ const IntroduceSection = () => {
         <Link to="/counseling">
           <img src={banner_5} alt="Banner 5" className="w-full" />
         </Link>
-        <Link to="/mypage/stats">
+        <Link to="/mypage/myActivity">
           <img src={banner_6} alt="Banner 6" className="w-full" />
         </Link>
       </Slider>
