@@ -37,7 +37,7 @@ const SimilarModal = ({ onClose, emotion }) => {
               오늘과 비슷한 감정을 가진 날의 일기를 보여드릴게요!
             </p>
           </div>
-          
+
           {quddy && (
             <div className="flex flex-col justify-center items-center mt-6 gap-2">
               <img src={quddy.imgSrc} alt={quddy.name} className="w-48 h-48" />
@@ -59,7 +59,11 @@ const SimilarModal = ({ onClose, emotion }) => {
           </div>
 
           <div className="flex justify-end mt-20">
-            <Button onClick={handleGoHome}>
+            <Button
+              className="absolute bottom-[20px] right-[10px]  w-[200px]
+"
+              onClick={handleGoHome}
+            >
               <p className="p-1.5">메인화면으로 돌아가기</p>
             </Button>
           </div>

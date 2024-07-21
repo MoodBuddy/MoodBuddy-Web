@@ -46,6 +46,7 @@ const EmotionStats = ({ data, emotions }) => {
 
   const renderLegend = (props) => {
     const { payload } = props;
+    console.log(payload);
     return (
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {payload.map((entry, index) => (
@@ -68,7 +69,10 @@ const EmotionStats = ({ data, emotions }) => {
                 display: 'inline-block',
               }}
             ></span>
-            {entry.value}
+            <div className=" flex gap-3 items-baseline">
+              <span className="font-semibold text-[30px]">{entry.value}</span>
+              <span className="text-[12px]">({emotions[index].fullName})</span>
+            </div>
           </li>
         ))}
       </ul>
