@@ -49,8 +49,10 @@ const DiarySummary = () => {
       </div>
       {id ? (
         <>
-          <h1 className="font-bold my-6 whitespace-pre-wrap">{title}</h1>
-          <p className="font-medium whitespace-pre-wrap">{summary}</p>
+          <h1 className="font-bold mt-6 mb-8 whitespace-pre-wrap text-2xl">
+            {title}
+          </h1>
+          <p className="font-medium whitespace-pre-wrap text-2xl">{summary}</p>
         </>
       ) : (
         <>

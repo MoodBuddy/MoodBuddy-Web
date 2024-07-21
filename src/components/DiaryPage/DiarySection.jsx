@@ -7,7 +7,6 @@ import { getFindOne } from '../../apis/diary';
 import { formatWeather, formatQuddyByEmotion } from '../../utils/format';
 import SimilarModal from './SimilarModal';
 import EditBar from './EditBar';
-import happyBubble from '../../../public/image/happyBubble.svg';
 import useSpeechBubbleStore from '../../store/speechBubbleStore';
 import ImageModal from './ImageModal';
 import prevIcon from '../../../public/icon/prevBoldIcon.svg';
@@ -51,7 +50,9 @@ const DiarySection = ({ diaryId }) => {
   }, []);
 
   const formattedWeather = formatWeather(diary.diaryWeather);
-  const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
+  const { imgSrc, bubbleSrc, name, color } = formatQuddyByEmotion(
+    diary.diaryEmotion,
+  );
 
   const handleImgModal = (imageUrl) => {
     console.log(imgModal);
@@ -94,8 +95,11 @@ const DiarySection = ({ diaryId }) => {
                   alt={imgSrc}
                   className="w-[150px] h-[170px]"
                 />
-                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                  {text}쿼디
+                <p
+                  style={{ color: color }}
+                  className="font-meetme text-center text-2xl text-[#D8B18E]"
+                >
+                  {name}
                 </p>
               </div>
 
@@ -104,7 +108,7 @@ const DiarySection = ({ diaryId }) => {
                 onClick={() => setIsModalOpen(true)}
                 className="absolute top-[25%] right-[-220px] cursor-pointer"
               >
-                <img src={happyBubble} alt="happyBubble" className="w-[90%]" />
+                <img src={bubbleSrc} alt="bubbleSrc" className="w-[90%]" />
               </div>
             </div>
           ) : (
@@ -115,8 +119,11 @@ const DiarySection = ({ diaryId }) => {
                   alt={imgSrc}
                   className="w-[150px] h-[170px]"
                 />
-                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                  {text}쿼디
+                <p
+                  style={{ color: color }}
+                  className="font-meetme text-center text-2xl"
+                >
+                  {name}
                 </p>
               </div>
             </>

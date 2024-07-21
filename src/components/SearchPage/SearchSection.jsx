@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { quddies } from '../../constants/QuddyList';
 import { topics } from '../../constants/TopicList';
@@ -13,6 +13,7 @@ const SearchSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
+  const [isSearchEnabled, setIsSearchEnabled] = useState(false);
   const navigate = useNavigate();
 
   const { setSearchParams } = useSearchStore();
@@ -59,17 +60,33 @@ const SearchSection = () => {
     }
   };
 
+  useEffect(() => {
+    const parsedYear = year ? parseInt(year, 10) : null;
+    const parsedMonth = month ? parseInt(month, 10) : null;
+    if (
+      parsedYear ||
+      parsedMonth ||
+      selectedTopic !== null ||
+      selectedQuddy !== null ||
+      searchQuery.trim() !== ''
+    ) {
+      setIsSearchEnabled(true);
+    } else {
+      setIsSearchEnabled(false);
+    }
+  }, [year, month, selectedTopic, selectedQuddy, searchQuery]);
+
   return (
     <div className="w-full relative z-10">
       <div className="flex flex-col items-center gap-4 mt-16">
-        <div className="flex justify-center items-center gap-4 relative z-50">
-          <div className="relative">
+        <div className="flex justify-center items-center gap-2 relative z-50">
+          <div className="relative mr-4 ml-5">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-[900px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[18px] border-2 border-black px-10"
+              className="w-[890px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[18px] border-2 border-black px-10"
               placeholder="검색어를 입력하세요."
             />
             <img
@@ -80,10 +97,10 @@ const SearchSection = () => {
             />
           </div>
           <Button
-            className="w-[157px] h-[57px] bg-[#C79A76] rounded-2xl text-2xl font-normal"
+            className="w-[157px] h-[57px] bg-[#C79A76] rounded-2xl text-2xl"
             onClick={toggleDetailOptions}
           >
-            상세검색
+            <p className="font-medium">상세검색</p>
           </Button>
         </div>
       </div>
@@ -134,14 +151,14 @@ const SearchSection = () => {
               </div>
 
               {/* 쿼디 검색 */}
-              <div className="flex gap-4 mb-24">
+              <div className="flex gap-4">
                 <span className="text-zinc-700 text-2xl mr-20">쿼디 검색</span>
                 <div className="flex gap-4">
                   {quddies.map((quddy, index) => (
                     <button
                       key={index}
                       onClick={() => handleQuddyClick(index)}
-                      className={`flex flex-col gap-2 py-2 px-0.5 items-center ${
+                      className={`flex flex-col gap-2 py-2 px-0.5 h-[150px] w-[90px] items-center ${
                         selectedQuddy === index
                           ? 'bg-[#DCC6B1] rounded-[15px] border border-[#787878]'
                           : ''
@@ -159,6 +176,18 @@ const SearchSection = () => {
                   ))}
                 </div>
               </div>
+              {isSearchEnabled ? (
+                <div className="flex mb-6 justify-end">
+                  <Button
+                    onClick={handleSearch}
+                    className="w-[157px] mr-[-22px] h-[57px] bg-[#C79A76] rounded-2xl text-2xl"
+                  >
+                    <p className="font-medium">검색</p>
+                  </Button>
+                </div>
+              ) : (
+                <div className="h-[81px]"></div>
+              )}
             </div>
           </div>
         </>
