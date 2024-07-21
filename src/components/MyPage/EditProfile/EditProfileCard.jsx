@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Button from '../../common/button/Button';
 import ProfileEditModal from './ProfileEditModal';
 import defaultProfile from '../../../../public/image/defaultProfile.png';
+import { handleAllowNotification } from '../../../service/notificationPermission';
 
 const EditProfileCard = () => {
   const { isError, data, error } = useQuery({
@@ -109,6 +110,8 @@ const EditProfileCard = () => {
     formData.append('nickname', state.nickname);
     formData.append('birthday', state.birthDate);
     formData.append('profileComment', state.profileComment);
+    formData.append('alarm', isNotificationEnabled);
+    formData.append('alarmTime', notificationTime);
 
     if (state.newProfileImg) {
       formData.append('newProfileImg', state.newProfileImg);
@@ -128,6 +131,10 @@ const EditProfileCard = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleResetNotification = () => {
+    handleAllowNotification();
   };
 
   return (
