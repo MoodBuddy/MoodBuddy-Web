@@ -5,9 +5,17 @@ import { ko } from 'date-fns/locale';
 import { getProfile } from '../../apis/user';
 import CompleteAnalysis from './CompleteAnalysis';
 
-const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
+const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
   const [progress, setProgress] = useState(0);
   const [completeAnaylsis, setCompleteAnaylsis] = useState(false);
+
+  const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
+
+  const formatted = format(new Date(selectedDate), 'MM.dd(EEE)', {
+    locale: ko,
+  });
 
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
@@ -60,10 +68,10 @@ const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
           <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
             <div className="flex flex-col">
               <div className="font-medium text-[15px] mx-auto mt-[66px]">
-                {formattedDate}
+                {selectedDate ? formattedCalendarDate : formattedDate}
               </div>
               <div className="font-meetme text-[32.6px] mx-auto mt-[81px]">
-                {`오늘의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${formatted}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <div className="mx-auto mt-[40px] border-2 border-black w-[456.75px] h-[26.4px] mb-5 h-2 rounded-full bg-gray-200">
                 <div
@@ -78,7 +86,10 @@ const AnalysisEmotion = ({ AnalysisEmotionModal }) => {
           </div>
         </div>
       )}
-      <CompleteAnalysis completeAnaylsis={completeAnaylsis} />
+      <CompleteAnalysis
+        selectedDate={selectedDate}
+        completeAnaylsis={completeAnaylsis}
+      />
     </>
   );
 };

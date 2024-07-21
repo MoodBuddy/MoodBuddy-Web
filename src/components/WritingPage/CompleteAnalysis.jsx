@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { EmotionQuddyList } from '../../constants/EmotionQuddyList';
 import { diaryDescription, saveDiary, updateDiaryOne } from '../../apis/diary';
 import useTitleStore from '../../store/titleStore';
@@ -14,9 +14,9 @@ import ModalLoadingSpinner from '../common/loading/ModalLoadingSpinner';
 import Button from '../common/button/Button';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
-import SaveModal from './SaveModal';
+import useCalendarStore from '../../store/calendarStore';
 
-const CompleteAnalysis = ({ completeAnaylsis }) => {
+const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const { title } = useTitleStore();
   const { content } = useDiaryContentStore();
   const { selectedOption } = useweatherStore();
@@ -30,13 +30,20 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
+  const { selectDate } = useCalendarStore();
+
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
+
+  const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
   const today = new Date();
   today.setTime(today.getTime() + 9 * 60 * 60 * 1000); // 9시간 추가
   const todayUTC = today.toISOString();
+  const currentDate = todayUTC.slice(0, -14);
 
   useEffect(() => {
     if (completeAnaylsis) {
@@ -59,7 +66,10 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       const formData = new FormData();
       formData.append('diaryId', diaryItemId);
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', todayUTC.slice(0, -14));
+      formData.append(
+        'diaryDate',
+        selectedDate ? selectedDate : todayUTC.slice(0, -14),
+      );
       formData.append('diaryStatus', 'DRAFT');
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
@@ -106,7 +116,10 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', todayUTC.slice(0, -14));
+      formData.append(
+        'diaryDate',
+        selectedDate ? selectedDate : todayUTC.slice(0, -14),
+      );
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {
@@ -126,6 +139,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
 
   const isSave = () => {
     setSpeechBubble(true);
+    selectDate(currentDate);
     if (diaryItemId) {
       navigate(`/diary/${diaryItemId}`);
     }
@@ -147,7 +161,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
                 </div>
                 <div className="flex flex-col items-center absolute top-[120px]">
                   <div className="text-[18px] font-medium relative top-[10px]">
-                    {formattedDate}
+                    {selectedDate ? formattedCalendarDate : formattedDate}
                   </div>
                   <div className="flex flex-col gap-[5px] justify-center items-center ">
                     <img
@@ -174,7 +188,6 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
           )}
         </div>
       )}
-      <SaveModal />
     </>
   );
 };

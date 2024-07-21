@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -7,12 +7,25 @@ import AnalysisEmotion from './AnalysisEmotion';
 import analysisEmotion from '@assets/analysisEmotion.svg';
 import close from '../../../public/icon/close.svg';
 import Button from '../common/button/Button';
+import useCalendarStore from '../../store/calendarStore';
 
 const GotoAnalysis = ({
+  selectedDate,
   gotoAnalysisEmotionModal,
   setGotoAnalysisEmotionModal,
 }) => {
   const [AnalysisEmotionModal, setAnalysisEmotionModal] = useState(false);
+  useEffect(() => {
+    console.log(selectedDate);
+  }, []);
+
+  const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
+
+  const formatted = format(new Date(selectedDate), 'MM.dd(EEE)', {
+    locale: ko,
+  });
 
   const isAnalysisEmotionModal = () => {
     setAnalysisEmotionModal(!AnalysisEmotionModal);
@@ -21,6 +34,7 @@ const GotoAnalysis = ({
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
   });
+
   const { isError, data, error } = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
@@ -54,10 +68,10 @@ const GotoAnalysis = ({
             </div>
             <div className="flex flex-col items-center gap-[20px]">
               <div className="font-medium text-[15px] mx-auto mt-[10px]">
-                {formattedDate}
+                {selectedDate ? formattedCalendarDate : formattedDate}
               </div>
               <div className="font-meetme font-bold text-[32.6px] mx-auto ">
-                {`오늘의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${formatted}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <img className=" w-[120px] h-[120px]" src={analysisEmotion} />
               <div>
@@ -72,7 +86,10 @@ const GotoAnalysis = ({
           </div>
         </div>
       )}
-      <AnalysisEmotion AnalysisEmotionModal={AnalysisEmotionModal} />
+      <AnalysisEmotion
+        selectedDate={selectedDate}
+        AnalysisEmotionModal={AnalysisEmotionModal}
+      />
     </>
   );
 };

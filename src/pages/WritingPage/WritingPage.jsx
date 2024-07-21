@@ -4,10 +4,16 @@ import NavBar from '../../components/common/layout/NavBar';
 import styles from '@styles/check.module.css';
 import Footer from '../../components/common/layout/Footer';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useCalendarStore from '../../store/calendarStore';
 
 const WritingPage = () => {
-  const [templateOn, setTemplateOn] = useState(false);
+  const [templateOn, setTemplateOn] = useState(true);
+  const { selectedDate } = useCalendarStore();
+
+  useEffect(() => {
+    console.log(selectedDate);
+  }, []);
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
@@ -16,10 +22,17 @@ const WritingPage = () => {
   return (
     <>
       <NavBar></NavBar>
-      <TopBar setTemplateOn={handleTemplate}></TopBar>
+      <TopBar
+        selectedDate={selectedDate}
+        setTemplateOn={handleTemplate}
+      ></TopBar>
 
       <div className={`flex justify-center ${styles.check} `}>
-        <Diary templateOn={templateOn} setTemplateOn={handleTemplate}></Diary>
+        <Diary
+          selectedDate={selectedDate}
+          templateOn={templateOn}
+          setTemplateOn={handleTemplate}
+        ></Diary>
       </div>
       <Footer />
     </>

@@ -21,7 +21,6 @@ const DiarySummary = () => {
         console.error('Failed to fetch diary summary:', error.message);
       }
     };
-
     fetchSummary();
   }, [selectedDate]);
 

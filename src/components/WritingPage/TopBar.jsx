@@ -26,8 +26,9 @@ import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 import { checkTodayDiary } from '../../apis/user.js';
 import SaveModal from './SaveModal.jsx';
 import TemporaryModal from './TemporaryModal.jsx';
+import useCalendarStore from '../../store/calendarStore.js';
 
-const TopBar = ({ setTemplateOn }) => {
+const TopBar = ({ selectedDate, setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
   const [gotoAnalysisEmotionModal, setGotoAnalysisEmotionModal] =
     useState(false);
@@ -47,7 +48,6 @@ const TopBar = ({ setTemplateOn }) => {
   const [isValid, setIsValid] = useState(false);
   const [message, setMessage] = useState('');
   const [isTemporaryModal, setIsTemporaryModal] = useState(false);
-
   const navigate = useNavigate();
 
   const today = new Date();
@@ -58,6 +58,7 @@ const TopBar = ({ setTemplateOn }) => {
     console.log(updateDiary);
     console.log(diaryItemId);
     console.log(temporaryDiary);
+    console.log(selectedDate);
   }, []);
 
   const handleFileChange = (e) => {
@@ -87,20 +88,13 @@ const TopBar = ({ setTemplateOn }) => {
     console.log(canWrite);
     console.log(updateDiary);
     if (!updateDiary) {
-      if (!canWrite) {
-        console.log('일기못씀');
-        alert('오늘 일기를 이미 작성하였습니다!');
+      if (updateDiary && !temporaryDiary) {
+        console.log(updateDiary);
+        console.log(temporaryDiary);
+
+        handleupdateDiary();
       } else {
-        console.log('일기씀');
-
-        if (updateDiary && !temporaryDiary) {
-          console.log(updateDiary);
-          console.log(temporaryDiary);
-
-          handleupdateDiary();
-        } else {
-          isGotoAnalysisEmotionModal();
-        }
+        isGotoAnalysisEmotionModal();
       }
     } else {
       if (updateDiary && !temporaryDiary) {
@@ -142,7 +136,10 @@ const TopBar = ({ setTemplateOn }) => {
       const formData = new FormData();
 
       formData.append('diaryTitle', title);
-      formData.append('diaryDate', todayUTC.slice(0, -14));
+      formData.append(
+        'diaryDate',
+        selectedDate ? selectedDate : todayUTC.slice(0, -14),
+      );
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
       for (let i = 0; i < imageFiles.length; i++) {
@@ -257,6 +254,7 @@ const TopBar = ({ setTemplateOn }) => {
         temporaryStorageModal={temporaryStorageModal}
       />
       <GotoAnalysis
+        selectedDate={selectedDate}
         gotoAnalysisEmotionModal={gotoAnalysisEmotionModal}
         setGotoAnalysisEmotionModal={setGotoAnalysisEmotionModal}
       />

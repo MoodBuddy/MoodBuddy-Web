@@ -13,19 +13,25 @@ import useweatherStore from '../../store/weatherStore';
 import ImageModal from '../DiaryPage/ImageModal';
 import useDiaryDateStore from '../../store/diaryDateStore';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
+import FontDropdown from './FontDropdown';
+import useFontStore from '../../store/fontStore';
+import TextSizeDropdown from './TextSizeDropdown';
+import useTextSizeStore from '../../store/textSizeStore';
 
-const Diary = ({ templateOn, setTemplateOn }) => {
+const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const { title, setTitle } = useTitleStore();
   const { content, setContent, addTemplate } = useDiaryContentStore();
   const { diaryImg, setDiaryImg } = useDiaryImgStore();
   const { setImageFiles, removeImageFile } = useDiaryImgFileStore();
-  const { updateDiary, setUpdateDiary } = useUpdateDiaryStore();
+  const { updateDiary } = useUpdateDiaryStore();
   const { setSelectedOption } = useweatherStore();
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
   const { diaryDate } = useDiaryDateStore();
   const { setDiaryKeepImg } = useDiaryKeepImgUrlStore();
+  const { font } = useFontStore();
+  const { textSize } = useTextSizeStore();
   const diaryDateValue = new Date(diaryDate);
   const isValidDate = !isNaN(diaryDateValue);
 
@@ -38,6 +44,13 @@ const Diary = ({ templateOn, setTemplateOn }) => {
   const formattedDate = format(new Date(), 'yyyy년 MM월 dd일 EEEE', {
     locale: ko,
   });
+  const formattedCalendarDate = format(
+    new Date(selectedDate),
+    'yyyy년 MM월 dd일 EEEE',
+    {
+      locale: ko,
+    },
+  );
 
   const handleTemplate = () => {
     setTemplateOn(!templateOn);
@@ -49,7 +62,6 @@ const Diary = ({ templateOn, setTemplateOn }) => {
       setSelectedOption(null);
       setDiaryImg([]);
       setImageFiles([]);
-      setUpdateDiary(false);
       removeImageFile([]);
     };
   }, []);
@@ -89,7 +101,11 @@ const Diary = ({ templateOn, setTemplateOn }) => {
           <div className="flex flex-row justify-between items-center ml-[121px] mr-[45px] mt-[149px]">
             <div className="flex flex-col gap-[41px]">
               <div className="text-[25px]">
-                {updateDiary ? updateDate : formattedDate}
+                {updateDiary
+                  ? updateDate
+                  : selectedDate
+                    ? formattedCalendarDate
+                    : formattedDate}
               </div>
               <input
                 type="text"
@@ -110,6 +126,10 @@ const Diary = ({ templateOn, setTemplateOn }) => {
           </div>
           <div className="border-t-[1px] border-[#BABABA]/400 mt-[52px] "></div>
           <div className="flex flex-col items-center justify-center ">
+            <div className="flex gap-3 relative right-[-385px] top-[-50px]">
+              <FontDropdown />
+              <TextSizeDropdown />
+            </div>
             <div className="flex flex-row w-[900px] overflow-x-auto custom-scrollbar gap-[30px]">
               {diaryImg.map((imageUrl, index) => (
                 <div key={index} className="relative flex-shrink-0">
@@ -131,7 +151,7 @@ const Diary = ({ templateOn, setTemplateOn }) => {
             </div>
             <textarea
               type="text"
-              className={`my-[70px] font-light text-[25px] leading-[66px] bg-[#F7F3EF] outline-none w-[949px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'}  overflow-y-auto custom-scrollbar `}
+              className={`font-${font} my-[70px] font-light text-[${textSize}] leading-[50px] bg-[#F7F3EF] outline-none w-[955px] ${diaryImg.length ? 'h-[500px]' : 'h-[931px]'}  overflow-y-auto custom-scrollbar `}
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
