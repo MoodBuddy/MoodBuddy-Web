@@ -14,6 +14,7 @@ import ModalLoadingSpinner from '../common/loading/ModalLoadingSpinner';
 import Button from '../common/button/Button';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
+import SaveModal from './SaveModal';
 
 const CompleteAnalysis = ({ completeAnaylsis }) => {
   const { title } = useTitleStore();
@@ -173,6 +174,7 @@ const CompleteAnalysis = ({ completeAnaylsis }) => {
           )}
         </div>
       )}
+      <SaveModal />
     </>
   );
 };
