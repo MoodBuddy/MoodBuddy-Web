@@ -16,7 +16,7 @@ const RankingCard = () => {
   const quddy = quddies.find((quddy) => quddy.emotion === diaryEmotion);
 
   const quddyImgSrc = quddy ? quddy.imgSrc : happyQuddy;
-  const quddyName = quddy ? quddy.nmae : '행복쿼디';
+  const quddyName = quddy ? quddy.name : '행복쿼디';
   const quddyAlt = quddy ? quddy.emotion : 'happy';
   const quddyColor = quddy ? quddy.color : '#D8B18E';
 
