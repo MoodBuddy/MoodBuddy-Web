@@ -21,7 +21,9 @@ export const formatWeather = (weather) => {
 // 감정에 따라 적절한 쿼디 이미지와 텍스트 반환
 export const formatQuddyByEmotion = (emotion) => {
   const quddy = quddies.find((q) => q.emotion === emotion);
-  return quddy ? quddy : { imgSrc: null, text: '' };
+  return quddy
+    ? quddy
+    : { imgSrc: null, bubbleSrc: null, text: '', name: '', color: '' };
 };
 
 // 날짜 포맷 ex) 2024.07.09(화)
