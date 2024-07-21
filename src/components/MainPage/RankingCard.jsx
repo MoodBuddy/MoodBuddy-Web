@@ -3,8 +3,10 @@ import Card from './Card';
 import useUserStore from '../../store/userStore';
 import { quddies } from '../../constants/QuddyList';
 import happyQuddy from '@assets/happyQuddy.svg';
+import { useNavigate } from 'react-router-dom';
 
 const RankingCard = () => {
+  const navigate = useNavigate();
   const userInfo = useUserStore((state) => ({
     diaryEmotion: state.diaryEmotion,
     maxEmotionNum: state.maxEmotionNum,
@@ -32,11 +34,15 @@ const RankingCard = () => {
 
         <div className="flex flex-col items-center mt-8 gap-3">
           <img
+            onClick={() => navigate('/mypage/myActivity')}
             src={quddyImgSrc}
             alt={quddyAlt}
-            className="w-[193px] h-[204px]"
+            className="w-[193px] h-[204px] cursor-pointer"
           />
-          <p className="font-meetme text-3xl mb-2" style={{ color: quddyColor }}>
+          <p
+            className="font-meetme text-3xl mb-2"
+            style={{ color: quddyColor }}
+          >
             {quddyName}
           </p>
           <h1 className="text-4xl font-medium">

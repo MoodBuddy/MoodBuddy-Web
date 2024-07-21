@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/userStore';
 import Card from './Card';
 import halfHappyQuddy from '@assets/halfHappyQuddy.svg';
 
 const CountCard = () => {
+  const navigate = useNavigate();
   const userInfo = useUserStore((state) => ({
     userCurDiaryNums: state.userCurDiaryNums,
   }));
@@ -20,7 +22,10 @@ const CountCard = () => {
 
         {/* 횟수 카운트 */}
         <div className="flex items-end justify-center gap-4 my-12">
-          <div className="border rounded-[18px] border-black">
+          <div
+            onClick={() => navigate('/mypage/myActivity')}
+            className="border rounded-[18px] border-black cursor-pointer"
+          >
             <h1 className="text-9xl font-medium text-center px-12 py-2">
               {userCurDiaryNums ? userCurDiaryNums : 0}
             </h1>
