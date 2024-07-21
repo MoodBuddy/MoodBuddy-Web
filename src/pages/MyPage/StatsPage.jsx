@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { getEmotionStatic } from '../../apis/user';
+import { getMonthStatic } from '../../apis/user';
 import QuddyTiSection from '../../components/MyPage/Statistics/QuddyTiSection';
 import styles from '@styles/check.module.css';
 import Footer from '../../components/common/layout/Footer';
@@ -29,7 +29,7 @@ const StatsPage = () => {
     error,
   } = useQuery({
     queryKey: ['emotion', formattedDate],
-    queryFn: () => getEmotionStatic(formattedDate),
+    queryFn: () => getMonthStatic(formattedDate),
   });
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const StatsPage = () => {
           <QuddyTiSection />
 
           <div className="flex">
-            <RankSection currentDate={currentDate} emotionData={emotion} />
+            <RankSection currentDate={currentDate} emotionData={emotion.emotionStaticDtoList} />
             <MyCalendarSection
               currentDate={currentDate}
               daysInMonth={daysInMonth}
