@@ -40,7 +40,7 @@ const SaveModal = ({
           />
 
           <Button
-            className="my-3 px-4 py-2 rounded-xl text-xl"
+            className="w-[300px] my-3 px-4 py-2 rounded-xl text-xl"
             onClick={handleButtonClick}
           >
             <p className="px-2 py-1">

@@ -15,12 +15,12 @@ const TemporaryModal = ({ handleButtonClick, setIsTemporaryModal }) => {
         </button>
 
         <div className="flex flex-col items-center p-10">
-          <h1 className="font-meetme text-6xl my-2">임시 저장 완료</h1>
+          <h1 className="font-meetme text-5xl my-2">임시 저장 완료</h1>
 
           <img src={happyQuddy} alt="Quddy" className="w-48 h-48 my-6" />
 
           <Button
-            className="my-3 px-4 py-2 rounded-xl text-xl"
+            className=" w-[250px] my-3 px-4 py-2 rounded-xl text-xl"
             onClick={handleButtonClick}
           >
             <p className="px-2 py-1">확인</p>

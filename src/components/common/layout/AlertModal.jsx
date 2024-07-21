@@ -23,7 +23,7 @@ const AlertModal = ({ handleButtonClick, setIsModal }) => {
             <img src={happyQuddy} alt="Quiddy" className="w-48 h-48 my-6" />
 
             <Button
-              className="my-3 px-4 py-2 rounded-xl text-xl"
+              className="w-[250px] my-3 px-4 py-2 rounded-xl text-xl"
               onClick={handleButtonClick}
             >
               <p className="px-2 py-1">추억회상 페이지로 이동</p>

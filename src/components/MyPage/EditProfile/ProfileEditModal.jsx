@@ -23,12 +23,14 @@ const ProfileEditModal = ({ message, onClose, isValid }) => {
         </button>
 
         <div className="flex flex-col items-center p-10">
-          <h1 className="font-meetme text-6xl my-2">
+          <h1 className="font-meetme text-5xl my-2">
             {isValid ? '프로필 수정 완료' : '프로필 수정 실패'}
           </h1>
 
           {!isValid ? (
-            <p className="text-zinc-500 text-xl mb-4">{message}</p>
+            <p className="absolute top-[98px] text-zinc-500 text-[15px] mb-4">
+              {message}
+            </p>
           ) : (
             <></>
           )}
@@ -40,7 +42,7 @@ const ProfileEditModal = ({ message, onClose, isValid }) => {
           />
 
           <Button
-            className="my-3 px-4 py-2 rounded-xl text-xl"
+            className="w-[250px] my-3 px-4 py-2 rounded-xl text-xl"
             onClick={handleButtonClick}
           >
             <p className="px-2 py-1">
