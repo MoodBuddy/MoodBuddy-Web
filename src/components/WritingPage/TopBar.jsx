@@ -26,7 +26,6 @@ import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 import { checkTodayDiary } from '../../apis/user.js';
 import SaveModal from './SaveModal.jsx';
 import TemporaryModal from './TemporaryModal.jsx';
-import useCalendarStore from '../../store/calendarStore.js';
 
 const TopBar = ({ selectedDate, setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -82,10 +81,6 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
   };
 
   const handleDiarySave = async () => {
-    const res = await checkTodayDiary();
-    console.log(res);
-    const canWrite = res.checkTodayDairy;
-    console.log(canWrite);
     console.log(updateDiary);
     if (!updateDiary) {
       if (updateDiary && !temporaryDiary) {
@@ -215,22 +210,24 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
             multiple
           />
           <div className="flex flex-row gap-[20px] mr-[30px] transform scale-75">
-            <button className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-row items-center justify-center">
-              <div
-                onClick={CheckDraftDiary}
-                className="flex flex-col items-center gap-[13.5px] "
-              >
-                <img src={temporary} className="w-[35px] h-[35px]"></img>
-                <p>임시저장</p>
-              </div>
-              <div className="border-l-[1.5px] border-[#b3b3b3] rounded-md  h-16 mx-4"></div>
-              <div
-                onClick={isTemporaryStorageModal}
-                className=" font-medium text-[25px] ml-[10px]"
-              >
-                {draftDiaryNum}
-              </div>
-            </button>
+            {!updateDiary && (
+              <button className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-row items-center justify-center">
+                <div
+                  onClick={CheckDraftDiary}
+                  className="flex flex-col items-center gap-[13.5px] "
+                >
+                  <img src={temporary} className="w-[35px] h-[35px]"></img>
+                  <p>임시저장</p>
+                </div>
+                <div className="border-l-[1.5px] border-[#b3b3b3] rounded-md  h-16 mx-4"></div>
+                <div
+                  onClick={isTemporaryStorageModal}
+                  className=" font-medium text-[25px] ml-[10px]"
+                >
+                  {draftDiaryNum}
+                </div>
+              </button>
+            )}
 
             <button
               onClick={handleDiarySave}

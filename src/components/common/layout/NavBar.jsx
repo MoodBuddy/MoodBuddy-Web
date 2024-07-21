@@ -52,6 +52,7 @@ const NavBar = () => {
   });
 
   useEffect(() => {
+    console.log(diaryData);
   }, [diaryData]);
 
   const handleMenuClick = (event, to) => {
@@ -133,7 +134,6 @@ const NavBar = () => {
         <AlertModal
           handleButtonClick={handleButtonClick}
           setIsModal={setIsModal}
-          isModal={isModal}
         />
       )}
     </div>

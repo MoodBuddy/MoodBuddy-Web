@@ -128,7 +128,7 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
 
       console.log(...formData);
       const res = await saveDiary(formData);
-      console.log(res.data);
+      console.log(res);
       const diaryId = res.data.data.diaryId;
       console.log(diaryId);
       setDiaryItemId(diaryId);

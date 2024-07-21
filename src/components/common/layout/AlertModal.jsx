@@ -2,7 +2,7 @@ import Button from '../button/Button';
 import happyQuddy from '@assets/happyQuddy.svg';
 import close from '../../../../public/icon/close.svg';
 
-const AlertModal = ({ handleButtonClick, setIsModal, isModal }) => {
+const AlertModal = ({ handleButtonClick, setIsModal }) => {
   const onClose = () => {
     setIsModal(false);
   };

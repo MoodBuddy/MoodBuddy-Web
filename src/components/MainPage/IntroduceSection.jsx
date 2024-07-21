@@ -17,6 +17,9 @@ import banner_5 from '@assets/banner/banner_5.svg';
 import banner_6 from '@assets/banner/banner_6.svg';
 import nextIcon from '../../../public/icon/bannerNextIcon.svg';
 import prevIcon from '../../../public/icon/bannerPrevIcon.svg';
+import { useState } from 'react';
+import AlertModal from '../common/layout/AlertModal';
+import { checkTodayDiary } from '../../apis/user';
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -43,6 +46,7 @@ function SamplePrevArrow(props) {
 }
 
 const IntroduceSection = () => {
+  const [isModal, setIsModal] = useState(false);
   const settings = {
     dots: true, // 점 표시 여부
     infinite: true, // 무한 루프 설정
@@ -66,6 +70,23 @@ const IntroduceSection = () => {
       </div>
     ),
     dotsClass: 'dots_custom',
+  };
+
+  const handleBanner = async () => {
+    const res = await checkTodayDiary();
+    console.log(res);
+    if (!res.checkTodayDairy) {
+      console.log(res.checkTodayDairy);
+      const check = !res.checkTodayDairy;
+      console.log(check);
+      check ? setIsModal(true) : setIsModal(false);
+      console.log(isModal);
+    }
+  };
+
+  const handleButtonClick = () => {
+    setIsModal(false);
+    navigate('/search');
   };
 
   return (
@@ -97,7 +118,7 @@ const IntroduceSection = () => {
           </div> */}
           <img src={banner_1} alt="Banner 1" className="w-full" />
         </Link>
-        <Link to="/writing">
+        <Link onClick={handleBanner} to="/writing">
           <div className="relative">
             <img
               src={banner_2}
@@ -130,6 +151,12 @@ const IntroduceSection = () => {
           <img src={banner_6} alt="Banner 6" className="w-full" />
         </Link>
       </Slider>
+      {isModal && (
+        <AlertModal
+          handleButtonClick={handleButtonClick}
+          setIsModal={setIsModal}
+        />
+      )}
     </div>
   );
 };
