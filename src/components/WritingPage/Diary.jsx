@@ -30,8 +30,8 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
   const [imgSource, setImgSource] = useState('');
   const { diaryDate } = useDiaryDateStore();
   const { setDiaryKeepImg } = useDiaryKeepImgUrlStore();
-  const { font } = useFontStore();
-  const { textSize } = useTextSizeStore();
+  const { font, setFont } = useFontStore();
+  const { textSize, setTextSize } = useTextSizeStore();
   const diaryDateValue = new Date(diaryDate);
   const isValidDate = !isNaN(diaryDateValue);
 
@@ -63,6 +63,8 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
       setDiaryImg([]);
       setImageFiles([]);
       removeImageFile([]);
+      setFont('Inter');
+      setTextSize('24px');
     };
   }, []);
 

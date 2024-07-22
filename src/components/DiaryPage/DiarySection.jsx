@@ -20,6 +20,8 @@ const DiarySection = ({ diaryId }) => {
 
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
+  const [diaryFont, setDiaryFont] = useState('');
+  const [diaryTextSize, setDiaryTextSize] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
     console.log(`temporary? ${temporaryDiary} `);
@@ -33,6 +35,27 @@ const DiarySection = ({ diaryId }) => {
     queryFn: () => getFindOne(diaryId),
     enabled: !!diaryId,
   });
+
+  useEffect(() => {
+    console.log(diary.diaryFont);
+    console.log(diary.diaryFontSize);
+    if (diary.diaryFont === 'MEETME') {
+      setDiaryFont('meetme');
+    } else {
+      setDiaryFont('Inter');
+    }
+    if (diary.diaryFontSize === 'PX24') {
+      setDiaryTextSize('24px');
+    } else {
+      if (diary.diaryFontSize === 'PX28') {
+        setDiaryTextSize('28px');
+      } else {
+        setDiaryTextSize('30px');
+      }
+    }
+    console.log(diaryFont);
+    console.log(diaryTextSize);
+  }, [diary.diaryFont, diary.diaryFontSize]);
 
   if (isError) {
     console.error('Error fetching diary:', error);
@@ -153,7 +176,9 @@ const DiarySection = ({ diaryId }) => {
         ) : (
           <></>
         )}
-        <p className="text-lg my-10 whitespace-normal break-words">
+        <p
+          className={`font-${diaryFont} text-[${diaryTextSize}] my-10 whitespace-normal break-words`}
+        >
           {diary.diaryContent}
         </p>
       </div>

@@ -15,6 +15,8 @@ import Button from '../common/button/Button';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
 import useCalendarStore from '../../store/calendarStore';
+import useFontStore from '../../store/fontStore';
+import useTextSizeStore from '../../store/textSizeStore';
 
 const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const { title } = useTitleStore();
@@ -31,6 +33,10 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const [loading, setLoading] = useState(true);
   const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const { selectDate } = useCalendarStore();
+  const { font } = useFontStore();
+  const { textSize } = useTextSizeStore();
+  const [diaryFont, setDiaryFont] = useState('');
+  const [diaryTextSize, setDiaryTextSize] = useState('');
 
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
     locale: ko,
@@ -47,7 +53,27 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
 
   useEffect(() => {
     console.log(`selectedDate : ${selectedDate}`);
-  }, []);
+    console.log(font);
+    console.log(textSize);
+    if (font === 'meetme') {
+      setDiaryFont('MEETME');
+    } else {
+      setDiaryFont('INTER');
+    }
+    if (textSize === '24px') {
+      setDiaryTextSize('PX24');
+    } else {
+      if (textSize === '28px') {
+        setDiaryTextSize('PX28');
+      } else {
+        setDiaryTextSize('PX30');
+      }
+    }
+
+    console.log(diaryFont);
+    console.log(diaryTextSize);
+  }, [font, textSize]);
+
   useEffect(() => {
     if (completeAnaylsis) {
       const result = async () => {
@@ -60,35 +86,35 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
       };
       result();
     }
-  }, [completeAnaylsis]);
+  }, [completeAnaylsis, diaryFont, diaryTextSize]);
 
-  const updateDiary = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('diaryId', diaryItemId);
-      formData.append('diaryTitle', title);
-      formData.append(
-        'diaryDate',
-        selectedDate ? selectedDate : todayUTC.slice(0, -14),
-      );
-      formData.append('diaryStatus', 'DRAFT');
-      formData.append('diaryContent', content);
-      formData.append('diaryWeather', selectedOption);
+  // const updateDiary = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('diaryId', diaryItemId);
+  //     formData.append('diaryTitle', title);
+  //     formData.append(
+  //       'diaryDate',
+  //       selectedDate ? selectedDate : todayUTC.slice(0, -14),
+  //     );
+  //     formData.append('diaryStatus', 'DRAFT');
+  //     formData.append('diaryContent', content);
+  //     formData.append('diaryWeather', selectedOption);
 
-      for (let i = 0; i < imageFiles.length; i++) {
-        imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
-      }
-      for (let i = 0; i < diaryKeepImg.length; i++) {
-        diaryKeepImg.length > 0 &&
-          formData.append('existingDiaryImgList', diaryKeepImg[i]);
-      }
-      console.log(...formData);
-      await updateDiaryOne(formData);
-      navigate(`/diary/${diaryItemId}`);
-    } catch (error) {
-      console.error('임시저장 일기 저장 오류', error);
-    }
-  };
+  //     for (let i = 0; i < imageFiles.length; i++) {
+  //       imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
+  //     }
+  //     for (let i = 0; i < diaryKeepImg.length; i++) {
+  //       diaryKeepImg.length > 0 &&
+  //         formData.append('existingDiaryImgList', diaryKeepImg[i]);
+  //     }
+  //     console.log(...formData);
+  //     await updateDiaryOne(formData);
+  //     navigate(`/diary/${diaryItemId}`);
+  //   } catch (error) {
+  //     console.error('임시저장 일기 저장 오류', error);
+  //   }
+  // };
 
   const getDescription = async () => {
     try {
@@ -126,6 +152,8 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('diaryImgList', imageFiles[i]);
       }
+      formData.append('diaryFont', diaryFont);
+      formData.append('diaryFontSize', diaryTextSize);
 
       console.log(...formData);
       const res = await saveDiary(formData);

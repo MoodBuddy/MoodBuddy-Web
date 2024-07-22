@@ -25,6 +25,8 @@ import useDiaryDateStore from '../../store/diaryDateStore.js';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
 import SaveModal from './SaveModal.jsx';
 import TemporaryModal from './TemporaryModal.jsx';
+import useFontStore from '../../store/fontStore.js';
+import useTextSizeStore from '../../store/textSizeStore.js';
 
 const TopBar = ({ selectedDate, setTemplateOn }) => {
   const [temporaryStorageModal, setTemporaryStorageModal] = useState(false);
@@ -42,9 +44,14 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
   const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
   const { diaryDate } = useDiaryDateStore();
   const { diaryKeepImg } = useDiaryKeepImgUrlStore();
+  const { font } = useFontStore();
+  const { textSize } = useTextSizeStore();
   const [isModal, setIsModal] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [message, setMessage] = useState('');
+  const [diaryFont, setDiaryFont] = useState('');
+  const [diaryTextSize, setDiaryTextSize] = useState('');
+
   const [isTemporaryModal, setIsTemporaryModal] = useState(false);
   const navigate = useNavigate();
 
@@ -58,6 +65,28 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
     console.log(temporaryDiary);
     console.log(selectedDate);
   }, []);
+
+  useEffect(() => {
+    console.log(font);
+    console.log(textSize);
+    if (font === 'meetme') {
+      setDiaryFont('MEETME');
+    } else {
+      setDiaryFont('INTER');
+    }
+    if (textSize === '24px') {
+      setDiaryTextSize('PX24');
+    } else {
+      if (textSize === '28px') {
+        setDiaryTextSize('PX28');
+      } else {
+        setDiaryTextSize('PX30');
+      }
+    }
+
+    console.log(diaryFont);
+    console.log(diaryTextSize);
+  }, [font, textSize]);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -139,7 +168,8 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
       for (let i = 0; i < imageFiles.length; i++) {
         formData.append('diaryImgList', imageFiles[i]);
       }
-
+      formData.append('diaryFont', diaryFont);
+      formData.append('diaryFontSize', diaryTextSize);
       console.log(...formData);
       const res = await SaveDraftDiary(formData);
       console.log(res.data.data.diaryId);
@@ -175,6 +205,8 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
         diaryKeepImg.length > 0 &&
           formData.append('existingDiaryImgList', diaryKeepImg[i]);
       }
+      formData.append('diaryFont', diaryFont);
+      formData.append('diaryFontSize', diaryTextSize);
       console.log(...formData);
       await updateDiaryOne(formData);
       setUpdateDiary(false);
