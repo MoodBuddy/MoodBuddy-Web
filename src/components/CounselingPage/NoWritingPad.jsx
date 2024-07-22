@@ -20,7 +20,7 @@ const NoWritingPad = () => {
           </div>
 
           {/* 편지 내용 작성 */}
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col gap-[20px] justify-center items-center">
             <div className="mt-[200px] font-light text-[37.5px] text-[#7c7c7c]">
               편지지가 없는데 일기작성하러 갈까요?
             </div>
@@ -28,7 +28,7 @@ const NoWritingPad = () => {
               className=" w-[226px] h-[64px] text-[23px] mt-3"
               onClick={handleWriting}
             >
-              일기 작성하러 가기
+              일기 기록하러 가기
             </Button>
           </div>
         </div>
