@@ -1,12 +1,32 @@
 import { useNavigate } from 'react-router-dom';
 import back from '../../../public/icon/back.svg';
 import Button from '../common/button/Button';
+import { useState } from 'react';
+import { checkTodayDiary } from '../../apis/user';
+import AlertModal from '../common/layout/AlertModal';
 const NoWritingPad = () => {
   const navigate = useNavigate();
+  const [isModal, setIsModal] = useState(false);
 
-  const handleWriting = () => {
-    navigate('/writing');
+  const handleWriting = async () => {
+    try {
+      const res = await checkTodayDiary();
+      console.log(res);
+      if (!res.checkTodayDairy) {
+        setIsModal(!isModal);
+      } else {
+        navigate('/writing');
+      }
+    } catch (error) {
+      console.error('Error checking today diary:', error);
+    }
   };
+
+  const handleButtonClick = () => {
+    setIsModal(false);
+    navigate('/search');
+  };
+
   return (
     <div className="z-10">
       <div>
@@ -33,6 +53,12 @@ const NoWritingPad = () => {
           </div>
         </div>
       </div>
+      {isModal && (
+        <AlertModal
+          handleButtonClick={handleButtonClick}
+          setIsModal={setIsModal}
+        />
+      )}
     </div>
   );
 };

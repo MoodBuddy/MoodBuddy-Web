@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -17,7 +17,7 @@ import banner_5 from '@assets/banner/banner_5.svg';
 import banner_6 from '@assets/banner/banner_6.svg';
 import nextIcon from '../../../public/icon/bannerNextIcon.svg';
 import prevIcon from '../../../public/icon/bannerPrevIcon.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AlertModal from '../common/layout/AlertModal';
 import { checkTodayDiary } from '../../apis/user';
 
@@ -47,6 +47,7 @@ function SamplePrevArrow(props) {
 
 const IntroduceSection = () => {
   const [isModal, setIsModal] = useState(false);
+  const navigate = useNavigate();
   const settings = {
     dots: true, // 점 표시 여부
     infinite: true, // 무한 루프 설정
@@ -73,14 +74,16 @@ const IntroduceSection = () => {
   };
 
   const handleBanner = async () => {
-    const res = await checkTodayDiary();
-    console.log(res);
-    if (!res.checkTodayDairy) {
-      console.log(res.checkTodayDairy);
-      const check = !res.checkTodayDairy;
-      console.log(check);
-      check ? setIsModal(true) : setIsModal(false);
-      console.log(isModal);
+    try {
+      const res = await checkTodayDiary();
+      console.log(res);
+      if (!res.checkTodayDairy) {
+        setIsModal(!isModal);
+      } else {
+        navigate('/writing');
+      }
+    } catch (error) {
+      console.error('Error checking today diary:', error);
     }
   };
 
@@ -118,7 +121,7 @@ const IntroduceSection = () => {
           </div> */}
           <img src={banner_1} alt="Banner 1" className="w-full" />
         </Link>
-        <Link onClick={handleBanner} to="/writing">
+        <Link onClick={handleBanner}>
           <div className="relative">
             <img
               src={banner_2}
@@ -138,7 +141,7 @@ const IntroduceSection = () => {
           </div>
           <div className="absolute bottom-0 z-30 w-full h-[10px] bg-[#E8DBCF]"></div>
         </Link>
-        <Link to="/writing">
+        <Link onClick={handleBanner}>
           <img src={banner_3} alt="Banner 3" className="w-full" />
         </Link>
         <Link to="/search">
