@@ -11,14 +11,19 @@ import happyBubble from '../../../public/image/happyBubble.svg';
 import useSpeechBubbleStore from '../../store/speechBubbleStore';
 import ImageModal from './ImageModal';
 import prevIcon from '../../../public/icon/prevBoldIcon.svg';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 
 const DiarySection = ({ diaryId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { speechBubble, setSpeechBubble } = useSpeechBubbleStore();
+  const { temporaryDiary, setTemporaryDiary } = useTemporaryDiaryStore();
+
   const [imgModal, setImgModal] = useState(false);
   const [imgSource, setImgSource] = useState('');
   const navigate = useNavigate();
-
+  useEffect(() => {
+    console.log(`temporary? ${temporaryDiary} `);
+  }, []);
   const {
     isError,
     data: diary,
@@ -86,40 +91,48 @@ const DiarySection = ({ diaryId }) => {
               <p className="text-lg">날씨 - {formattedWeather}</p>
             </div>
           </div>
-          {speechBubble ? (
-            <div>
-              <div className="mr-40 mb-6">
-                <img
-                  src={imgSrc}
-                  alt={imgSrc}
-                  className="w-[150px] h-[170px]"
-                />
-                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                  {text}쿼디
-                </p>
-              </div>
+          {!temporaryDiary ? (
+            speechBubble ? (
+              <div>
+                <div className="mr-40 mb-6">
+                  <img
+                    src={imgSrc}
+                    alt={imgSrc}
+                    className="w-[150px] h-[170px]"
+                  />
+                  <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+                    {text}쿼디
+                  </p>
+                </div>
 
-              {/* 비슷한 추억보기 모달 */}
-              <div
-                onClick={() => setIsModalOpen(true)}
-                className="absolute top-[25%] right-[-220px] cursor-pointer"
-              >
-                <img src={happyBubble} alt="happyBubble" className="w-[90%]" />
+                {/* 비슷한 추억보기 모달 */}
+                <div
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute top-[25%] right-[-220px] cursor-pointer"
+                >
+                  <img
+                    src={happyBubble}
+                    alt="happyBubble"
+                    className="w-[90%]"
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <>
+                <div className="mr-12 mb-6">
+                  <img
+                    src={imgSrc}
+                    alt={imgSrc}
+                    className="w-[150px] h-[170px]"
+                  />
+                  <p className="font-meetme text-center text-2xl text-[#D8B18E]">
+                    {text}쿼디
+                  </p>
+                </div>
+              </>
+            )
           ) : (
-            <>
-              <div className="mr-12 mb-6">
-                <img
-                  src={imgSrc}
-                  alt={imgSrc}
-                  className="w-[150px] h-[170px]"
-                />
-                <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                  {text}쿼디
-                </p>
-              </div>
-            </>
+            <></>
           )}
         </div>
 

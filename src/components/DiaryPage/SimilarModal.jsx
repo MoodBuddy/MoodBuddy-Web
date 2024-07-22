@@ -60,7 +60,7 @@ const SimilarModal = ({ onClose, emotion }) => {
 
           <div className="flex justify-end mt-20">
             <Button
-              className="absolute bottom-[20px] right-[10px]  w-[200px]
+              className="absolute bottom-[20px] right-[10px] w-[200px]
 "
               onClick={handleGoHome}
             >

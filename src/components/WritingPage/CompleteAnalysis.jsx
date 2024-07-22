@@ -46,14 +46,15 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const currentDate = todayUTC.slice(0, -14);
 
   useEffect(() => {
+    console.log(`selectedDate : ${selectedDate}`);
+  }, []);
+  useEffect(() => {
     if (completeAnaylsis) {
       const result = async () => {
         console.log(temporaryDiary);
-        if (!temporaryDiary) {
-          await isCompleteSave();
-        } else {
-          await updateDiary();
-        }
+
+        await isCompleteSave();
+
         setTemporaryDiary(false);
         await getDescription();
       };

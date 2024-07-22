@@ -23,7 +23,6 @@ import { useNavigate } from 'react-router-dom';
 import useTemporaryDiaryStore from '../../store/temporaryDiaryStore.js';
 import useDiaryDateStore from '../../store/diaryDateStore.js';
 import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore.js';
-import { checkTodayDiary } from '../../apis/user.js';
 import SaveModal from './SaveModal.jsx';
 import TemporaryModal from './TemporaryModal.jsx';
 
@@ -149,7 +148,6 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
       const { draftList, draftLength } = await getFindDraftAll();
       setDraftDiaryNum(draftLength);
       setDraftList(draftList);
-
       return newDraftId;
     } catch (error) {
       console.error('일기 임시 저장 오류', error);
@@ -210,7 +208,7 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
             multiple
           />
           <div className="flex flex-row gap-[20px] mr-[30px] transform scale-75">
-            {!updateDiary && (
+            {(!updateDiary || (updateDiary && temporaryDiary)) && (
               <button className="cursor-pointer bg-btnColor hover:bg-btnColorActive  border-[#98928C] border w-[180px] h-[116px] rounded-[12px] flex flex-row items-center justify-center">
                 <div
                   onClick={CheckDraftDiary}
