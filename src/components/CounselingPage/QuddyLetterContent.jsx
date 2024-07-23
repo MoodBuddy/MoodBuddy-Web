@@ -41,7 +41,7 @@ const QuddyLetterContent = ({ data }) => {
 
   return (
     <div className="z-10">
-      <div className="box-content border-[1px] w-[1000px] h-[900px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-[183px]">
+      <div className="box-content border-[1px] w-[1000px] border-black  bg-[#F7F3EF] rounded-3xl pb-[20px] mb-[183px]">
         <div className="px-[23px] w-full py-[19px] border-b-[1px] border-black flex justify-start gap-[316px] items-center">
           <img
             src={back}
@@ -51,8 +51,8 @@ const QuddyLetterContent = ({ data }) => {
           <div className="font-medium text-2xl ml-[80px]">To.QUDDY</div>
         </div>
 
-        <div className="text-center my-36 mx-auto font-light text-xl leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
-          {data.letterWorryContent}
+        <div className="text-center my-[103px] mx-auto font-light text-xl leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+          <p className="px-20"> {data.letterWorryContent}</p>
         </div>
 
         <div className="flex items-center justify-center py-[19px] border-y-[1px] border-black font-medium text-2xl">
@@ -61,7 +61,7 @@ const QuddyLetterContent = ({ data }) => {
 
         <div className="flex flex-col justify-center items-center h-[485px]">
           {showAnswer ? (
-            <div className="text-center font-light text-xl mb-10 leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+            <div className="text-center font-light text-xl leading-[50px] bg-[#F7F3EF] outline-none w-[1000px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
               <p className="px-20">{data.letterAnswerContent}</p>
             </div>
           ) : (
