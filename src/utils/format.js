@@ -1,18 +1,22 @@
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { quddies } from '../constants/QuddyList';
+import clear from '../../public/icon/sunIcon.svg';
+import cloudy from '../../public/icon/cloudIcon.svg';
+import rain from '../../public/icon/rainIcon.svg';
+import snow from '../../public/icon/snowIcon.svg';
 
-// 날씨에 따라 텍스트 반환
+// 날씨에 따라 아이콘 반환
 export const formatWeather = (weather) => {
   switch (weather) {
     case 'CLEAR':
-      return '맑음';
+      return clear;
     case 'CLOUDY':
-      return '구름많음';
+      return cloudy;
     case 'RAIN':
-      return '비';
+      return rain;
     case 'SNOW':
-      return '눈';
+      return snow;
     default:
       return '알 수 없음';
   }

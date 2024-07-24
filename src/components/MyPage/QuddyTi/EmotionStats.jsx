@@ -3,13 +3,13 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const EmotionStats = ({ data, emotions }) => {
   const COLORS = [
-    'rgba(199, 154, 118, 1)',
-    'rgba(199, 154, 118, 0.75)',
-    'rgba(211, 176, 148, 0.74)',
-    'rgba(211, 176, 148, 0.56)',
-    'rgba(199, 154, 118, 0.33)',
-    'rgba(228, 208, 191, 0.46)',
-    'rgba(222, 196, 175, 1)',
+    '#C79A76',
+    '#CE8C98',
+    '#F08D74',
+    '#9C8EBD',
+    '#9CB57A',
+    '#7598BA',
+    '#E3C778',
   ];
 
   const RADIAN = Math.PI / 180;
@@ -21,7 +21,7 @@ const EmotionStats = ({ data, emotions }) => {
     outerRadius,
     index,
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -29,10 +29,10 @@ const EmotionStats = ({ data, emotions }) => {
       <text
         x={x}
         y={y}
-        fill="#5E5E5E"
-        textAnchor={x > cx ? 'start' : 'end'}
+        textAnchor="middle"
         dominantBaseline="central"
-        className="text-3xl"
+        className="text-[34px] text-black"
+        style={{ fontWeight: '500' }}
       >
         {chartData[index].name}
       </text>
@@ -46,7 +46,7 @@ const EmotionStats = ({ data, emotions }) => {
 
   const renderLegend = (props) => {
     const { payload } = props;
-    console.log(payload);
+
     return (
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {payload.map((entry, index) => (
@@ -71,7 +71,7 @@ const EmotionStats = ({ data, emotions }) => {
             ></span>
             <div className=" flex gap-3 items-baseline">
               <span className="font-semibold text-[30px]">{entry.value}</span>
-              <span className="text-[12px]">({emotions[index].fullName})</span>
+              <span className="text-[14px]">({emotions[index].fullName})</span>
             </div>
           </li>
         ))}
@@ -82,11 +82,11 @@ const EmotionStats = ({ data, emotions }) => {
   return (
     <ResponsiveContainer width={900} height={460} className="text-center">
       <div className="text-2xl font-medium text-center mb-4">감정</div>
-      <div className="mx-7">
+      <div className="mx-1">
         <PieChart width={900} height={460}>
           <Pie
             data={chartData}
-            cx="50%"
+            cx="60%"
             cy="50%"
             labelLine={false}
             label={renderCustomizedLabel}

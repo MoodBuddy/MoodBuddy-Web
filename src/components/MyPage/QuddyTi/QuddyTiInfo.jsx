@@ -21,7 +21,6 @@ const QuddyTiInfo = () => {
     queryFn: getquddyTI,
     throwOnError: false,
   });
-
   return (
     <div className="p-6">
       <button onClick={() => navigate(-1)} className="mb-6">
