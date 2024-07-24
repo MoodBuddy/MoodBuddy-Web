@@ -1,4 +1,4 @@
-import { getDaysInMonth } from 'date-fns';
+import { getDaysInMonth, subMonths } from 'date-fns';
 import prevIcon from '../../../../public/icon/prevIcon.svg';
 import { topics } from '../../../constants/TopicList';
 import { emotions } from '../../../constants/EmotionList';
@@ -14,7 +14,8 @@ const QuddyTiInfo = () => {
   const navigate = useNavigate();
 
   const currentDate = new Date();
-  const daysInMonth = getDaysInMonth(currentDate);
+  const previousMonthDate = subMonths(currentDate, 1);
+  const daysInMonth = getDaysInMonth(previousMonthDate);
 
   const { isError, data } = useQuery({
     queryKey: ['quddyTI'],

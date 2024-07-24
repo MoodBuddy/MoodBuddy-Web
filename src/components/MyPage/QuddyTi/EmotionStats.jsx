@@ -2,17 +2,15 @@ import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const EmotionStats = ({ data, emotions }) => {
-  const COLORS = [
-    '#C79A76',
-    '#CE8C98',
-    '#F08D74',
-    '#9C8EBD',
-    '#9CB57A',
-    '#7598BA',
-    '#E3C778',
-  ];
-
   const RADIAN = Math.PI / 180;
+  const chartData = emotions.map((emotion) => ({
+    name: emotion.name,
+    fullName: emotion.fullName,
+    value: data ? data[emotion.key] : 0,
+    color: emotion.color,
+  }));
+  const filteredChartData = chartData.filter((entry) => entry.value > 0);
+
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -21,7 +19,7 @@ const EmotionStats = ({ data, emotions }) => {
     outerRadius,
     index,
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -34,15 +32,10 @@ const EmotionStats = ({ data, emotions }) => {
         className="text-[34px] text-black"
         style={{ fontWeight: '500' }}
       >
-        {chartData[index].name}
+        {filteredChartData[index].name}
       </text>
     );
   };
-
-  const chartData = emotions.map((emotion) => ({
-    name: emotion.name,
-    value: data ? data[emotion.key] : 1,
-  }));
 
   const renderLegend = (props) => {
     const { payload } = props;
@@ -64,14 +57,16 @@ const EmotionStats = ({ data, emotions }) => {
               style={{
                 width: '25px',
                 height: '25px',
-                backgroundColor: COLORS[index % COLORS.length],
+                backgroundColor: entry.payload.color,
                 marginRight: '10px',
                 display: 'inline-block',
               }}
             ></span>
-            <div className=" flex gap-3 items-baseline">
+            <div className="flex gap-3 items-baseline">
               <span className="font-semibold text-[30px]">{entry.value}</span>
-              <span className="text-[14px]">({emotions[index].fullName})</span>
+              <span className="text-[14px]">
+                ({filteredChartData[index].fullName})
+              </span>
             </div>
           </li>
         ))}
@@ -85,7 +80,7 @@ const EmotionStats = ({ data, emotions }) => {
       <div className="mx-1">
         <PieChart width={900} height={460}>
           <Pie
-            data={chartData}
+            data={filteredChartData}
             cx="60%"
             cy="50%"
             labelLine={false}
@@ -93,11 +88,8 @@ const EmotionStats = ({ data, emotions }) => {
             outerRadius={200}
             dataKey="value"
           >
-            {chartData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
+            {filteredChartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
           <Legend

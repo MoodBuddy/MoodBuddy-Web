@@ -12,13 +12,18 @@ const BASE_COLOR = '#EBD9C9';
 const FILL_COLOR = '#D8B18E';
 
 const FrequencyStats = ({ daysInMonth, count }) => {
-  const dailyCount = count ? count.dailyCount : 0;
+  const totalCount = count
+    ? count.dailyCount +
+      count.growthCount +
+      count.emotionCount +
+      count.travelCount
+    : 0;
 
   const data = [
     {
       type: 'P(즉흥)',
       type2: 'J(판단)',
-      value: dailyCount,
+      value: totalCount,
     },
   ];
 
