@@ -77,7 +77,7 @@ const SearchSection = () => {
   }, [year, month, selectedTopic, selectedQuddy, searchQuery]);
 
   return (
-    <div className="w-full relative z-10">
+    <div className="w-full relative z-[5]">
       <div className="flex flex-col items-center gap-4 mt-16">
         <div className="flex justify-center items-center gap-2 relative z-50">
           <div className="relative mr-4 ml-5">

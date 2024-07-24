@@ -1,5 +1,5 @@
 import profile from '@assets/profile.png';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Toggle from '../../common/toggle/Toggle';
 import TimePicker from '../../common/timePicker/TimePicker';
 import { getProfile, postProfileEdit } from '../../../apis/user';
@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import Button from '../../common/button/Button';
 import ProfileEditModal from './ProfileEditModal';
 import defaultProfile from '../../../../public/image/defaultProfile.png';
-import { handleAllowNotification } from '../../../service/notificationPermission';
 
 const EditProfileCard = () => {
   const { isError, data, error } = useQuery({
@@ -27,18 +26,36 @@ const EditProfileCard = () => {
     profileComment: '',
     newProfileImg: null,
     gender: true,
+    phoneFirst: '',
+    phoneSecond: '',
+    phoneLast: '',
   });
+
+  const phoneFirstRef = useRef(null);
+  const phoneSecondRef = useRef(null);
+  const phoneLastRef = useRef(null);
 
   useEffect(() => {
     if (data) {
+      const phoneNumber = data.phoneNumber || '';
+      const phoneFirst = phoneNumber.slice(0, 3);
+      const phoneSecond = phoneNumber.slice(3, 7);
+      const phoneLast = phoneNumber.slice(7, 11);
+
       setState({
         nickname: data.nickname || '',
         birthDate: data.birthday || '',
         profileComment: data.profileComment || '',
         newProfileImg: null,
         gender: data.gender || true,
+        phoneFirst: phoneFirst,
+        phoneSecond: phoneSecond,
+        phoneLast: phoneLast,
       });
+
       setProfileImage(data.url || profile);
+      setIsNotificationEnabled(data.alarm || false);
+      setNotificationTime(data.alarmTime || '');
     }
   }, [data]);
 
@@ -61,10 +78,25 @@ const EditProfileCard = () => {
       }
     }
 
+    if (name === 'phoneFirst' && value.length === 3) {
+      phoneSecondRef.current.focus();
+    }
+
+    if (name === 'phoneSecond' && value.length === 4) {
+      phoneLastRef.current.focus();
+    }
+
     setState({
       ...state,
       [name]: value,
     });
+  };
+
+  const handleKeyDown = (e) => {
+    const { key } = e;
+    if (!/^\d*$/.test(key) && key !== 'Backspace') {
+      e.preventDefault();
+    }
   };
 
   const handleToggleChange = (toggleState) => {
@@ -106,12 +138,16 @@ const EditProfileCard = () => {
       setShowModal(true);
       return;
     }
+
+    const phoneNumber = `${state.phoneFirst}${state.phoneSecond}${state.phoneLast}`;
+
     const formData = new FormData();
     formData.append('nickname', state.nickname);
     formData.append('birthday', state.birthDate);
     formData.append('profileComment', state.profileComment);
     formData.append('alarm', isNotificationEnabled);
     formData.append('alarmTime', notificationTime);
+    formData.append('phoneNumber', phoneNumber);
 
     if (state.newProfileImg) {
       formData.append('newProfileImg', state.newProfileImg);
@@ -131,10 +167,6 @@ const EditProfileCard = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-  };
-
-  const handleResetNotification = () => {
-    handleAllowNotification();
   };
 
   return (
@@ -177,30 +209,68 @@ const EditProfileCard = () => {
               className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
             />
           </div>
-          <div className="flex flex-col gap-[10px]">
-            <div className="font-bold text-[20px]">생년월일 변경</div>
-            <input
-              name="birthDate"
-              type="text"
-              value={state.birthDate}
-              onChange={handleChangeState}
-              className="w-[613px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
-            />
+
+          <div className="flex gap-6">
+            <div className="flex flex-col gap-[10px]">
+              <div className="font-bold text-[20px]">전화번호 변경</div>
+              <div className="flex gap-1">
+                <input
+                  ref={phoneFirstRef}
+                  name="phoneFirst"
+                  type="text"
+                  value={state.phoneFirst}
+                  onChange={handleChangeState}
+                  onKeyDown={handleKeyDown}
+                  maxLength="3"
+                  className="w-[80px] h-[56px] text-center text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-5"
+                />
+                <input
+                  ref={phoneSecondRef}
+                  name="phoneSecond"
+                  type="text"
+                  value={state.phoneSecond}
+                  onChange={handleChangeState}
+                  onKeyDown={handleKeyDown}
+                  maxLength="4"
+                  className="w-[100px] h-[56px] text-center text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-6"
+                />
+                <input
+                  ref={phoneLastRef}
+                  name="phoneLast"
+                  type="text"
+                  value={state.phoneLast}
+                  onChange={handleChangeState}
+                  onKeyDown={handleKeyDown}
+                  maxLength="4"
+                  className="w-[100px] h-[56px] text-center text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-6"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-[10px]">
+              <div className="font-bold text-[20px]">생년월일 변경</div>
+              <input
+                name="birthDate"
+                type="text"
+                value={state.birthDate}
+                onChange={handleChangeState}
+                className="w-[300px] h-[56px] text-xl placeholder-stone-300 bg-white rounded-[10px] border-[1px] border-black px-7"
+              />
+            </div>
           </div>
+
           <div className="flex flex-col gap-[10px]">
             <div className="font-bold text-[20px]">카카오톡 알림</div>
             <div className="flex gap-[40px] items-center">
-              <Toggle onToggleChange={handleToggleChange} />
+              <Toggle
+                onToggleChange={handleToggleChange}
+                isEnabled={isNotificationEnabled}
+              />
               {isNotificationEnabled && (
-                <>
-                  <TimePicker onTimeChange={handleTimeChange} />
-                  <button
-                    className="w-[130px] h-[43px] rounded-[14px] bg-[#C79A76] text-lg font-medium"
-                    onClick={handleResetNotification}
-                  >
-                    재설정
-                  </button>
-                </>
+                <TimePicker
+                  onTimeChange={handleTimeChange}
+                  initialTime={notificationTime}
+                />
               )}
             </div>
           </div>
