@@ -111,7 +111,8 @@ const DiarySection = ({ diaryId }) => {
 
             <div className="flex items-center gap-6 mb-20">
               <p className="text-lg">{formattedDate}</p>
-              <p className="text-lg">날씨 - {formattedWeather}</p>
+              <p className="text-lg">날씨</p>
+              <img className="w-5 h-5 -ml-4" src={formattedWeather} alt="formatWeather" />
             </div>
           </div>
           {!temporaryDiary ? (
