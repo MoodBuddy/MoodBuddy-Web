@@ -88,8 +88,8 @@ const SelectModal = ({ sending, setSending }) => {
               <div className="font-meetme text-[78px] text-center mt-[88px]">
                 고민 전송 완료 !
               </div>
-              <div className="text-[30px] mb-[30px]">10분 뒤에 답장이 와요</div>
-              <FakeTimer hh={'00'} mm={'10'} ss={'00'} />
+              <div className="text-[30px] mb-[30px]">30초 뒤에 답장이 와요</div>
+              <FakeTimer hh={'00'} mm={'00'} ss={'30'} />
 
               <Button
                 onClick={() => navigate('/counseling/completedWriting')}
