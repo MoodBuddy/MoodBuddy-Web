@@ -14,7 +14,7 @@ const Profile = ({ data }) => {
   };
 
   return (
-    <div className=" flex flex-col items-center w-[286px] h-[619px] bg-[#F7F3EF] rounded-2xl">
+    <div className=" flex flex-col items-center w-[286px] h-[660px] bg-[#F7F3EF] rounded-2xl">
       <div className="transform scale-75 relative top-[-110px]">
         <Button
           onClick={handleWritingLetter}
@@ -27,7 +27,8 @@ const Profile = ({ data }) => {
           <div className="font-semibold text-[40px]">{data.userLetterNums}</div>
         </div>
         <div className="text-xl mt-[10px] flex justify-start w-[285px] text-[#676767]  ml-[20px] ">
-          일기를 작성하면 편지지가 주어져요!
+          오늘의 일기를 작성하고,<br/>
+          편지지를 받아 고민을 털어놓으세요 !
         </div>
         <div className="w-full border-b-[1px] border-[#888888] mt-[26px]"></div>
 
@@ -40,7 +41,7 @@ const Profile = ({ data }) => {
             <div className="font-semibold text-4xl mr-4">{data.nickname}</div>
             <div className="font-thin text-xl">{data.userBirth}</div>
           </div>
-          <div className="text-2xl mt-4 whitespace-pre-wrap">
+          <div className="text-2xl mt-4 h-[20px] w-[320px] whitespace-pre-wrap">
             {data.profileComment}
           </div>
         </div>
