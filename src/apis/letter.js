@@ -36,3 +36,12 @@ export const postLetter = async (letterData) => {
     throw new Error('데이터 불러오기에 실패하였습니다.');
   }
 };
+
+export const postAlarm = async (alarm) => {
+  try {
+    const data = await post(`/api/v1/member/letter/alarm`, alarm);
+    return data;
+  } catch (error) {
+    throw new Error('데이터 불러오기에 실패하였습니다.');
+  }
+};

@@ -1,11 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/button/Button';
 import Toggle from '../common/toggle/Toggle';
+import { useEffect, useState } from 'react';
+import { postAlarm } from '../../apis/letter';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate();
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
+
+  useEffect(() => {
+    if (data && data.letterAlarm !== undefined) {
+      setIsNotificationEnabled(data.letterAlarm);
+    }
+  }, [data]);
+
   const handleWritingLetter = () => {
-    console.log(data.userLetterNums);
     const letterNums = data.userLetterNums;
     if (letterNums === 0) {
       navigate('/counseling/noWritingLetter');
@@ -13,7 +22,16 @@ const Profile = ({ data }) => {
       navigate('/counseling/writingLetter');
     }
   };
-  const handleToggleChange = (toggleState) => {};
+
+  const handleToggleChange = async (toggleState) => {
+    setIsNotificationEnabled(toggleState);
+    try {
+      await postAlarm({ letterAlarm: toggleState });
+    } catch (error) {
+      console.error('알림 설정 업데이트에 실패했습니다:', error);
+    }
+  };
+
   return (
     <div className=" flex flex-col items-center w-[286px] h-[680px] bg-[#F7F3EF] rounded-2xl">
       <div className="transform scale-75 relative top-[-110px]">
@@ -51,7 +69,7 @@ const Profile = ({ data }) => {
           <p className="text-2xl font-medium">답장 SMS알림설정</p>
           <Toggle
             onToggleChange={handleToggleChange}
-            // isEnabled={isNotificationEnabled}
+            isEnabled={isNotificationEnabled}
           />
         </div>
       </div>
