@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { setHours, setMinutes, format } from 'date-fns';
 
-const TimePicker = ({ onTimeChange }) => {
+const TimePicker = ({ onTimeChange, initialTime }) => {
   const [selectedHour, setSelectedHour] = useState(12);
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [selectedPeriod, setSelectedPeriod] = useState('AM');
@@ -9,6 +9,18 @@ const TimePicker = ({ onTimeChange }) => {
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const minutes = Array.from({ length: 12 }, (_, i) => i * 5);
   const periods = ['AM', 'PM'];
+
+  useEffect(() => {
+    if (initialTime) {
+      const [hour, minute] = initialTime.split(':').map(Number);
+      const isPM = hour >= 12;
+      const adjustedHour = hour % 12 || 12;
+
+      setSelectedHour(adjustedHour);
+      setSelectedMinute(minute);
+      setSelectedPeriod(isPM ? 'PM' : 'AM');
+    }
+  }, [initialTime]);
 
   const handleTimeChange = (hour, minute, period) => {
     if (period === 'PM' && hour !== 12) {
@@ -80,4 +92,3 @@ const TimePicker = ({ onTimeChange }) => {
 };
 
 export default TimePicker;
-
