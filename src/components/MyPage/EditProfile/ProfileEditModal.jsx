@@ -22,13 +22,13 @@ const ProfileEditModal = ({ message, onClose, isValid }) => {
           <img src={close} alt="close" className="w-6 h-6" />
         </button>
 
-        <div className="flex flex-col items-center p-10">
+        <div className="flex flex-col items-center p-10 mt-3">
           <h1 className="font-meetme text-5xl my-2">
             {isValid ? '프로필 수정 완료' : '프로필 수정 실패'}
           </h1>
 
           {!isValid ? (
-            <p className="absolute top-[98px] text-zinc-500 text-[15px] mb-4">
+            <p className="absolute top-[115px] text-zinc-500 text-[15px]">
               {message}
             </p>
           ) : (
@@ -38,7 +38,7 @@ const ProfileEditModal = ({ message, onClose, isValid }) => {
           <img
             src={isValid ? happyQuddy : gloomyQuddy}
             alt="Quiddy"
-            className="w-48 h-48 my-6"
+            className="w-44 h-44 my-8"
           />
 
           <Button
