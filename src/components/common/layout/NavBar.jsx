@@ -78,7 +78,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="flex relative w-full z-10 bg-[#E8DBCF] h-[75px] justify-around ">
+      <div className="flex relative w-full z-20 bg-[#E8DBCF] h-[75px] justify-around ">
         <div onClick={handleLogo} className="flex items-center text-2xl mr-12 ">
           <h1 className="font-meetme cursor-pointer">MOODBUDDY</h1>
         </div>
