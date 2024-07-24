@@ -17,6 +17,7 @@ import FontDropdown from './FontDropdown';
 import useFontStore from '../../store/fontStore';
 import TextSizeDropdown from './TextSizeDropdown';
 import useTextSizeStore from '../../store/textSizeStore';
+import useCalendarClickStore from '../../store/calendarClick';
 
 const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('');
@@ -34,7 +35,7 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
   const { textSize, setTextSize } = useTextSizeStore();
   const diaryDateValue = new Date(diaryDate);
   const isValidDate = !isNaN(diaryDateValue);
-
+  const { calendarClick } = useCalendarClickStore();
   const updateDate = format(
     isValidDate ? diaryDateValue : new Date(),
     'yyyy년 MM월 dd일 EEEE',
@@ -65,6 +66,7 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
       removeImageFile([]);
       setFont('Inter');
       setTextSize('24px');
+      console.log(calendarClick);
     };
   }, []);
 
@@ -100,12 +102,12 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
     <>
       <div className="flex relative top-[-203.5px] transform scale-75 mb-[-415px]">
         <div className="z-10 w-[1174px] h-[1534px] bg-[#F7F3EF] mb-[80px] rounded-b-[36px]">
-          <div className="flex flex-row justify-between items-center ml-[121px] mr-[45px] mt-[149px]">
+          <div className="flex flex-row justify-between items-center items-center ml-[121px] mr-[45px] mt-[149px]">
             <div className="flex flex-col gap-[41px]">
               <div className="text-[25px]">
                 {updateDiary
                   ? updateDate
-                  : selectedDate
+                  : calendarClick
                     ? formattedCalendarDate
                     : formattedDate}
               </div>
@@ -119,7 +121,7 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
                 }}
               />
             </div>
-            <div className="flex flex-row gap-[16px]">
+            <div className="flex flex-row gap-[16px] mb-[25px]">
               <div className="text-[24px]">날씨</div>
               <div>
                 <Weather></Weather>

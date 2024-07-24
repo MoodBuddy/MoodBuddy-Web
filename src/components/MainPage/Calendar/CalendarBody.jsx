@@ -1,10 +1,12 @@
 import { format, startOfMonth, getDay } from 'date-fns';
 import useCalendarStore from '../../../store/calendarStore';
 import { getDiaryEmotion, getEmotionImage } from '../../../utils/calendar';
+import useCalendarClickStore from '../../../store/calendarClick';
 
 const CalendarBody = () => {
   const { currentDate, selectedDate, selectDate, daysInMonth, diaryList } =
     useCalendarStore();
+  const { setCalendarClick } = useCalendarClickStore();
   const days = daysInMonth(currentDate).filter(
     (date) => format(currentDate, 'MM') === date.month,
   ); // 현재 달의 날짜만 필터링
@@ -49,6 +51,7 @@ const CalendarBody = () => {
                 ${date && date.day >= 25 && date.day <= 31 ? 'border-l-[3.5px]' : ''}`}
                   onClick={() => {
                     if (date) selectDate(date.date);
+                    setCalendarClick(true);
                   }}
                 >
                   {date ? (

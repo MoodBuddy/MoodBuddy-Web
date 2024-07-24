@@ -4,12 +4,15 @@ import Button from '../common/button/Button';
 import { useState } from 'react';
 import { checkTodayDiary } from '../../apis/user';
 import AlertModal from '../common/layout/AlertModal';
+import useCalendarClickStore from '../../store/calendarClick';
 const NoWritingPad = () => {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
+  const { setCalendarClick } = useCalendarClickStore();
 
   const handleWriting = async () => {
     try {
+      setCalendarClick(false);
       const res = await checkTodayDiary();
       console.log(res);
       if (!res.checkTodayDairy) {

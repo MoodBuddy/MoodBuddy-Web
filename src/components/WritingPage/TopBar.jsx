@@ -221,7 +221,7 @@ const TopBar = ({ selectedDate, setTemplateOn }) => {
 
   return (
     <>
-      <div className="sticky top-0 z-10 bg-[#EEE4DB] w-[full] h-[117px] shadow-md flex justify-center text-[15px] ">
+      <div className="sticky top-0 z-0 bg-[#EEE4DB] w-[full] h-[117px] shadow-md flex justify-center text-[15px] ">
         <div className="flex flex-row justify-between items-center w-[1438px]">
           <button
             type="button"

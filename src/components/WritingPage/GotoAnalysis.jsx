@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
+import { format, isFuture, isToday } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { getProfile } from '../../apis/user';
 import AnalysisEmotion from './AnalysisEmotion';
@@ -58,6 +58,14 @@ const GotoAnalysis = ({
     return hasFinalConsonant(lastChar) ? '은' : '는';
   };
 
+  const isSelectedDateToday = isToday(new Date(selectedDate));
+  const isSelectedDateFuture = isFuture(new Date(selectedDate));
+  const dayDescription = isSelectedDateToday
+    ? '오늘'
+    : isSelectedDateFuture
+      ? '미래'
+      : '과거';
+
   return (
     <>
       {gotoAnalysisEmotionModal && (
@@ -71,7 +79,7 @@ const GotoAnalysis = ({
                 {selectedDate ? formattedCalendarDate : formattedDate}
               </div>
               <div className="font-meetme font-bold text-[32.6px] mx-auto ">
-                {`${formatted}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <img className=" w-[120px] h-[120px]" src={analysisEmotion} />
               <div>

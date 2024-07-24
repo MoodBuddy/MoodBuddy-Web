@@ -6,12 +6,14 @@ import { checkTodayDiary, getProfile } from '../../../apis/user';
 import ProfileInfo from './ProfileInfo';
 import MyPageDropdown from './MyPageDropdown';
 import AlertModal from './AlertModal';
+import useCalendarClickStore from '../../../store/calendarClick';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
   const [showProfileDetails, setShowProfileDetails] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [writing, setWriting] = useState(false);
+  const { setCalendarClick } = useCalendarClickStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,6 +58,7 @@ const NavBar = () => {
   }, [diaryData]);
 
   const handleMenuClick = (event, to) => {
+    setCalendarClick(false);
     event.preventDefault(); // 기본 동작 방지
     if (!diaryData.checkTodayDairy) {
       setIsModal(true);
