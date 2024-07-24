@@ -260,7 +260,7 @@ const EditProfileCard = () => {
           </div>
 
           <div className="flex flex-col gap-[10px]">
-            <div className="font-bold text-[20px]">카카오톡 알림</div>
+            <div className="font-bold text-[20px]">SMS 알림</div>
             <div className="flex gap-[40px] items-center">
               <Toggle
                 onToggleChange={handleToggleChange}

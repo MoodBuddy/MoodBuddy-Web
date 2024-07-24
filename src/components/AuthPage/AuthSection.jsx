@@ -74,7 +74,7 @@ const AuthSection = () => {
           />
         </div>
         <div className="flex items-center gap-[58px]">
-          <p>카카오톡 알림</p>
+          <p>SMS 알림</p>
           <Toggle onToggleChange={handleToggleChange} />
 
           {isNotificationEnabled && (

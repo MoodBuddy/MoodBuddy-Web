@@ -8,6 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const MyCalendarSection = ({ currentDate, daysInMonth, shortWord }) => {
+  const navigate = useNavigate();
   const { diaryList } = useCalendarStore();
   const days = daysInMonth(currentDate).filter(
     (date) => format(currentDate, 'MM') === date.month,
@@ -82,11 +83,12 @@ const MyCalendarSection = ({ currentDate, daysInMonth, shortWord }) => {
                     <div className="flex justify-center">
                       {date && getDiaryEmotion(diaryList, date.date) ? (
                         <img
+                          onClick={() => date && handleDayClick(date)}
                           src={getEmotionImage(
                             getDiaryEmotion(diaryList, date.date),
                           )}
                           alt={getDiaryEmotion(diaryList, date.date)}
-                          className="w-[50px] mb-3"
+                          className="w-[50px] mb-3 cursor-pointer"
                         />
                       ) : (
                         <div className="w-[50px] mb-16"></div>

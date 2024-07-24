@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
+import { format, isFuture, isToday } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { getProfile } from '../../apis/user';
 import CompleteAnalysis from './CompleteAnalysis';
@@ -9,11 +9,15 @@ const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
   const [progress, setProgress] = useState(0);
   const [completeAnaylsis, setCompleteAnaylsis] = useState(false);
 
-  const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
-    locale: ko,
-  });
+  const isSelectedDateToday = isToday(new Date(selectedDate));
+  const isSelectedDateFuture = isFuture(new Date(selectedDate));
+  const dayDescription = isSelectedDateToday
+    ? '오늘'
+    : isSelectedDateFuture
+      ? '미래'
+      : '과거';
 
-  const formatted = format(new Date(selectedDate), 'MM.dd(EEE)', {
+  const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
@@ -71,7 +75,7 @@ const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
                 {selectedDate ? formattedCalendarDate : formattedDate}
               </div>
               <div className="font-meetme text-[32.6px] mx-auto mt-[81px]">
-                {`${formatted}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <div className="mx-auto mt-[40px] border-2 border-black w-[456.75px] h-[26.4px] mb-5 h-2 rounded-full bg-gray-200">
                 <div
