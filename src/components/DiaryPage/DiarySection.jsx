@@ -79,8 +79,10 @@ const DiarySection = ({ diaryId }) => {
   }, []);
 
   const formattedWeather = formatWeather(diary.diaryWeather);
-  const { imgSrc, text } = formatQuddyByEmotion(diary.diaryEmotion);
-
+  const { imgSrc, bubbleSrc, name, color } = formatQuddyByEmotion(
+    diary.diaryEmotion,
+  );
+  console.log(color);
   const handleImgModal = (imageUrl) => {
     console.log(imgModal);
     setImgSource(imageUrl);
@@ -112,7 +114,11 @@ const DiarySection = ({ diaryId }) => {
             <div className="flex items-center gap-6 mb-20">
               <p className="text-lg">{formattedDate}</p>
               <p className="text-lg">날씨</p>
-              <img className="w-5 h-5 -ml-4" src={formattedWeather} alt="formatWeather" />
+              <img
+                className="w-5 h-5 -ml-4"
+                src={formattedWeather}
+                alt="formatWeather"
+              />
             </div>
           </div>
           {!temporaryDiary ? (
@@ -124,8 +130,11 @@ const DiarySection = ({ diaryId }) => {
                     alt={imgSrc}
                     className="w-[150px] h-[170px]"
                   />
-                  <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                    {text}쿼디
+                  <p
+                    style={{ color: color }}
+                    className="font-meetme text-center text-2xl text-[#D8B18E]"
+                  >
+                    {name}
                   </p>
                 </div>
 
@@ -134,11 +143,7 @@ const DiarySection = ({ diaryId }) => {
                   onClick={() => setIsModalOpen(true)}
                   className="absolute top-[25%] right-[-220px] cursor-pointer"
                 >
-                  <img
-                    src={happyBubble}
-                    alt="happyBubble"
-                    className="w-[90%]"
-                  />
+                  <img src={bubbleSrc} alt="bubbleSrc" className="w-[90%]" />
                 </div>
               </div>
             ) : (
@@ -149,8 +154,11 @@ const DiarySection = ({ diaryId }) => {
                     alt={imgSrc}
                     className="w-[150px] h-[170px]"
                   />
-                  <p className="font-meetme text-center text-2xl text-[#D8B18E]">
-                    {text}쿼디
+                  <p
+                    style={{ color: color }}
+                    className="font-meetme text-center text-2xl text-[#D8B18E]"
+                  >
+                    {name}
                   </p>
                 </div>
               </>

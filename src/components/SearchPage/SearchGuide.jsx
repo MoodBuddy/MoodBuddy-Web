@@ -1,4 +1,4 @@
-import halfHappyQuddy from '@assets/halfHappyQuddy.svg';
+import halfSearchQuddy from '@assets/halfSearchQuddy.svg';
 
 const SearchGuide = () => {
   return (
@@ -8,8 +8,8 @@ const SearchGuide = () => {
       </h1>
       <div className="relative">
         <img
-          src={halfHappyQuddy}
-          alt="halfHappyQuddy"
+          src={halfSearchQuddy}
+          alt="halfSearchQuddy"
           className="w-[600px] h-[425px] transform translate-y-8"
         />
       </div>
