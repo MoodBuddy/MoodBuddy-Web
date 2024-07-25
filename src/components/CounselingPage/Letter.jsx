@@ -45,7 +45,7 @@ const Letter = () => {
           <div className="flex flex-col justify-center items-center">
             <textarea
               type="text"
-              className="mt-[150px] text-center font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none resize-none w-[1000px] h-[600px] overflow-y-auto custom-scrollbar"
+              className="mt-[150px] px-28 mr-24 text-center font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none resize-none w-[900px] h-[600px] overflow-y-auto custom-scrollbar"
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);

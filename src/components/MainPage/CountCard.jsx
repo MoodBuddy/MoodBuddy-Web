@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/userStore';
 import Card from './Card';
-import halfHappyQuddy from '@assets/halfHappyQuddy.svg';
+import halfSearchQuddy from '@assets/halfSearchQuddy.svg';
 
 const CountCard = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const CountCard = () => {
         </div>
 
         <div className="flex justify-center">
-          <img src={halfHappyQuddy} alt="halfHappyQuddy" className="mt-2" />
+          <img src={halfSearchQuddy} alt="halfSearchQuddy" className="mt-2" />
         </div>
       </div>
     </Card>

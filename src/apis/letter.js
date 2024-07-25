@@ -31,6 +31,7 @@ export const getLetterDetails = async (letterId) => {
 export const postLetter = async (letterData) => {
   try {
     const data = await post(`/api/v1/member/letter/write`, letterData);
+    console.log(data);
     return data;
   } catch (error) {
     throw new Error('데이터 불러오기에 실패하였습니다.');

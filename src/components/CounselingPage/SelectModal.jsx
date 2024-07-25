@@ -28,6 +28,7 @@ const SelectModal = ({ sending, setSending }) => {
         letterWorryContent: content,
         letterDate: todayUTC,
       };
+      console.log(letterData);
 
       const response = await postLetter(letterData);
 

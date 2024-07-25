@@ -31,7 +31,7 @@ const CompletedLetter = () => {
           <div className="font-medium text-2xl ml-20">To.QUDDY</div>
         </div>
         <div className="flex flex-col">
-          <div className="text-center mt-[150px] mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[1000px] h-[600px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
+          <div className="text-center px-28 mr-24 mt-[150px] mx-auto font-light text-xl leading-[66px] bg-[#F7F3EF] outline-none w-[900px] h-[600px] overflow-y-auto custom-scrollbar whitespace-pre-wrap">
             {content}
           </div>
           <div className="flex flex-col items-end font-medium text-xl gap-[10px] mr-10">
