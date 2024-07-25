@@ -3,10 +3,21 @@ import Button from '../common/button/Button';
 import Toggle from '../common/toggle/Toggle';
 import { useEffect, useState } from 'react';
 import { postAlarm } from '../../apis/letter';
+import { getProfile } from '../../apis/user';
+import { useQuery } from '@tanstack/react-query';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate();
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
+
+  const {
+    isError,
+    data: profile,
+    error,
+  } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+  });
 
   useEffect(() => {
     if (data && data.letterAlarm !== undefined) {
@@ -24,7 +35,14 @@ const Profile = ({ data }) => {
   };
 
   const handleToggleChange = async (toggleState) => {
+    if (!profile || !profile.phoneNumber) {
+      alert('프로필에서 전화번호를 먼저 설정해주세요.');
+      window.location.reload();
+      return;
+    }
+
     setIsNotificationEnabled(toggleState);
+    console.log(toggleState);
     try {
       await postAlarm({ letterAlarm: toggleState });
     } catch (error) {
@@ -37,7 +55,7 @@ const Profile = ({ data }) => {
       <div className="transform scale-75 relative top-[-110px]">
         <Button
           onClick={handleWritingLetter}
-          className="w-[332px] h-[71px] rounded-[30px] bg-[#C79A76] font-semibold text-[30px] mt-[36px]"
+          className="w-[332px] h-[71px] rounded-[30px] bg-[#C79A76] font-semibold text-[30px] mt-5"
         >
           편지 쓰기
         </Button>
@@ -65,7 +83,7 @@ const Profile = ({ data }) => {
             {data.profileComment}
           </div>
         </div>
-        <div className="flex items-center gap-12 mt-[50px] ml-2">
+        <div className="flex items-center gap-12 mt-[60px] ml-2">
           <p className="text-2xl font-medium">답장 SMS알림설정</p>
           <Toggle
             onToggleChange={handleToggleChange}
@@ -76,4 +94,5 @@ const Profile = ({ data }) => {
     </div>
   );
 };
+
 export default Profile;
