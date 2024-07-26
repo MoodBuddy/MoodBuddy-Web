@@ -4,11 +4,18 @@ import { format, isFuture, isToday } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { getProfile } from '../../apis/user';
 import CompleteAnalysis from './CompleteAnalysis';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
+import useDiaryDateStore from '../../store/diaryDateStore';
+import useCalendarClickStore from '../../store/calendarClick';
 
 const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
   const [progress, setProgress] = useState(0);
   const [completeAnaylsis, setCompleteAnaylsis] = useState(false);
+  const { temporaryDiary } = useTemporaryDiaryStore();
+  const { diaryDate } = useDiaryDateStore();
+  const { calendarClick } = useCalendarClickStore();
 
+  //캘린더 날짜 클릭 -> 일기 작성 -> 감정 분석
   const isSelectedDateToday = isToday(new Date(selectedDate));
   const isSelectedDateFuture = isFuture(new Date(selectedDate));
   const dayDescription = isSelectedDateToday
@@ -17,7 +24,20 @@ const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
       ? '미래'
       : '과거';
 
+  //임시저장 -> 일기 작성 -> 감정 분석
+  const isDiaryDateToday = isToday(new Date(diaryDate));
+  const isDiaryDateFuture = isFuture(new Date(diaryDate));
+  const DiaryDescription = isDiaryDateToday
+    ? '오늘'
+    : isDiaryDateFuture
+      ? '미래'
+      : '과거';
+
   const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
+
+  const formattedDiaryDate = format(new Date(diaryDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
@@ -72,10 +92,14 @@ const AnalysisEmotion = ({ selectedDate, AnalysisEmotionModal }) => {
           <div className="fixed top-0 left-0 right-0 bottom-0 m-auto w-[660px] h-[427.5px] bg-[#F7F3EF] rounded-[40px] border-[3px] border-black">
             <div className="flex flex-col">
               <div className="font-medium text-[15px] mx-auto mt-[66px]">
-                {selectedDate ? formattedCalendarDate : formattedDate}
+                {temporaryDiary
+                  ? formattedDiaryDate
+                  : calendarClick
+                    ? formattedCalendarDate
+                    : formattedDate}
               </div>
               <div className="font-meetme text-[32.6px] mx-auto mt-[81px]">
-                {`${dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${temporaryDiary ? DiaryDescription : dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <div className="mx-auto mt-[40px] border-2 border-black w-[456.75px] h-[26.4px] mb-5 h-2 rounded-full bg-gray-200">
                 <div

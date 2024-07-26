@@ -8,14 +8,26 @@ import MyPageDropdown from './MyPageDropdown';
 import AlertModal from './AlertModal';
 import useCalendarClickStore from '../../../store/calendarClick';
 import useUpdateDiaryStore from '../../../store/updateDiaryStore';
+import useTemporaryDiaryStore from '../../../store/temporaryDiaryStore';
+import useTitleStore from '../../../store/titleStore';
+import useDiaryContentStore from '../../../store/diaryContentStore';
+import useDiaryImgStore from '../../../store/diaryImgStore';
+import useDiaryImgFileStore from '../../../store/diaryImgFileStore';
+import useweatherStore from '../../../store/weatherStore';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
-  const [showProfileDetails, setShowProfileDetails] = useState(false);
+  const [hoveredProfile, setHoveredProfile] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [writing, setWriting] = useState(false);
   const { setCalendarClick } = useCalendarClickStore();
   const { setUpdateDiary } = useUpdateDiaryStore();
+  const { setTemporaryDiary } = useTemporaryDiaryStore();
+  const { setTitle } = useTitleStore();
+  const { setContent } = useDiaryContentStore();
+  const { setDiaryImg } = useDiaryImgStore();
+  const { setImageFiles, removeImageFile } = useDiaryImgFileStore();
+  const { setSelectedOption } = useweatherStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,9 +40,12 @@ const NavBar = () => {
     setHoveredMyPage(false);
   };
 
-  const handleProfileClick = () => {
-    setUpdateDiary(false);
-    setShowProfileDetails(!showProfileDetails);
+  const handleProfileMouseEnter = () => {
+    setHoveredProfile(true);
+  };
+
+  const handleProfileMouseLeave = () => {
+    setHoveredProfile(false);
   };
 
   const { isError, data, error } = useQuery({
@@ -62,6 +77,15 @@ const NavBar = () => {
 
   const handleMenuClick = (event, to) => {
     setCalendarClick(false);
+    setUpdateDiary(false);
+    setTemporaryDiary(false);
+    setTitle('');
+    setContent('');
+    setSelectedOption('CLEAR');
+    setDiaryImg([]);
+    setImageFiles([]);
+    removeImageFile([]);
+
     event.preventDefault(); // 기본 동작 방지
     if (!diaryData.checkTodayDairy) {
       setIsModal(true);
@@ -71,11 +95,17 @@ const NavBar = () => {
   };
 
   const handleOtherMenu = (event, to) => {
+    setTemporaryDiary(false);
+    setCalendarClick(false);
     setUpdateDiary(false);
     navigate(to);
   };
 
   const handleLogo = () => {
+    setTemporaryDiary(false);
+    setUpdateDiary(false);
+    setCalendarClick(false);
+
     navigate('/home');
   };
 
@@ -124,11 +154,12 @@ const NavBar = () => {
           ))}
         </div>
 
-        <div className="flex items-center ml-12 relative">
-          <div
-            onClick={handleProfileClick}
-            className="flex items-center cursor-pointer gap-3"
-          >
+        <div
+          onMouseEnter={handleProfileMouseEnter}
+          onMouseLeave={handleProfileMouseLeave}
+          className="flex items-center ml-12 relative"
+        >
+          <div className="flex items-center cursor-pointer gap-3">
             <img
               src={data.url}
               alt="profileImgURL"
@@ -137,7 +168,7 @@ const NavBar = () => {
             <h1 className="text-lg font-medium">{data.nickname}</h1>
           </div>
 
-          {showProfileDetails && <ProfileInfo data={data} />}
+          {hoveredProfile && <ProfileInfo data={data} />}
         </div>
       </div>
       <div className="border-b-[1px] border-[#B98D6D]"> </div>

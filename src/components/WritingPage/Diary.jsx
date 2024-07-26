@@ -66,7 +66,7 @@ const Diary = ({ selectedDate, templateOn, setTemplateOn }) => {
       removeImageFile([]);
       setFont('Inter');
       setTextSize('24px');
-      console.log(calendarClick);
+      console.log(`수정? ${updateDiary}`);
     };
   }, []);
 

@@ -1,9 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import useUpdateDiaryStore from '../../../store/updateDiaryStore';
+import useTemporaryDiaryStore from '../../../store/temporaryDiaryStore';
+import useCalendarClickStore from '../../../store/calendarClick';
 
 const MyPageDropdown = ({ subMenu }) => {
   const { setUpdateDiary } = useUpdateDiaryStore();
+  const { setTemporaryDiary } = useTemporaryDiaryStore();
+  const { setCalendarClick } = useCalendarClickStore();
+
   const handleDropDown = () => {
+    setTemporaryDiary(false);
+    setCalendarClick(false);
     setUpdateDiary(false);
     navigate(to);
   };

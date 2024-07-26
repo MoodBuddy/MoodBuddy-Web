@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import { postAlarm } from '../../apis/letter';
 import { getProfile } from '../../apis/user';
 import { useQuery } from '@tanstack/react-query';
+import useCalendarClickStore from '../../store/calendarClick';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate();
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
-
+  const { setCalendarClick } = useCalendarClickStore();
   const {
     isError,
     data: profile,
@@ -26,6 +27,7 @@ const Profile = ({ data }) => {
   }, [data]);
 
   const handleWritingLetter = () => {
+    setCalendarClick(false);
     const letterNums = data.userLetterNums;
     if (letterNums === 0) {
       navigate('/counseling/noWritingLetter');

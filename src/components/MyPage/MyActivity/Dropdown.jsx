@@ -34,7 +34,7 @@ const Dropdown = ({ initState, onChangeState }) => {
   return (
     <div>
       <button
-        className="flex gap-[10px] justify-center items-center border-[1px] border-black rounded-[7px] px-[20px] text-[28px] font-medium"
+        className="flex gap-[10px] justify-center items-center border-[1px] border-black rounded-[7px] px-[20px] text-[25px] font-medium"
         onClick={handleClickDropdown}
       >
         <span>{selectedYear}</span>
@@ -45,7 +45,7 @@ const Dropdown = ({ initState, onChangeState }) => {
         )}
       </button>
       {visibilityAnimation && (
-        <ul className="justify-center items-center border-[1px] border-black rounded-[7px] px-[20px] text-[28px] font-medium ">
+        <ul className="justify-center items-center border-[1px] border-black rounded-[7px] px-[20px] text-[25px] font-medium ">
           {[...Array(7).keys()].map((i) => {
             const year = (new Date().getFullYear() + i).toString();
             return (

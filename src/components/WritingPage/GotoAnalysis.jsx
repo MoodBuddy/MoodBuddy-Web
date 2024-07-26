@@ -8,6 +8,9 @@ import analysisEmotion from '@assets/analysisEmotion.svg';
 import close from '../../../public/icon/close.svg';
 import Button from '../common/button/Button';
 import useCalendarStore from '../../store/calendarStore';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
+import useDiaryDateStore from '../../store/diaryDateStore';
+import useCalendarClickStore from '../../store/calendarClick';
 
 const GotoAnalysis = ({
   selectedDate,
@@ -15,15 +18,15 @@ const GotoAnalysis = ({
   setGotoAnalysisEmotionModal,
 }) => {
   const [AnalysisEmotionModal, setAnalysisEmotionModal] = useState(false);
-  useEffect(() => {
-    console.log(selectedDate);
-  }, []);
+  const { temporaryDiary } = useTemporaryDiaryStore();
+  const { diaryDate } = useDiaryDateStore();
+  const { calendarClick } = useCalendarClickStore();
 
   const formattedCalendarDate = format(new Date(selectedDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
-  const formatted = format(new Date(selectedDate), 'MM.dd(EEE)', {
+  const formattedDiaryDate = format(new Date(diaryDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
@@ -58,11 +61,21 @@ const GotoAnalysis = ({
     return hasFinalConsonant(lastChar) ? '은' : '는';
   };
 
+  //캘린더 날짜 클릭 -> 일기 작성 -> 감정 분석
   const isSelectedDateToday = isToday(new Date(selectedDate));
   const isSelectedDateFuture = isFuture(new Date(selectedDate));
   const dayDescription = isSelectedDateToday
     ? '오늘'
     : isSelectedDateFuture
+      ? '미래'
+      : '과거';
+
+  //임시저장 -> 일기 작성 -> 감정 분석
+  const isDiaryDateToday = isToday(new Date(diaryDate));
+  const isDiaryDateFuture = isFuture(new Date(diaryDate));
+  const DiaryDescription = isDiaryDateToday
+    ? '오늘'
+    : isDiaryDateFuture
       ? '미래'
       : '과거';
 
@@ -76,10 +89,14 @@ const GotoAnalysis = ({
             </div>
             <div className="flex flex-col items-center gap-[20px]">
               <div className="font-medium text-[15px] mx-auto mt-[10px]">
-                {selectedDate ? formattedCalendarDate : formattedDate}
+                {temporaryDiary
+                  ? formattedDiaryDate
+                  : calendarClick
+                    ? formattedCalendarDate
+                    : formattedDate}
               </div>
               <div className="font-meetme font-bold text-[32.6px] mx-auto ">
-                {`${dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
+                {`${temporaryDiary ? DiaryDescription : dayDescription}의 ${nickname}${getPostPosition(nickname)} 어떤 감정일까요?`}
               </div>
               <img className=" w-[120px] h-[120px]" src={analysisEmotion} />
               <div>

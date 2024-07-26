@@ -17,6 +17,8 @@ import useDiaryKeepImgUrlStore from '../../store/diaryKeepImgUrlStore';
 import useCalendarStore from '../../store/calendarStore';
 import useFontStore from '../../store/fontStore';
 import useTextSizeStore from '../../store/textSizeStore';
+import useDiaryDateStore from '../../store/diaryDateStore';
+import useCalendarClickStore from '../../store/calendarClick';
 
 const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const { title } = useTitleStore();
@@ -37,8 +39,14 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
   const { textSize } = useTextSizeStore();
   const [diaryFont, setDiaryFont] = useState('');
   const [diaryTextSize, setDiaryTextSize] = useState('');
+  const { diaryDate } = useDiaryDateStore();
+  const { calendarClick } = useCalendarClickStore();
 
   const formattedDate = format(new Date(), 'yy.MM.dd (E)', {
+    locale: ko,
+  });
+
+  const formattedDiaryDate = format(new Date(diaryDate), 'yy.MM.dd (E)', {
     locale: ko,
   });
 
@@ -55,6 +63,8 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
     console.log(`selectedDate : ${selectedDate}`);
     console.log(font);
     console.log(textSize);
+    console.log(temporaryDiary);
+    console.log(calendarClick);
     if (font === 'meetme') {
       setDiaryFont('MEETME');
     } else {
@@ -73,6 +83,9 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
     console.log(diaryFont);
     console.log(diaryTextSize);
   }, [font, textSize]);
+  useEffect(() => {
+    console.log(diaryDate);
+  }, []);
 
   useEffect(() => {
     if (completeAnaylsis) {
@@ -87,34 +100,6 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
       result();
     }
   }, [completeAnaylsis, diaryFont, diaryTextSize]);
-
-  // const updateDiary = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('diaryId', diaryItemId);
-  //     formData.append('diaryTitle', title);
-  //     formData.append(
-  //       'diaryDate',
-  //       selectedDate ? selectedDate : todayUTC.slice(0, -14),
-  //     );
-  //     formData.append('diaryStatus', 'DRAFT');
-  //     formData.append('diaryContent', content);
-  //     formData.append('diaryWeather', selectedOption);
-
-  //     for (let i = 0; i < imageFiles.length; i++) {
-  //       imageFiles.length > 0 && formData.append('diaryImgList', imageFiles[i]);
-  //     }
-  //     for (let i = 0; i < diaryKeepImg.length; i++) {
-  //       diaryKeepImg.length > 0 &&
-  //         formData.append('existingDiaryImgList', diaryKeepImg[i]);
-  //     }
-  //     console.log(...formData);
-  //     await updateDiaryOne(formData);
-  //     navigate(`/diary/${diaryItemId}`);
-  //   } catch (error) {
-  //     console.error('임시저장 일기 저장 오류', error);
-  //   }
-  // };
 
   const getDescription = async () => {
     try {
@@ -145,7 +130,11 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
       formData.append('diaryTitle', title);
       formData.append(
         'diaryDate',
-        selectedDate ? selectedDate : todayUTC.slice(0, -14),
+        temporaryDiary
+          ? diaryDate
+          : calendarClick
+            ? selectedDate
+            : todayUTC.slice(0, -14),
       );
       formData.append('diaryContent', content);
       formData.append('diaryWeather', selectedOption);
@@ -190,7 +179,11 @@ const CompleteAnalysis = ({ selectedDate, completeAnaylsis }) => {
                 </div>
                 <div className="flex flex-col items-center absolute top-[120px]">
                   <div className="text-[18px] font-medium relative top-[10px]">
-                    {selectedDate ? formattedCalendarDate : formattedDate}
+                    {temporaryDiary
+                      ? formattedDiaryDate
+                      : calendarClick
+                        ? formattedCalendarDate
+                        : formattedDate}
                   </div>
                   <div className="flex flex-col gap-[5px] justify-center items-center ">
                     <img

@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import useTemporaryDiaryStore from '../../../store/temporaryDiaryStore';
+import useUpdateDiaryStore from '../../../store/updateDiaryStore';
+import useCalendarClickStore from '../../../store/calendarClick';
 
 const ProfileInfo = ({ data }) => {
   const navigate = useNavigate();
-
+  const { setCalendarClick } = useCalendarClickStore();
+  const { setUpdateDiary } = useUpdateDiaryStore();
+  const { setTemporaryDiary } = useTemporaryDiaryStore();
   const handleLogout = () => {
     sessionStorage.removeItem('session');
     sessionStorage.removeItem('i');
@@ -10,11 +15,15 @@ const ProfileInfo = ({ data }) => {
   };
 
   const handleMyPage = () => {
+    setCalendarClick(false);
+    setUpdateDiary(false);
+    setTemporaryDiary(false);
+
     navigate('/mypage/editProfile');
   };
 
   return (
-    <div className="absolute flex top-20 right-[-40px] mt-2 w-[340px] bg-[#F8EFE8] border border-[#B98D6D] shadow-lg z-20 rounded-xl p-4">
+    <div className=" absolute flex top-[68px] right-[-40px] mt-2 w-[340px] bg-[#F8EFE8] border border-[#B98D6D] shadow-lg z-20 rounded-xl p-4">
       <div onClick={handleMyPage}>
         <img
           src={data.url}

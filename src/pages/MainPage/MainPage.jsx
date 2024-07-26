@@ -7,8 +7,10 @@ import CalendarSection from '../../components/MainPage/CalendarSection';
 import IntroduceSection from '../../components/MainPage/IntroduceSection';
 import useUserStore from '../../store/userStore';
 import { getUserInfo } from '../../apis/user';
+import useTemporaryDiaryStore from '../../store/temporaryDiaryStore';
 
 const MainPage = () => {
+  const { setTemporaryDiary } = useTemporaryDiaryStore();
   const { isError, data, error } = useQuery({
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
@@ -21,6 +23,10 @@ const MainPage = () => {
       setUserStore(data);
     }
   }, [data, setUserStore]);
+
+  useEffect(() => {
+    setTemporaryDiary(false);
+  }, []);
 
   if (!data) {
     return <div>데이터가 없습니다.</div>;
