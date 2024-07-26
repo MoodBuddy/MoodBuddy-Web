@@ -7,6 +7,7 @@ import ProfileInfo from './ProfileInfo';
 import MyPageDropdown from './MyPageDropdown';
 import AlertModal from './AlertModal';
 import useCalendarClickStore from '../../../store/calendarClick';
+import useUpdateDiaryStore from '../../../store/updateDiaryStore';
 
 const NavBar = () => {
   const [hoveredMyPage, setHoveredMyPage] = useState(false);
@@ -14,6 +15,7 @@ const NavBar = () => {
   const [isModal, setIsModal] = useState(false);
   const [writing, setWriting] = useState(false);
   const { setCalendarClick } = useCalendarClickStore();
+  const { setUpdateDiary } = useUpdateDiaryStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,6 +29,7 @@ const NavBar = () => {
   };
 
   const handleProfileClick = () => {
+    setUpdateDiary(false);
     setShowProfileDetails(!showProfileDetails);
   };
 
@@ -67,6 +70,11 @@ const NavBar = () => {
     }
   };
 
+  const handleOtherMenu = (event, to) => {
+    setUpdateDiary(false);
+    navigate(to);
+  };
+
   const handleLogo = () => {
     navigate('/home');
   };
@@ -96,7 +104,7 @@ const NavBar = () => {
                 onClick={
                   item.id === 2
                     ? (event) => handleMenuClick(event, item.to)
-                    : undefined
+                    : (event) => handleOtherMenu(event, item.to)
                 }
                 className={({ isActive }) =>
                   isActive ||
