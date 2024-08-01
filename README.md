@@ -24,14 +24,42 @@
 ![Slide 16_9 - 543](https://github.com/user-attachments/assets/9e3b67a0-2eee-443f-ad79-c42af3acaad7)
 ![Slide 16_9 - 494](https://github.com/user-attachments/assets/3d6159c0-b8f8-4f61-a8cf-dea0c27aa423)
 ![Slide 16_9 - 493](https://github.com/user-attachments/assets/5ecc9021-4309-44a1-bf54-f585b7707b3d)
+<br>
+
+## 🧑‍🤝‍🧑 멤버 구성
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/m2na7">
+        <img src="https://avatars.githubusercontent.com/u/118591632?v=4" width="100"><br>
+        <sub><b>강민하</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/YoungseoChoi23">
+        <img src="https://avatars.githubusercontent.com/u/134666006?v=4" width="100"><br>
+        <sub><b>최영서</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+<br>
+
+## 💡 기술 스택
+- <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>
+- <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=Vite&logoColor=white"/> <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/>
+- <img src="https://img.shields.io/badge/React Query-FF4154?style=flat-square&logo=React Query&logoColor=white"/>  <img src="https://img.shields.io/badge/Zustand-D2B48C?style=flat-square&logo=React Query&logoColor=white"/>
+- <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/>
+<br>
 
 ## 🕰️ 개발 기간
-
 - 24.04.01일 - 24.07.27일
-
+<br>
+  
 ## 👥 유저테스트
 - 테스트 기간: 24.07.19일 - 24.07.20일
 - 테스트 인원: 12명
+<br>
 
 ## 📝 규칙
 
